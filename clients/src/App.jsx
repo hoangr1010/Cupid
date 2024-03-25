@@ -6,13 +6,13 @@ import {
   // Redirect;
 } from 'react-router-dom';
 
-import Home from './pages/Home';
+import LangdingPage from './pages/LandingPage';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<LangdingPage />} />
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </Router>

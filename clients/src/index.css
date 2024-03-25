@@ -15,3 +15,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@layer components {
+  .widget_container {
+    @apply border p-6 rounded-lg shadow-md bg-alt;
+  }
+}
