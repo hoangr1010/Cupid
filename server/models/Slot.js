@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-const referralSlotSchema = new Schema({
+// Referral slot opened by referrer
+const slotSchema = new Schema({
   referrer_id: { 
       type: Schema.Types.ObjectId, 
       required: true, ref: "User" 
@@ -10,6 +11,11 @@ const referralSlotSchema = new Schema({
     type: Schema.Types.ObjectId, 
     required: function () { return this.status !== 'waiting'; },
     ref: "RequestBatch"
+  },
+  opening_batch_id: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "OpeningBatch"
   },
   company: {
     type: String,
@@ -22,4 +28,4 @@ const referralSlotSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("ReferralSlot", referralSlotSchema, "ReferralSlots");
+module.exports = mongoose.model("Slot", slotSchema, "Slots");

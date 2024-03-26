@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { changeUser } from '../../state/index';
+import { changeUser } from '../../state';
 import { AiOutlineLinkedin } from "react-icons/ai";
+import { Button } from "flowbite-react"
 
 
 
-const LangdingPage = () => {
+const LandingPage = () => {
 
     const name = useSelector((state) => state.auth.user);
     const dispatch = useDispatch()
@@ -25,11 +26,16 @@ const LangdingPage = () => {
                 <form class="max-w-sm mx-auto">
                     <div class="mb-5">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                        <input value={name} type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary" placeholder="name@flowbite.com" required />
+                        <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary" placeholder="name@flowbite.com" 
+                            onClick={(e) => {
+                                dispatch(changeUser(e.target.value))
+                            }}
+                        
+                        required />
                     </div>
                     <div class="mb-5">
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-                        <input type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primaryLight focus:border-primary block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary" required />
+                        <input value={name} id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primaryLight focus:border-primary block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary" required />
                     </div>
                 
                     </form>
@@ -44,4 +50,4 @@ const LangdingPage = () => {
     )
 }
 
-export default LangdingPage
+export default LandingPage

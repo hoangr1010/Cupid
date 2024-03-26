@@ -9,7 +9,6 @@ import UserRouter from './routes/UserRouter.js';
 // CONFIGURATION
 const app = express();
 app.use(cors());
-dotenv.config();
 app.use(express.json())
 app.use(bodyParser.json({ limit: '30mb', extended: true }));
 

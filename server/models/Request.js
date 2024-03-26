@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-const referralRequestSchema = new Schema({
+// request made by candidate
+const requestSchema = new Schema({
   batch_id: {
     type: Schema.Types.ObjectId,
     required: true,
@@ -36,4 +37,4 @@ const referralRequestSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model("ReferralRequest", referralRequestSchema, "ReferralRequests");
+module.exports = mongoose.model("Request", referralRequestSchema, "Requests");

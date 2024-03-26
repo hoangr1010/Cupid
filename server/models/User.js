@@ -84,9 +84,13 @@ const UserSchema = new Schema({
         minLength: 2,
         maxLength: 50
     },
-    latest_batch: {
+    last_request_batch: {
         type: Schema.Types.ObjectId,
         ref: "RequestBatch"
+    },
+    last_opening_batch: {
+        type: Schema.Types.ObjectId,
+        ref: "OpeningBatch"
     },
     experience: {
         type: ExperienceSchema
