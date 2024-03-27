@@ -6,15 +6,17 @@ import {
   // Redirect;
 } from 'react-router-dom';
 
-import Home from './pages/Home';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<LandingPage />} />
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
+
+      
     </Router>
   );
 }
