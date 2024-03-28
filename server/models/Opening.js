@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-// Referral slot opened by referrer
-const slotSchema = new Schema({
+// Referral opening opened by referrer
+const openingSchema = new Schema({
   referrer_id: { 
       type: Schema.Types.ObjectId, 
       required: true, ref: "User" 
@@ -28,4 +28,4 @@ const slotSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("Slot", slotSchema, "Slots");
+module.exports = mongoose.model("Opening", openingSchema, "Openings");

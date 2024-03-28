@@ -18,7 +18,7 @@ const openBatchSchema = new Schema({
   },
   open_list: {
     type: [Schema.Types.ObjectId],
-    ref: "ReferralSlot",
+    ref: "Opening",
   }
 });
 
