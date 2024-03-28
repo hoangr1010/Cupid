@@ -10,7 +10,7 @@ const openingSchema = new Schema({
   request_id: { 
     type: Schema.Types.ObjectId, 
     required: function () { return this.status !== 'waiting'; },
-    ref: "RequestBatch"
+    ref: "Request"
   },
   opening_batch_id: {
     type: Schema.Types.ObjectId,

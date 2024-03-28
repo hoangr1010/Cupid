@@ -16,7 +16,7 @@ const requestSchema = new Schema({
   opening_id: { 
     type: Schema.Types.ObjectId,
     required: function () { return this.status !== 'waiting'; },
-    ref: "User"
+    ref: "Opening"
   },
   company: {
     type: String, 
