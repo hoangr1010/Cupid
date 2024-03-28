@@ -13,10 +13,10 @@ const requestSchema = new Schema({
     required: true,
     ref: "User"
   },
-  referrer_id: { 
+  opening_id: { 
     type: Schema.Types.ObjectId,
     required: function () { return this.status !== 'waiting'; },
-    ref: "User"
+    ref: "Opening"
   },
   company: {
     type: String, 
@@ -37,4 +37,4 @@ const requestSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model("Request", referralRequestSchema, "Requests");
+module.exports = mongoose.model("Request", requestSchema, "Requests");

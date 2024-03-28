@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 // batch of referral openings
-const openBatchSchema = new Schema({
+const openingBatchSchema = new Schema({
   batch_name: {
     type: String,
     required: true,
@@ -18,8 +18,8 @@ const openBatchSchema = new Schema({
   },
   open_list: {
     type: [Schema.Types.ObjectId],
-    ref: "ReferralSlot",
+    ref: "Opening",
   }
 });
 
-module.exports = mongoose.model("OpeningBatch", requestBatchSchema, "OpeningBatchs");
+module.exports = mongoose.model("OpeningBatch", openingBatchSchema, "OpeningBatchs");
