@@ -22,4 +22,4 @@ const openingBatchSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model("OpeningBatch", requestBatchSchema, "OpeningBatchs");
+module.exports = mongoose.model("OpeningBatch", openingBatchSchema, "OpeningBatchs");

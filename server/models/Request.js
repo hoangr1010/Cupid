@@ -37,4 +37,4 @@ const requestSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model("Request", referralRequestSchema, "Requests");
+module.exports = mongoose.model("Request", requestSchema, "Requests");
