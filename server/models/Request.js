@@ -13,7 +13,7 @@ const requestSchema = new Schema({
     required: true,
     ref: "User"
   },
-  referrer_id: { 
+  opening_id: { 
     type: Schema.Types.ObjectId,
     required: function () { return this.status !== 'waiting'; },
     ref: "User"

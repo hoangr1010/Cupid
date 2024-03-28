@@ -18,7 +18,7 @@ const requestBatchSchema = new Schema({
   },
   requesting_list: {
     type: [Schema.Types.ObjectId],
-    ref: "ReferralRequest",
+    ref: "Request",
   }
 });
 

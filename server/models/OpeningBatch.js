@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 // batch of referral openings
-const openBatchSchema = new Schema({
+const openingBatchSchema = new Schema({
   batch_name: {
     type: String,
     required: true,
