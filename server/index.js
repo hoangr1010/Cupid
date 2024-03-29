@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import UserRouter from './routes/UserRouter.js';
+import AuthRouter from './routes/AuthRouter.js';
 
 // CONFIGURATION
 const app = express();
@@ -14,15 +15,21 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }));
 
 // Set up routes
 app.use("/user", UserRouter);
+app.use("/auth", AuthRouter);
 
 // Connect to Database
 mongoose.set("strictQuery", false);
 
 main().catch((err) => console.log(err));
 async function main() {
-  await mongoose.connect(process.env.DATABASE_CONNECTION_STRING);
+  try {
+    await mongoose.connect(process.env.DATABASE_CONNECTION_STRING);
+    console.log("Successfully connect to MongoDB");
+  } catch (error) {
+    console.log(error);
+  }
 }
-  
+
 app.listen(process.env.PORT, () => {
     console.log(`Server running at localhost ${process.env.PORT}`);
 });
