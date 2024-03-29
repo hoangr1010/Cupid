@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(bodyParser.json({ limit: '30mb', extended: true }));
 
 // Set up routes
-app.use("/user", UserRouter);
+app.use("/users", UserRouter);
 
 // Connect to Database
 mongoose.set("strictQuery", false);
