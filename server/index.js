@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import UserRouter from './routes/UserRouter.js';
+import RequestBatchRouter from './routes/RequestBatchRouter.js';
 
 // CONFIGURATION
 const app = express();
@@ -14,6 +15,7 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }));
 
 // Set up routes
 app.use("/user", UserRouter);
+app.use("/request-batch", RequestBatchRouter);
 
 // Connect to Database
 mongoose.set("strictQuery", false);
