@@ -15,7 +15,7 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }));
 
 // Set up routes
 app.use("/user", UserRouter);
-app.use("/request-batchs", RequestBatchRouter);
+app.use("/request-batch", RequestBatchRouter);
 
 // Connect to Database
 mongoose.set("strictQuery", false);
