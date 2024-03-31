@@ -43,7 +43,6 @@ export const getUser = async (req, res) => {
 }
 
 // add user experience -- POST
-// rethink the flow of this funcrtion
 export const addExperience = async (req, res) => {
     try {
         const { _id } = req.headers;
@@ -69,6 +68,7 @@ export const addExperience = async (req, res) => {
 }
 
 // edit user experience -- PUT
+// rethink the flow of this function
 export const editExperience = async (req, res) => {
     try {
         const { _id } = req.headers;
