@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeUser } from '../../state';
 import { AiOutlineLinkedin } from "react-icons/ai";
@@ -7,6 +7,10 @@ import { Button } from "flowbite-react"
 
 
 const LandingPage = () => {
+
+    const LinkedInAuthorize = () => {
+        window.location.href = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${process.env.REACT_APP_LINKEDIN_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_LINKEDIN_REDIRECT_URL}&state=foobar&scope=openid%20profile%20w_member_social%20email`;
+    };
 
     return (
         <div className="flex flex-col justify-center items-center bg-background min-h-screen w-screen">
@@ -17,26 +21,14 @@ const LandingPage = () => {
 
 
             <div className="widget_container flex flex-col items-center justify-center h-fit w-fit ">
-
-                <form className="max-w-sm mx-auto">
-                    <div className="mb-5">
-                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                        <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary" placeholder="name@flowbite.com" 
-                        
-                        required />
-                    </div>
-                    <div className="mb-5">
-                        <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-                        <input id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primaryLight focus:border-primary block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary" required />
-                    </div>
-                
-                    </form>
-
-                <button type="button" className="text-white bg-[#0a66c2] hover:bg-[#004b7c]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center">
+                <button 
+                    type="button" 
+                    className="text-white bg-[#0a66c2] hover:bg-[#004b7c]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm pe-3 ps-3 py-2.5 text-center inline-flex items-center"
+                    onClick={LinkedInAuthorize}
+                >
                     <AiOutlineLinkedin size={25} />
-                Sign in with LinkedIn
+                    <span className="ps-1">Sign in with LinkedIn</span>
                 </button>
-
             </div>
         </div>
     )
