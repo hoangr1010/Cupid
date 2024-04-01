@@ -1,6 +1,6 @@
 import OpeningBatch from "../models/OpeningBatch.js";
 
-const createOpeningtBatch = async (req, res) => {
+export const createOpeningBatch = async (req, res) => {
   try {
     const { batch_name } = req.body;
     const newOpeningBatch = await OpeningBatch.create({ batch_name });
@@ -10,7 +10,7 @@ const createOpeningtBatch = async (req, res) => {
   }
 };
 
-const deleteOpeningBatch = async (req, res) => {
+export const deleteOpeningBatch = async (req, res) => {
   try {
     const { id } = req.params;
     const deletedOpeningBatch = await OpeningBatch.findByIdAndDelete(id);
@@ -23,7 +23,3 @@ const deleteOpeningBatch = async (req, res) => {
   }
 };
 
-module.exports = {
-  createOpeningtBatch,
-  deleteOpeningBatch
-};
