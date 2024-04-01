@@ -25,23 +25,6 @@ export const createUser = async (req, res) => {
     }
 };
 
-// get user profile -- GET
-export const getUser = async (req, res) => {
-    try {
-        const { linkedin_id, email } = req.body;
-        const user_profile = await User.findOne({ linkedin_id, email });
-        res.status(201).json({ 
-            message: 'User created successfully', 
-            data: user_profile,
-        });
-    } catch (error) {
-        res.status(400).json({ 
-            message: 'Error getting user profile', 
-            error: error.message,
-        });
-    }
-}
-
 // add user experience -- POST
 export const addExperience = async (req, res) => {
     try {
@@ -102,5 +85,3 @@ export const editExperience = async (req, res) => {
 //         });
 //     }
 // }
-
-
