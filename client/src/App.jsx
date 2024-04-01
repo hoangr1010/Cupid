@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 
 import LandingPage from './pages/LandingPage';
+import RequestBatchSelectionPage from "./pages/RequestBatchSelectionPage";
 
 function App() {
   return (
@@ -16,7 +17,10 @@ function App() {
         {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
 
-      
+      <Routes>
+        <Route path="/request-batch" element={<RequestBatchSelectionPage />} />
+        {/* <Route path="*" element={<NotFound />} /> */}
+      </Routes>
     </Router>
   );
 }
