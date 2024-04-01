@@ -14,12 +14,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        {/* <Route path="*" element={<NotFound />} /> */}
-      </Routes>
-
-      <Routes>
         <Route path="/request-batch" element={<RequestBatchSelectionPage />} />
-        {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </Router>
   );
