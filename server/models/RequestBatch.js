@@ -22,4 +22,4 @@ const requestBatchSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model("RequestBatch", requestBatchSchema, "RequestBatchs");
+export default mongoose.model("RequestBatch", requestBatchSchema, "RequestBatchs");
