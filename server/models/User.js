@@ -93,10 +93,10 @@ const UserSchema = new Schema({
         ref: "OpeningBatch"
     },
     experience: {
-        type: ExperienceSchema
+        type: [ExperienceSchema] 
     },
     education: {
-        type: EducationSchema
+        type: [EducationSchema] 
     },
     contact: {
         type: ContactSchema

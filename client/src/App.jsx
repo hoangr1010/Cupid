@@ -5,8 +5,8 @@ import {
   Route,
   // Redirect;
 } from 'react-router-dom';
-
 import LandingPage from './pages/LandingPage';
+import Redirect from './pages/LandingPage/Redirect';
 import RequestBatchSelectionPage from "./pages/RequestBatchSelectionPage";
 
 function App() {
@@ -14,12 +14,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        {/* <Route path="*" element={<NotFound />} /> */}
-      </Routes>
-
-      <Routes>
+        <Route path="/auth/redirect" element={<Redirect />} />
         <Route path="/request-batch" element={<RequestBatchSelectionPage />} />
-        {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </Router>
   );
