@@ -28,4 +28,4 @@ const openingSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("Opening", openingSchema, "Openings");
+export default mongoose.model("Opening", openingSchema, "Openings");

@@ -5,10 +5,11 @@ import {
   Route,
   // Redirect;
 } from 'react-router-dom';
-
 import LandingPage from './pages/LandingPage';
 import ProfilePage from './pages/ProfilePage';
 import OnboardPage from './pages/OnboardPage';
+import Redirect from './pages/LandingPage/Redirect';
+import RequestBatchSelectionPage from "./pages/RequestBatchSelectionPage";
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/auth/redirect" element={<Redirect />} />
+        <Route path="/request-batch" element={<RequestBatchSelectionPage />} />
         <Route path="/onboard" element={<OnboardPage />} />
       </Routes>
     </Router>
