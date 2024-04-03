@@ -1,8 +1,8 @@
 import express from "express";
 import { createRequest } from "../controllers/RequestController.js";
 
-const RequestBatchRouter = express.Router();
+const RequestRouter = express.Router();
 
-RequestBatchRouter.post("/create", createRequest);
+RequestRouter.post("/create", createRequest);
 
-export default RequestBatchRouter;
+export default RequestRouter;
