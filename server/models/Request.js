@@ -31,10 +31,15 @@ const requestSchema = new Schema({
     enum: ["waiting", "matched", "referred"],
     required: true,
   },
-  scale: {
-    type: Number,
+  created_date: {
+    type: Date,
     required: true,
-  }
+    default: Date.now,
+  },
+});
+
+requestSchema.virtual("scale").get(function() {
+  return -this.created_date.getTime() - 7*24*60*60*this.priority;
 });
 
 export default mongoose.model("Request", requestSchema, "Requests");
