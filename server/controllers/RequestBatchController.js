@@ -2,9 +2,9 @@ import RequestBatch from "../models/RequestBatch.js";
 
 export const getRequestBatch = async (req, res) => {
   try {
-    const { request_id } = req.params;
-    const batch = await RequestBatch.find({ _id: request_id }).exec();
-    res.status(201).json({ message: 'Successfully access Request Batch', data: batch });
+    const { batch_id } = req.params;
+    const batch = await RequestBatch.find({ _id: batch_id }).exec();
+    res.status(201).json({ message: 'Successfully accessed Request Batch', data: batch });
   } catch (error) {
     res.status(400).json({ message: 'Error accessing Request Batch', error: error.message });
   }
