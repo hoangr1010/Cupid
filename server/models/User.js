@@ -111,16 +111,16 @@ const UserSchema = new Schema({
     // }
 });
 
-const User = mongoose.model("User", UserSchema, "Users");
-const UserExperience =  mongoose.model("userExperience", ExperienceSchema, "userExperiences");
-const UserEducation = mongoose.model("userEducation", EducationSchema, "userEducations");
+export const User = mongoose.model("User", UserSchema, "Users");
+export const UserExperience =  mongoose.model("userExperience", ExperienceSchema, "userExperiences");
+export const UserEducation = mongoose.model("userEducation", EducationSchema, "userEducations");
 // const UserContact = mongoose.model("UserContact", ContactSchema, "UserContacts");
 
-export {
-    User,
-    UserExperience,
-    UserEducation,
-    // UserContact
-};
+// export {
+//     User,
+//     UserExperience,
+//     UserEducation,
+//     // UserContact
+// };
 
 // export default mongoose.model("User", UserSchema, "Users");
