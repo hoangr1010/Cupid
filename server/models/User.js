@@ -55,23 +55,31 @@ const EducationSchema = new Schema({
     }
 })
 
-const ContactSchema = new Schema({
-    email: {
-        type: String,
-        required: true,
-    },
-    phone_number: {
-        type: String
-    },
-    date_of_birth: {
-        type: Date,
-    },
-    location: {
-        type: String,
-    }
-})
+// const ContactSchema = new Schema({
+//     email: {
+//         type: String,
+//         required: true,
+//     },
+//     phone_number: {
+//         type: String
+//     },
+//     date_of_birth: {
+//         type: Date,
+//     },
+//     location: {
+//         type: String,
+//     }
+// })
 
 const UserSchema = new Schema({
+    linkedin_id: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
     first_name: {
         type: String,
         required: true,
@@ -98,9 +106,21 @@ const UserSchema = new Schema({
     education: {
         type: [EducationSchema] 
     },
-    contact: {
-        type: ContactSchema
-    }
+    // contact: {
+    //     type: ContactSchema
+    // }
 });
 
-export default mongoose.model("User", UserSchema, "Users");
+export const User = mongoose.model("User", UserSchema, "Users");
+export const UserExperience =  mongoose.model("userExperience", ExperienceSchema, "userExperiences");
+export const UserEducation = mongoose.model("userEducation", EducationSchema, "userEducations");
+// const UserContact = mongoose.model("UserContact", ContactSchema, "UserContacts");
+
+// export {
+//     User,
+//     UserExperience,
+//     UserEducation,
+//     // UserContact
+// };
+
+// export default mongoose.model("User", UserSchema, "Users");
