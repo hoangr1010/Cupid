@@ -30,7 +30,7 @@ export const getUserInfo = async (req, res) => {
         }
 
         res.status(200).send({
-            userInfo: userInfo,
+            userInfo: userProfile,
             exist: exist,
         })
     } catch (err) {
