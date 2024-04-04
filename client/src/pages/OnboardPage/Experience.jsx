@@ -1,4 +1,5 @@
 import React from 'react'
+import { IoMdAdd } from "react-icons/io";
 
 export function Experience() {
   return (
@@ -11,10 +12,8 @@ export function Experience() {
                 <span className='inline-flex rounded-md'>
                     <button 
                         type="button" 
-                        className="text-gray-900 bg-white border border-gray-300 
-                        focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 
-                        font-medium rounded-full text-sm px-2.5 py-2.5">
-                        Add
+                        className="filled-btn rounded-full px-2.5 py-2.5">
+                        <IoMdAdd/>
                     </button>
                 </span>
             </div>

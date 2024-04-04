@@ -2,7 +2,7 @@ import React from 'react'
 // import { Button } from 'flowbite-react';
 import { Education } from "./Education"
 import { Experience } from "./Experience"
-import { ExperienceForm } from "./ExperienceForm"
+import { Form } from "./ExperienceForm"
 
 const OnboardPage = () => {
 return (
@@ -12,7 +12,7 @@ return (
             <Experience />
         </div>
         
-        <ExperienceForm />
+        <Form />
 
     </div>
 )
