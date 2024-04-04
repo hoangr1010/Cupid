@@ -49,39 +49,3 @@ export const addExperience = async (req, res) => {
         });
     }
 }
-
-// edit user experience -- PUT
-// rethink the flow of this function
-export const editExperience = async (req, res) => {
-    try {
-        const { _id } = req.headers;
-        const data = req.body;
-
-        const newExperience = await UserExperience.findOneAndUpdate(
-            { _id },
-            data,
-        );
-
-        res.status(201).json({
-            message: 'Experience updated successfully',
-            data: newExperience,
-        });
-
-    } catch (error) {
-        res.status(400).json({
-            message: 'Error editing experience',
-            error: error.message,
-        });
-    }
-}
-
-// delete user experience -- DELETE
-// export const delExperience = async (req, res) => {
-//     try {
-//     } catch (error) {
-//         res.status(400).json({
-//             message: 'Error deleting experience',
-//             error: error.message,
-//         });
-//     }
-// }
