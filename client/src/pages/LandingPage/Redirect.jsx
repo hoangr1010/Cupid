@@ -36,10 +36,8 @@ const Redirect = () => {
 
             // redirect to page
             if (data.exist) {
-                console.log(data.exist, "on if statement");
                 navigate('/profile');
             } else {
-                console.log(data.exist, "on if statement");
                 navigate('/onboard');
             }
 
