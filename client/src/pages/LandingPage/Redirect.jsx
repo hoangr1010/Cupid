@@ -2,11 +2,15 @@ import React from 'react'
 import { LoadingIcon } from "./../../components/icons/LoadingIcon"
 import { useNavigate } from 'react-router-dom';
 
+import { useDispatch } from 'react-redux';
+import { changeUser } from '../../state';
+
 const Redirect = () => {
 
     const urlParams = new URLSearchParams(window.location.search);
     const authCode = urlParams.get('code');
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     React.useEffect(() => {
         if (authCode) {
@@ -28,6 +32,8 @@ const Redirect = () => {
             console.log(data);
             
             // put data into redux
+            dispatch(changeUser(data.userInfo));
+
             // redirect to page
             if (data.exist) {
                 console.log(data.exist, "on if statement");
