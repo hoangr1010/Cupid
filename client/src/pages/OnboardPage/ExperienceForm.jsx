@@ -68,12 +68,12 @@ export function Form() {
 
         <Modal.Body>
           <form onSubmit={handleSubmit}>
-            <div class='grid gap-4 grid-cols-2'>
+            <div className='grid gap-4 grid-cols-2'>
               {/* Position */}
-              <div class='col-span-2 sm:col-span-1'>
+              <div className='col-span-2 sm:col-span-1'>
                 <label
                   for='position'
-                  class='block mb-2 text-sm font-medium text-gray-900'
+                  className='block mb-2 text-sm font-medium text-gray-900'
                 >
                   *Position title
                 </label>
@@ -81,7 +81,7 @@ export function Form() {
                   type='text'
                   name='position'
                   id='position'
-                  class='text-field block w-full p-2.5'
+                  className='text-field block w-full p-2.5'
                   placeholder='Your position title'
                   ref={positionRef}
                   required
@@ -91,10 +91,10 @@ export function Form() {
               </div>
 
               {/* Location */}
-              <div class='col-span-2 sm:col-span-1'>
+              <div className='col-span-2 sm:col-span-1'>
                 <label
                   for='location'
-                  class='block mb-2 text-sm font-medium text-gray-900'
+                  className='block mb-2 text-sm font-medium text-gray-900'
                 >
                   Location
                 </label>
@@ -102,7 +102,7 @@ export function Form() {
                   type='text'
                   name='location'
                   id='location'
-                  class='text-field block w-full p-2.5'
+                  className='text-field block w-full p-2.5'
                   placeholder='Your location'
                   required=''
                   value={formData.location}
@@ -111,17 +111,17 @@ export function Form() {
               </div>
 
               {/* Start year */}
-              <div class='col-span-1'>
+              <div className='col-span-1'>
                 <label
                   for='startYear'
-                  class='block mb-2 text-sm font-medium text-gray-900'
+                  className='block mb-2 text-sm font-medium text-gray-900'
                 >
                   Start Year
                 </label>
                 <select
                   id='startYear'
                   name='startYear'
-                  class='text-field block w-full p-2.5'
+                  className='text-field block w-full p-2.5'
                   value={formData.startYear}
                   onChange={(e) => handleChange(e)}
                 >
@@ -134,17 +134,17 @@ export function Form() {
               </div>
 
               {/* Start month */}
-              <div class='col-span-1'>
+              <div className='col-span-1'>
                 <label
                   for='startMonth'
-                  class='block mb-2 text-sm font-medium text-gray-900'
+                  className='block mb-2 text-sm font-medium text-gray-900'
                 >
                   Month
                 </label>
                 <select
                   id='startMonth'
                   name='startMonth'
-                  class='text-field block w-full p-2.5'
+                  className='text-field block w-full p-2.5'
                   value={formData.startMonth}
                   onChange={(e) => handleChange(e)}
                 >
@@ -157,17 +157,17 @@ export function Form() {
               </div>
 
               {/* End year */}
-              <div class='col-span-1'>
+              <div className='col-span-1'>
                 <label
                   for='endYear'
-                  class='block mb-2 text-sm font-medium text-gray-900'
+                  className='block mb-2 text-sm font-medium text-gray-900'
                 >
                   End year
                 </label>
                 <select
                   id='endYear'
                   name='endYear'
-                  class='text-field block w-full p-2.5'
+                  className='text-field block w-full p-2.5'
                   value={formData.endYear}
                   onChange={(e) => handleChange(e)}
                 >
@@ -180,17 +180,17 @@ export function Form() {
               </div>
 
               {/* End month */}
-              <div class='col-span-1'>
+              <div className='col-span-1'>
                 <label
                   for='endMonth'
-                  class='block mb-2 text-sm font-medium text-gray-900'
+                  className='block mb-2 text-sm font-medium text-gray-900'
                 >
                   Month
                 </label>
                 <select
                   id='endMonth'
                   name='endMonth'
-                  class='text-field block w-full p-2.5'
+                  className='text-field block w-full p-2.5'
                   value={formData.endMonth}
                   onChange={(e) => handleChange(e)}
                 >
@@ -203,10 +203,10 @@ export function Form() {
               </div>
 
               {/* Organization */}
-              <div class='col-span-2'>
+              <div className='col-span-2'>
                 <label
                   for='organization'
-                  class='block mb-2 text-sm font-medium text-gray-900'
+                  className='block mb-2 text-sm font-medium text-gray-900'
                 >
                   *Organization
                 </label>
@@ -214,7 +214,7 @@ export function Form() {
                   type='text'
                   name='organization'
                   id='organization'
-                  class='text-field block w-full p-2.5'
+                  className='text-field block w-full p-2.5'
                   placeholder='Your Organization'
                   value={formData.organization}
                   onChange={(e) => handleChange(e)}
@@ -223,10 +223,10 @@ export function Form() {
               </div>
 
               {/* Description */}
-              <div class='col-span-2'>
+              <div className='col-span-2'>
                 <label
                   for='description'
-                  class='block mb-2 text-sm font-medium text-gray-900'
+                  className='block mb-2 text-sm font-medium text-gray-900'
                 >
                   Experience Description
                 </label>
@@ -234,14 +234,14 @@ export function Form() {
                   id='description'
                   name='description'
                   rows='4'
-                  class='text-field block w-full p-2.5'
+                  className='text-field block w-full p-2.5'
                   placeholder='Write your experience description'
                   value={formData.description}
                   onChange={(e) => handleChange(e)}
                 />
               </div>
 
-              <div class='col-span-2 sm:col-span-1'></div>
+              <div className='col-span-2 sm:col-span-1'></div>
             </div>
 
             {/* Validation check message */}
@@ -250,7 +250,7 @@ export function Form() {
             )}
 
             {/* Submit button */}
-            <button type='submit' class='filled-btn px-5 py-2.5 text-center'>
+            <button type='submit' className='filled-btn px-5 py-2.5 text-center'>
               Add new experience
             </button>
           </form>
