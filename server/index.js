@@ -6,8 +6,6 @@ import mongoose from "mongoose";
 import cors from "cors";
 import UserRouter from './routes/UserRouter.js';
 import AuthRouter from './routes/AuthRouter.js';
-import RequestBatchRouter from './routes/RequestBatchRouter.js';
-import OpeningBatchRouter from './routes/OpeningBatchRouter.js';
 
 // CONFIGURATION
 const app = express();
@@ -18,8 +16,6 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }));
 // Set up routes
 app.use("/user", UserRouter);
 app.use("/auth", AuthRouter);
-app.use("/request-batch", RequestBatchRouter);
-app.use("/opening-batch", OpeningBatchRouter);
 
 // Connect to Database
 mongoose.set("strictQuery", false);
