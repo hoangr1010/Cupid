@@ -1,7 +1,6 @@
 import React from 'react'
 import { LoadingIcon } from "./../../components/icons/LoadingIcon"
 import { useNavigate } from 'react-router-dom';
-
 import { useDispatch } from 'react-redux';
 import { changeUser } from '../../state';
 
@@ -21,7 +20,6 @@ const Redirect = () => {
     // CONTROLLERS
     async function getUserInfo(authCode) {
         try {
-
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth/linkedin/${authCode}`, {
                 method: 'GET',
                 headers: {
