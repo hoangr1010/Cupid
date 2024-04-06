@@ -1,5 +1,22 @@
 import Request from "../models/Request.js";
 
+export const getRequest = async (req, res) => {
+  try {
+    const request_id = req.params.request_id;
+    const foundRequest = await Request.find({_id: request_id});
+
+    res.status(200).json({ 
+      message: 'Request gotten successfully', 
+      data: foundRequest,
+    });
+  } catch (error) {
+    res.status(400).json({ 
+      message: 'Error getting request', 
+      error: error.message,
+    });
+  }
+};
+
 export const createRequest = async (req, res) => {
   try {
     const data = req.body;
