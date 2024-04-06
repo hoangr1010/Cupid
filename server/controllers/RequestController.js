@@ -1,6 +1,6 @@
 import Request from "../models/Request.js";
 
-export const getRequest = async (req, res) => {
+export const getOneRequest = async (req, res) => {
   try {
     const request_id = req.params.request_id;
     const foundRequest = await Request.find({_id: request_id});
