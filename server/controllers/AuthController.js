@@ -1,6 +1,5 @@
 import axios from 'axios';
-// import { User } from '../models/User';
-import { User } from "../models/User.js"
+import User from "../models/User.js"
 
 export const getUserInfo = async (req, res) => {
     const authCode = req.params.authCode;

@@ -1,40 +1,37 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 // request made by candidate
 const requestSchema = new Schema({
-  batch_id: {
+  candidate_id: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: "RequestBatch"
+    ref: "User",
   },
-  candidate_id: { 
+  opening_id: {
     type: Schema.Types.ObjectId,
-    required: true,
-    ref: "User"
-  },
-  opening_id: { 
-    type: Schema.Types.ObjectId,
-    required: function () { return this.status !== 'waiting'; },
-    ref: "Opening"
+    required: function () {
+      return this.status !== "waiting";
+    },
+    ref: "Opening",
   },
   company: {
-    type: String, 
-    required: true
+    type: String,
+    required: true,
   },
   priority: {
     type: Number,
-    required: true
+    required: true,
   },
   status: {
     type: String,
-    enum: ["waiting", "matched", "referred"],
+    enum: ["waiting", "matched", "approved", "referred"],
     required: true,
   },
   scale: {
     type: Number,
     required: true,
-  }
+  },
 });
 
 export default mongoose.model("Request", requestSchema, "Requests");
