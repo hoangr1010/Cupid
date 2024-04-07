@@ -1,7 +1,9 @@
 import express from "express";
-import { createRequest, getOneRequest } from "../controllers/RequestController.js";
+import { createRequest, getOneRequest, getRequestsWithin3Months } from "../controllers/RequestController.js";
 
 const requestRouter = express.Router();
+
+requestRouter.get("/", getRequestsWithin3Months);
 
 requestRouter.get("/:request_id", getOneRequest);
 

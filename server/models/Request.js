@@ -32,6 +32,11 @@ const requestSchema = new Schema({
     type: Number,
     required: true,
   },
+  created_date: {
+    type: Date,
+    default: Date.now,
+    required: true,
+  }
 });
 
 export default mongoose.model("Request", requestSchema, "Requests");
