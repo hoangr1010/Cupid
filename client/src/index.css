@@ -26,6 +26,10 @@ code {
   }
 
   .filled-btn {
-    @apply text-primary hover:text-primaryDark border hover:bg-primaryLight font-medium rounded-sm text-sm transition-all;
+    @apply text-white bg-primary hover:text-primaryDark hover:bg-primaryLight font-medium rounded-sm text-sm transition-all;
+  }
+
+  .navbar-button {
+    @apply rounded-2xl h-14 text-lg
   }
 }

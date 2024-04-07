@@ -9,7 +9,7 @@ const SidebarItem = ({path, text}) => {
   }
 
   return (
-    <button onClick={nav}>
+    <button onClick={nav} className="filled-btn navbar-button">
       {text}
     </button>
 
