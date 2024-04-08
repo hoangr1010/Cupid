@@ -1,8 +1,18 @@
-const SidebarItem = ({text}) => {
+import { useNavigate } from "react-router-dom";
+
+const SidebarItem = ({path, text}) => {
+
+  const navigate = useNavigate();
+
+  function nav() {
+    navigate(path);
+  }
+
   return (
-    <li className="text-lg">
-      <a href="#">{text}</a>
-    </li>
+    <button onClick={nav} className="filled-btn navbar-button">
+      {text}
+    </button>
+
   );
 }
 

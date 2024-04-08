@@ -10,6 +10,7 @@ import OnboardPage from './pages/OnboardPage';
 import Redirect from './pages/LandingPage/Redirect';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import RequestDashboardPage from './pages/RequestDashboardPage';
+import OpeningDashboardPage from './pages/OpeningDashboardPage/OpeningDashboardPage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/onboard" element={<OnboardPage />} />
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/request' element={<RequestDashboardPage />} />
+        <Route path='/opening' element={<OpeningDashboardPage />} />
       </Routes>
     </Router>
   );
