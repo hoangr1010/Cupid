@@ -45,7 +45,7 @@ export const getRequestsWithin3Months = async (req, res) => {
     const { candidate_id } = req.body;
     const requests = await Request.find({
       candidate_id: candidate_id,
-      created_date: {
+      createdAt: {
         $gte: startDate,
         $lte: endDate
       }
