@@ -43,7 +43,13 @@ export const getRequestsWithin3Months = async (req, res) => {
 
     // From this point on, it's just typical CREATE endpoint
     const { candidate_id } = req.body;
-    const requests = await Request.find({candidate_id: candidate_id, created_date: {$gte: startDate, $lte: endDate}});
+    const requests = await Request.find({
+      candidate_id: candidate_id,
+      created_date: {
+        $gte: startDate,
+        $lte: endDate
+      }
+    });
 
     res.status(200).json({ 
       message: 'Requests with 3 months gotten successfully', 
