@@ -11,6 +11,7 @@ import Redirect from './pages/LandingPage/Redirect';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import RequestDashboardPage from './pages/RequestDashboardPage';
 import OpeningDashboardPage from './pages/OpeningDashboardPage/OpeningDashboardPage';
+import RequestCreatePage from './pages/RequestCreatePage';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/request' element={<RequestDashboardPage />} />
         <Route path='/opening' element={<OpeningDashboardPage />} />
+        <Route path='/request/create' element={<RequestCreatePage />} />
       </Routes>
     </Router>
   );
