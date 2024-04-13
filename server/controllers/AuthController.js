@@ -1,4 +1,5 @@
 import axios from 'axios';
+import User from "../models/User.js"
 
 export const getUserInfo = async (req, res) => {
     const authCode = req.params.authCode;
@@ -6,10 +7,30 @@ export const getUserInfo = async (req, res) => {
     try {
         // Call LinkedIn API to get user info
         const accessToken = await getLinkedInToken(authCode)
-        const userInfo = await getUserData(accessToken)     
+        const userInfo = await getUserData(accessToken)
+        let exist = true;
+
+        
+        // Check if data exists in the database
+        let userProfile = await User.findOne({
+            email: userInfo.email,
+            linkedin_id: userInfo.sub,
+        });
+
+        // if userProfile not exist, create new userProfile
+        if (userProfile == null) {
+            exist = false;
+            userProfile = await User.create({
+                email: userInfo.email,
+                linkedin_id: userInfo.sub,
+                first_name: userInfo.given_name,
+                last_name: userInfo.family_name
+            });
+        }
 
         res.status(200).send({
-            userInfo: userInfo
+            userInfo: userProfile,
+            exist: exist,
         })
     } catch (err) {
         res.status(400).send({
@@ -20,6 +41,7 @@ export const getUserInfo = async (req, res) => {
 
 // HANDLERS
 async function getLinkedInToken(authCode) {
+    console.log(process.env.LINKEDIN_CLIENT_ID, "hellooo");
     try {
         const response = await axios.post('https://www.linkedin.com/oauth/v2/accessToken', {
             grant_type: 'authorization_code',
@@ -34,6 +56,7 @@ async function getLinkedInToken(authCode) {
         });
         return response.data.access_token;
     } catch (error) {
+        // console.log(error);
         throw new Error('Failed to get LinkedIn token');
     }
 }
