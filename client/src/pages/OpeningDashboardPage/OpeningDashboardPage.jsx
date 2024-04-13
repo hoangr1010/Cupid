@@ -1,5 +1,5 @@
-import React from 'react'
-import Sidebar from '../../components/Sidebar'
+import React from "react";
+import Sidebar from "../../components/Sidebar";
 
 function OpeningDashboardPage() {
   return (
@@ -10,7 +10,7 @@ function OpeningDashboardPage() {
         <h1 className="text-3xl">Opening Page</h1>
       </main>
     </div>
-  )
+  );
 }
 
-export default OpeningDashboardPage
+export default OpeningDashboardPage;

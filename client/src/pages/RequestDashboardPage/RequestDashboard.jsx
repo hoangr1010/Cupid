@@ -1,5 +1,3 @@
-const RequestDashboard = () => {
-  
-};
+const RequestDashboard = () => {};
 
 export default RequestDashboard;
