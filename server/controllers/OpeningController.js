@@ -1,4 +1,5 @@
 import Opening from "../models/Opening.js";
+import { getBatchPeriod } from "./date-utilities.js"
 
 export const getOneOpening = async (req, res) => {
   try {
@@ -17,6 +18,31 @@ export const getOneOpening = async (req, res) => {
   }
 };
 
+export const getAllOpenings = async (req, res) => {
+    try {
+      let [startDate, endDate] = getBatchPeriod();
+  
+      const { user_id } = req.params;
+      const openings = await Opening.find({
+        referrer_id: user_id,
+        createdAt: {
+          $gte: startDate,
+          $lte: endDate,
+        }
+      });
+  
+      res.status(200).json({ 
+        message: 'Openings with 3 months gotten successfully', 
+        data: openings,
+      });
+    } catch (error) {
+      res.status(400).json({ 
+        message: 'Error getting openings within 3 months', 
+        error: error.message,
+      });
+    }
+};
+
 export const createOpening = async (req, res) => {
   try {
     const data = req.body;
@@ -28,7 +54,7 @@ export const createOpening = async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({ 
-      message: 'Error creating request', 
+      message: 'Error creating opening', 
       error: error.message,
     });
   }
