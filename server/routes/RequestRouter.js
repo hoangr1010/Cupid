@@ -1,5 +1,9 @@
 import express from "express";
-import { createRequest, getOneRequest, getAllRequests } from "../controllers/RequestController.js";
+import {
+  createRequest,
+  getOneRequest,
+  getAllRequests,
+} from "../controllers/RequestController.js";
 
 const requestRouter = express.Router();
 
