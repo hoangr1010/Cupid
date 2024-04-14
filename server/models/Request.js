@@ -32,6 +32,8 @@ const requestSchema = new Schema({
     type: Number,
     required: true,
   },
+}, {
+  timestamps: true,
 });
 
 export default mongoose.model("Request", requestSchema, "Requests");
