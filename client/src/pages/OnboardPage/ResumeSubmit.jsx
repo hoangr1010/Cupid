@@ -17,7 +17,7 @@ export function ResumeSubmit() {
     // Make google drive link with "preview" ending
     var new_url = "";
     for (var i = 0; i < split_url.length; i++) {
-      if (i == split_url.length - 1) {
+      if (i === split_url.length - 1) {
         new_url += "preview";
       } else {
         new_url += split_url[i] + "/";
@@ -68,7 +68,11 @@ export function ResumeSubmit() {
           </button>
 
           <div className=" h-screen">
-            <iframe src={iframeSrc} className="w-full h-full bg-white"></iframe>
+            <iframe 
+              src={iframeSrc} 
+              className="w-full h-full bg-white"
+              title="Resume"
+            ></iframe>
           </div>
 
           <button
