@@ -40,7 +40,6 @@ export const getUserInfo = async (req, res) => {
 
 // HANDLERS
 async function getLinkedInToken(authCode) {
-  console.log(process.env.LINKEDIN_CLIENT_ID, "hellooo");
   try {
     const response = await axios.post(
       "https://www.linkedin.com/oauth/v2/accessToken",
