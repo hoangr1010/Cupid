@@ -26,7 +26,7 @@ code {
   }
 
   .filled-btn {
-    @apply text-white w-fit px-5 py-2.5 text-center bg-primary hover:text-primaryDark hover:bg-primaryLight font-medium rounded-md text-sm transition-all;
+    @apply text-white px-5 py-2.5 text-center bg-primary hover:text-primaryDark hover:bg-primaryLight font-medium rounded-md text-sm transition-all;
   }
 
   .navbar-button {
