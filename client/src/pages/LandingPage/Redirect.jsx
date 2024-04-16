@@ -2,7 +2,7 @@ import React from "react";
 import { LoadingIcon } from "./../../components/icons/LoadingIcon";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { changeUser } from "../../state";
+import { getUserInfo } from "./../../api/auth";
 
 const Redirect = () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -12,38 +12,9 @@ const Redirect = () => {
 
   React.useEffect(() => {
     if (authCode) {
-      getUserInfo(authCode);
+      getUserInfo(authCode, navigate, dispatch);
     }
   }, []);
-
-  // CONTROLLERS
-  async function getUserInfo(authCode) {
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/auth/linkedin/${authCode}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
-      const data = await response.json();
-      console.log(data);
-
-      // put data into redux
-      dispatch(changeUser(data.userInfo));
-
-      // redirect to page
-      if (data.exist) {
-        navigate("/profile");
-      } else {
-        navigate("/onboard");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
 
   return (
     <div className="text-center h-screen items-center">
