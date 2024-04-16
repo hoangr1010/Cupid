@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import RequestCard from "./RequestCard";
 
 const RequestDashboard = () => {
@@ -19,5 +20,8 @@ const RequestDashboard = () => {
     </main>
   );
 };
+=======
+const RequestDashboard = () => {};
+>>>>>>> main
 
 export default RequestDashboard;

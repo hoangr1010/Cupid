@@ -59,7 +59,7 @@ export function Form() {
 
       <Modal
         show={openModal}
-        size='xl'
+        size="xl"
         popup
         onClose={() => setOpenModal(false)}
         initialFocus={positionRef}
@@ -68,21 +68,21 @@ export function Form() {
 
         <Modal.Body>
           <form onSubmit={handleSubmit}>
-            <div className='grid gap-4 grid-cols-2'>
+            <div className="grid gap-4 grid-cols-2">
               {/* Position */}
-              <div className='col-span-2 sm:col-span-1'>
+              <div className="col-span-2 sm:col-span-1">
                 <label
-                  for='position'
-                  className='block mb-2 text-sm font-medium text-gray-900'
+                  for="position"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   *Position title
                 </label>
                 <input
-                  type='text'
-                  name='position'
-                  id='position'
-                  className='text-field block w-full p-2.5'
-                  placeholder='Your position title'
+                  type="text"
+                  name="position"
+                  id="position"
+                  className="text-field block w-full p-2.5"
+                  placeholder="Your position title"
                   ref={positionRef}
                   required
                   value={formData.position}
@@ -91,37 +91,37 @@ export function Form() {
               </div>
 
               {/* Location */}
-              <div className='col-span-2 sm:col-span-1'>
+              <div className="col-span-2 sm:col-span-1">
                 <label
-                  for='location'
-                  className='block mb-2 text-sm font-medium text-gray-900'
+                  for="location"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Location
                 </label>
                 <input
-                  type='text'
-                  name='location'
-                  id='location'
-                  className='text-field block w-full p-2.5'
-                  placeholder='Your location'
-                  required=''
+                  type="text"
+                  name="location"
+                  id="location"
+                  className="text-field block w-full p-2.5"
+                  placeholder="Your location"
+                  required=""
                   value={formData.location}
                   onChange={(e) => handleChange(e)}
                 />
               </div>
 
               {/* Start year */}
-              <div className='col-span-1'>
+              <div className="col-span-1">
                 <label
-                  for='startYear'
-                  className='block mb-2 text-sm font-medium text-gray-900'
+                  for="startYear"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Start Year
                 </label>
                 <select
-                  id='startYear'
-                  name='startYear'
-                  className='text-field block w-full p-2.5'
+                  id="startYear"
+                  name="startYear"
+                  className="text-field block w-full p-2.5"
                   value={formData.startYear}
                   onChange={(e) => handleChange(e)}
                 >
@@ -134,17 +134,17 @@ export function Form() {
               </div>
 
               {/* Start month */}
-              <div className='col-span-1'>
+              <div className="col-span-1">
                 <label
-                  for='startMonth'
-                  className='block mb-2 text-sm font-medium text-gray-900'
+                  for="startMonth"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Month
                 </label>
                 <select
-                  id='startMonth'
-                  name='startMonth'
-                  className='text-field block w-full p-2.5'
+                  id="startMonth"
+                  name="startMonth"
+                  className="text-field block w-full p-2.5"
                   value={formData.startMonth}
                   onChange={(e) => handleChange(e)}
                 >
@@ -157,17 +157,17 @@ export function Form() {
               </div>
 
               {/* End year */}
-              <div className='col-span-1'>
+              <div className="col-span-1">
                 <label
-                  for='endYear'
-                  className='block mb-2 text-sm font-medium text-gray-900'
+                  for="endYear"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   End year
                 </label>
                 <select
-                  id='endYear'
-                  name='endYear'
-                  className='text-field block w-full p-2.5'
+                  id="endYear"
+                  name="endYear"
+                  className="text-field block w-full p-2.5"
                   value={formData.endYear}
                   onChange={(e) => handleChange(e)}
                 >
@@ -180,17 +180,17 @@ export function Form() {
               </div>
 
               {/* End month */}
-              <div className='col-span-1'>
+              <div className="col-span-1">
                 <label
-                  for='endMonth'
-                  className='block mb-2 text-sm font-medium text-gray-900'
+                  for="endMonth"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Month
                 </label>
                 <select
-                  id='endMonth'
-                  name='endMonth'
-                  className='text-field block w-full p-2.5'
+                  id="endMonth"
+                  name="endMonth"
+                  className="text-field block w-full p-2.5"
                   value={formData.endMonth}
                   onChange={(e) => handleChange(e)}
                 >
@@ -203,19 +203,19 @@ export function Form() {
               </div>
 
               {/* Organization */}
-              <div className='col-span-2'>
+              <div className="col-span-2">
                 <label
-                  for='organization'
-                  className='block mb-2 text-sm font-medium text-gray-900'
+                  for="organization"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   *Organization
                 </label>
                 <input
-                  type='text'
-                  name='organization'
-                  id='organization'
-                  className='text-field block w-full p-2.5'
-                  placeholder='Your Organization'
+                  type="text"
+                  name="organization"
+                  id="organization"
+                  className="text-field block w-full p-2.5"
+                  placeholder="Your Organization"
                   value={formData.organization}
                   onChange={(e) => handleChange(e)}
                   required
@@ -223,34 +223,37 @@ export function Form() {
               </div>
 
               {/* Description */}
-              <div className='col-span-2'>
+              <div className="col-span-2">
                 <label
-                  for='description'
-                  className='block mb-2 text-sm font-medium text-gray-900'
+                  for="description"
+                  className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Experience Description
                 </label>
                 <textarea
-                  id='description'
-                  name='description'
-                  rows='4'
-                  className='text-field block w-full p-2.5'
-                  placeholder='Write your experience description'
+                  id="description"
+                  name="description"
+                  rows="4"
+                  className="text-field block w-full p-2.5"
+                  placeholder="Write your experience description"
                   value={formData.description}
                   onChange={(e) => handleChange(e)}
                 />
               </div>
 
-              <div className='col-span-2 sm:col-span-1'></div>
+              <div className="col-span-2 sm:col-span-1"></div>
             </div>
 
             {/* Validation check message */}
             {formError && (
-              <p className='text-red-500 text-sm pb-2'>*{formError}</p>
+              <p className="text-red-500 text-sm pb-2">*{formError}</p>
             )}
 
             {/* Submit button */}
-            <button type='submit' className='filled-btn px-5 py-2.5 text-center'>
+            <button
+              type="submit"
+              className="filled-btn px-5 py-2.5 text-center"
+            >
               Add new experience
             </button>
           </form>
