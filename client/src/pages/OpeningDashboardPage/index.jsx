@@ -15,4 +15,3 @@ const OpeningDashboardPage = () => {
 };
 
 export default OpeningDashboardPage;
-
