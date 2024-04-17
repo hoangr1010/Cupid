@@ -30,6 +30,6 @@ code {
   }
 
   .navbar-button {
-    @apply rounded-2xl h-14 text-lg
+    @apply rounded-2xl h-14 text-lg;
   }
 }

@@ -5,8 +5,8 @@ export const getBatchPeriod = () => {
   let endMonth;
 
   // Get current month and year
-  const thisMonth = (new Date()).getMonth();
-  const thisYear = (new Date()).getFullYear();
+  const thisMonth = new Date().getMonth();
+  const thisYear = new Date().getFullYear();
 
   // Get the start month and end month of the 3-month period that our current date is in (i.e. Jan 1st - 31st Mar, Apr 1st - Jun 30th, Jul 1st - Sep 30th, Oct 1st - Dec 31st)
   // For example, today is Apr 7th, so it is in the period [Apr 1st, Jun 30th]

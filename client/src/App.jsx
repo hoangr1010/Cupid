@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -12,6 +12,7 @@ import ProfilePage from './pages/ProfilePage/ProfilePage';
 import RequestDashboardPage from './pages/RequestDashboardPage';
 import OpeningDashboardPage from './pages/OpeningDashboardPage/OpeningDashboardPage';
 import CreateOpeningPage from './pages/OpeningDashboardPage/CreateOpeningPage';
+import RequestCreatePage from "./pages/RequestCreatePage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path='/request' element={<RequestDashboardPage />} />
         <Route path='/opening' element={<OpeningDashboardPage />} />
         <Route path="/opening/create" element={<CreateOpeningPage />} />
+        <Route path="/request/create" element={<RequestCreatePage />} />
       </Routes>
     </Router>
   );

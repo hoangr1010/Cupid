@@ -1,5 +1,6 @@
 import Sidebar from "../../components/Sidebar";
 import Function from "./Function"
+import React from "react";
 
 const OpeningDashboardPage = () => {
   return (
@@ -15,4 +16,3 @@ const OpeningDashboardPage = () => {
 };
 
 export default OpeningDashboardPage;
-

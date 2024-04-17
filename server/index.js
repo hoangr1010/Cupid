@@ -1,19 +1,19 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
-import UserRouter from './routes/UserRouter.js';
-import AuthRouter from './routes/AuthRouter.js';
+import UserRouter from "./routes/UserRouter.js";
+import AuthRouter from "./routes/AuthRouter.js";
 import requestRouter from "./routes/RequestRouter.js";
 import OpeningRouter from "./routes/OpeningRouter.js";
 
 // CONFIGURATION
 const app = express();
 app.use(cors());
-app.use(express.json())
-app.use(bodyParser.json({ limit: '30mb', extended: true }));
+app.use(express.json());
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
 
 // Set up routes
 app.use("/user", UserRouter);
@@ -35,5 +35,5 @@ async function main() {
 }
 
 app.listen(process.env.PORT, () => {
-    console.log(`Server running at localhost ${process.env.PORT}`);
+  console.log(`Server running at localhost ${process.env.PORT}`);
 });
