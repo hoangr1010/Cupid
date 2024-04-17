@@ -1,5 +1,4 @@
 import Opening from "../models/Opening.js";
-import { getBatchPeriod } from "./date-utilities.js"
 
 export const getOneOpening = async (req, res) => {
   try {
@@ -20,24 +19,18 @@ export const getOneOpening = async (req, res) => {
 
 export const getAllOpenings = async (req, res) => {
     try {
-      let [startDate, endDate] = getBatchPeriod();
-  
       const { user_id } = req.params;
       const openings = await Opening.find({
         referrer_id: user_id,
-        createdAt: {
-          $gte: startDate,
-          $lte: endDate,
-        }
       });
   
       res.status(200).json({ 
-        message: 'Openings with 3 months gotten successfully', 
+        message: 'Openings gotten successfully',
         data: openings,
       });
     } catch (error) {
       res.status(400).json({ 
-        message: 'Error getting openings within 3 months', 
+        message: 'Error getting openings', 
         error: error.message,
       });
     }
@@ -45,12 +38,17 @@ export const getAllOpenings = async (req, res) => {
 
 export const createOpening = async (req, res) => {
   try {
-    const data = req.body;
-    const newOpening = await Opening.create(data);
+    const { number, company } = req.body;
+    const { userid } = req.headers;
+    const openings = [];
+    for (let i = 0; i < number; i++) {
+      const newOpening = await Opening.create({ referrer_id: userid, company, status: "waiting"});
+      openings.push(newOpening);
+    }
 
     res.status(201).json({ 
       message: 'Opening created successfully', 
-      data: newOpening,
+      data: openings,
     });
   } catch (error) {
     res.status(400).json({ 
