@@ -54,11 +54,12 @@ async function getLinkedInToken(authCode) {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-      },
+      }
     );
     return response.data.access_token;
   } catch (error) {
-    // console.log(error);
+    console.log(process.env.LINKEDIN_CLIENT_ID);
+    console.log(error);
     throw new Error("Failed to get LinkedIn token");
   }
 }

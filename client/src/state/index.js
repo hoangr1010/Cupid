@@ -14,7 +14,25 @@ const authSlice = createSlice({
   },
 });
 
-export const { login, changeUser } = authSlice.actions;
+const requestInitialState = {
+  list: [],
+};
+
+const requestSlice = createSlice({
+  name: "request",
+  initialState: requestInitialState,
+  reducers: {
+    changeRequestList(state, action) {
+      state.list = action.payload;
+    },
+  },
+});
+
+export const { changeUser } = authSlice.actions;
+
+export const { changeRequestList } = requestSlice.actions;
+
 export default {
   auth: authSlice.reducer,
+  request: requestSlice.reducer,
 };
