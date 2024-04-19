@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-const SidebarItem = ({path, text}) => {
-
+const SidebarItem = ({ path, text }) => {
   const navigate = useNavigate();
 
   function nav() {
@@ -12,8 +11,7 @@ const SidebarItem = ({path, text}) => {
     <button onClick={nav} className="filled-btn navbar-button">
       {text}
     </button>
-
   );
-}
+};
 
 export default SidebarItem;

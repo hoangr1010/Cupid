@@ -1,5 +1,5 @@
-import React from 'react'
-import Sidebar from '../../components/Sidebar'
+import React from "react";
+import Sidebar from "../../components/Sidebar";
 
 function ProfilePage() {
   return (
@@ -10,7 +10,7 @@ function ProfilePage() {
         <h1 className="text-3xl">Profile Page</h1>
       </main>
     </div>
-  )
+  );
 }
 
-export default ProfilePage
+export default ProfilePage;

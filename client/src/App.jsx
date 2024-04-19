@@ -1,27 +1,53 @@
-import React from 'react';
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Navigate,
   // Redirect;
-} from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
-import OnboardPage from './pages/OnboardPage';
-import Redirect from './pages/LandingPage/Redirect';
-import ProfilePage from './pages/ProfilePage/ProfilePage';
-import RequestDashboardPage from './pages/RequestDashboardPage';
-import OpeningDashboardPage from './pages/OpeningDashboardPage/OpeningDashboardPage';
+} from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import OnboardPage from "./pages/OnboardPage";
+import Redirect from "./pages/LandingPage/Redirect";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import RequestDashboardPage from "./pages/RequestDashboardPage";
+import OpeningDashboardPage from "./pages/OpeningDashboardPage/OpeningDashboardPage";
+import RequestCreatePage from "./pages/RequestCreatePage";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import { useSelector } from "react-redux";
 
 function App() {
+  const user = useSelector((state) => state.auth.user);
+  const isAuthenticated = Boolean(user);
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/auth/redirect" element={<Redirect />} />
-        <Route path="/onboard" element={<OnboardPage />} />
-        <Route path='/profile' element={<ProfilePage />} />
-        <Route path='/request' element={<RequestDashboardPage />} />
-        <Route path='/opening' element={<OpeningDashboardPage />} />
+
+        <Route
+          path="/"
+          element={
+            // user is already login can not access to Login page
+            isAuthenticated ? <Navigate to="/profile" /> : <LandingPage />
+          }
+        />
+        <Route
+          path="/auth/redirect"
+          element={
+            // user is already login can not access to Redirect page
+            isAuthenticated ? <Navigate to="/profile" /> : 
+            <Redirect />
+          }
+        />
+
+        {/* only authenticated user can access to these routes */}
+        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
+          <Route path="/onboard" element={<OnboardPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/request" element={<RequestDashboardPage />} />
+          <Route path="/opening" element={<OpeningDashboardPage />} />
+          <Route path="/request/create" element={<RequestCreatePage />} />
+        </Route>
       </Routes>
     </Router>
   );
