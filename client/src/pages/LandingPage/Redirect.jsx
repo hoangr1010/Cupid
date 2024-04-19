@@ -1,8 +1,8 @@
 import React from "react";
-import { LoadingIcon } from "./../../components/icons/LoadingIcon";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getUserInfo } from "./../../api/auth";
+import { Spinner } from "flowbite-react";
 
 const Redirect = () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -17,12 +17,11 @@ const Redirect = () => {
   }, []);
 
   return (
-    <div className="text-center h-screen items-center">
-      <div role="status">
-        <LoadingIcon />
-        <span className="sr-only">Loading...</span>
-        <p>Loading...</p>
-      </div>
+    <div className="h-screen flex items-center justify-center">
+      <Spinner
+        className="fill-primary w-16 h-16"
+        aria-label="Loading"
+      />
     </div>
   );
 };
