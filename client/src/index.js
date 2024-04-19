@@ -17,6 +17,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import storage from "redux-persist/lib/storage";
 import { Provider } from "react-redux";
 import allReducer from "./state";
+import { Toaster } from "sonner";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -47,6 +48,7 @@ root.render(
   <PersistGate persistor={persistor}>
     <Provider store={store}>
       <App />
+      <Toaster richColors closeButton/>
     </Provider>
   </PersistGate>,
 );
