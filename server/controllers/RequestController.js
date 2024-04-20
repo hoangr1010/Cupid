@@ -19,14 +19,10 @@ export const getOneRequest = async (req, res) => {
 };
 
 export const getAllRequests = async (req, res) => {
-  const USER_ID = "660ce122f99a93e263f053b4";
-
   try {
     let [startDate, endDate] = getBatchPeriod();
 
-    // This will be how you get user_id from axios headers when it's set up
-    // const { user_id } = req.headers.userid;
-    const user_id = USER_ID;
+    const user_id = req.get("userId");
 
     const requests = await Request.find({
       candidate_id: user_id,

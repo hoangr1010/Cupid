@@ -58,8 +58,6 @@ async function getLinkedInToken(authCode) {
     );
     return response.data.access_token;
   } catch (error) {
-    console.log(process.env.LINKEDIN_CLIENT_ID);
-    console.log(error);
     throw new Error("Failed to get LinkedIn token");
   }
 }
