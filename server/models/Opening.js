@@ -24,6 +24,8 @@ const openingSchema = new Schema({
     enum: ["waiting", "matched", "approved", "referred"],
     required: true,
   },
+}, {
+  timestamps: true
 });
 
 export default mongoose.model("Opening", openingSchema, "Openings");
