@@ -1,5 +1,6 @@
 import API from ".";
 import { setUserId } from "../utils/api";
+import { Toaster, toast } from "sonner";
 
 export const getAllRequests = async (userId) => {
   try {
@@ -7,6 +8,6 @@ export const getAllRequests = async (userId) => {
     const response = await API.get(`/request`);
     return response;
   } catch (err) {
-    console.log(err);
+    toast.error(err);
   }
 };

@@ -3,6 +3,7 @@ import { getAllRequests } from "../../api/request";
 import { useEffect } from "react";
 import { changeRequestList } from "../../state";
 import { useSelector, useDispatch } from "react-redux";
+import { Toaster, toast } from "sonner";
 
 const RequestDashboard = () => {
   const user = useSelector((state) => state.auth.user);
@@ -11,8 +12,12 @@ const RequestDashboard = () => {
   const dispatch = useDispatch();
 
   const getRequests = async () => {
-    const response = await getAllRequests(user._id);
-    dispatch(changeRequestList(response.data.data));
+    try {
+      const response = await getAllRequests(user._id);
+      dispatch(changeRequestList(response.data.data));
+    } catch (err) {
+      toast.error(err);
+    }
   };
 
   useEffect(() => {
