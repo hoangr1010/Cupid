@@ -1,5 +1,5 @@
 import Sidebar from "../../components/Sidebar";
-import Function from "./Function"
+import Function from "./Function";
 
 const OpeningDashboardPage = () => {
   return (

@@ -1,18 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import AddSlotButton from "./AddSlotButton";
 import OpeningSlotCard from "./OpeningSlotCard";
 // import axios from "axios";
 
 const Function = () => {
-
   const [openings, setOpenings] = useState([]);
 
   useEffect(() => {
-    const fetchOpenings = async (userId) => { 
+    const fetchOpenings = async (userId) => {
       try {
         const response = await fetch(`/opening/getAll/${userId}`);
-        const data = await response.json(); 
-        setOpenings(data); 
+        const data = await response.json();
+        setOpenings(data);
       } catch (error) {
         console.error("Error fetching openings:", error);
       }
@@ -27,9 +26,9 @@ const Function = () => {
       <AddSlotButton to="./create" />
       <ul>
         {openings.map((opening, index) => (
-            <li key={index}>
-              {opening.company} - {opening.role}
-            </li>
+          <li key={index}>
+            {opening.company} - {opening.role}
+          </li>
         ))}
       </ul>
     </main>
