@@ -7,6 +7,7 @@ import cors from "cors";
 import UserRouter from "./routes/UserRouter.js";
 import AuthRouter from "./routes/AuthRouter.js";
 import requestRouter from "./routes/RequestRouter.js";
+import OpeningRouter from "./routes/OpeningRouter.js";
 
 // CONFIGURATION
 const app = express();
@@ -18,6 +19,7 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use("/user", UserRouter);
 app.use("/auth", AuthRouter);
 app.use("/request", requestRouter);
+app.use("/opening", OpeningRouter);
 
 // Connect to Database
 mongoose.set("strictQuery", false);

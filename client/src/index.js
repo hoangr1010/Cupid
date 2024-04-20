@@ -29,6 +29,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   auth: allReducer.auth,
+  request: allReducer.request,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
