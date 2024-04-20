@@ -22,16 +22,12 @@ export function ResumeSubmit() {
 
   return (
     <>
-      <div className="bg-background">
+      <div className="bg-background grid grid-cols-12">
         {/* Resume Submit Form */}
-        <div className="flex flex-col gap-5 px-12 py-5 max-w-4xl">
+        <div className="flex flex-col gap-5 px-12 py-5 sm:col-start-1 sm:col-span-12 md:col-start-3 md:col-span-8">
           {/* Header */}
           <div className="flex justify-around gap-5">
-            <div 
-              className="px-5 py-2.5"
-            >
-              Add your Resume
-            </div>
+            <div className="px-5 py-2.5">Add your Resume</div>
             <button
               className="filled-btn px-5 py-2.5 text-center"
               // onClick={direct to HomePage}
