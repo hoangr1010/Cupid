@@ -22,7 +22,8 @@ export const getAllRequests = async (req, res) => {
   try {
     let [startDate, endDate] = getBatchPeriod();
 
-    const { user_id } = req.params;
+    const user_id = req.get("userId");
+
     const requests = await Request.find({
       candidate_id: user_id,
       createdAt: {

@@ -26,10 +26,10 @@ code {
   }
 
   .filled-btn {
-    @apply text-white bg-primary hover:text-primaryDark hover:bg-primaryLight font-medium rounded-sm text-sm transition-all;
+    @apply text-white bg-primary hover:text-primaryDark hover:bg-primaryLight font-medium rounded-md text-sm transition-all;
   }
 
-  .navbar-button {
-    @apply rounded-2xl h-14 text-lg;
+  .sidebar-btn {
+    @apply text-grayLight font-normal hover:bg-primaryLight hover:font-bold hover:text-primary focus:text-primaryDark transition-all;
   }
 }

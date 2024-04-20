@@ -7,7 +7,7 @@ import {
 
 const requestRouter = express.Router();
 
-requestRouter.get("/getAll/:user_id", getAllRequests);
+requestRouter.get("/", getAllRequests);
 
 requestRouter.get("/:request_id", getOneRequest);
 

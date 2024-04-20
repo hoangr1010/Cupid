@@ -28,7 +28,10 @@ export const getUserInfo = async (req, res) => {
     }
 
     res.status(200).send({
-      userInfo: userProfile,
+      userInfo: {
+        pictureUrl: userInfo.picture,
+        userProfile,
+      },
       exist: exist,
     });
   } catch (err) {
@@ -54,11 +57,10 @@ async function getLinkedInToken(authCode) {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-      },
+      }
     );
     return response.data.access_token;
   } catch (error) {
-    // console.log(error);
     throw new Error("Failed to get LinkedIn token");
   }
 }
