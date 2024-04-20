@@ -1,18 +1,15 @@
 import React from "react";
 // import { Button } from 'flowbite-react';
-import { Education } from "./Education";
-import { Experience } from "./Experience";
-import { Form } from "./ExperienceForm";
+// import { Education } from "./Education";
+// import { Experience } from "./Experience";
+// import { Form } from "./ExperienceForm";
+
+import { ResumeSubmit } from "./ResumeSubmit";
 
 const OnboardPage = () => {
   return (
     <div>
-      <div className="grid gap-4 justify-center">
-        <Education />
-        <Experience />
-      </div>
-
-      <Form />
+      <ResumeSubmit />
     </div>
   );
 };

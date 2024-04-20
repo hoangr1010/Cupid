@@ -26,7 +26,7 @@ code {
   }
 
   .filled-btn {
-    @apply text-white bg-primary hover:text-primaryDark hover:bg-primaryLight font-medium rounded-sm text-sm transition-all;
+    @apply text-white bg-primary hover:text-primaryDark hover:bg-primaryLight font-medium rounded-md text-sm transition-all;
   }
 
   .sidebar-btn {
