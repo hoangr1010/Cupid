@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import SidebarItem from "./SidebarItem";
+import BottomBar from "./BottomBar";
 import { BsFillPersonFill } from "react-icons/bs";
 import { FaHandHoldingMedical } from "react-icons/fa";
 import { FaHandHolding } from "react-icons/fa";
@@ -14,8 +15,14 @@ const Sidebar = () => {
   const [isExpanded, setIsExpanded] = useState(true);
 
   return (
-    <ul className="w-fit h-screen flex flex-col bg-alt shadow-md">
-      <div className="flex-1 flex flex-col w-fit">
+    <ul
+      className={
+        isExpanded
+          ? "h-screen flex flex-col bg-alt shadow-md w-56 min-w-fit"
+          : "h-screen flex flex-col bg-alt shadow-md w-fit"
+      }
+    >
+      <div className="flex-1 flex flex-col w-full">
         <p className="ps-5 p-2 font-righteous text-primary text-4xl">
           {isExpanded ? "Cupid" : "id"}
         </p>
@@ -57,6 +64,9 @@ const Sidebar = () => {
           </button>
         </p>
       </div>
+
+      <div className="border-t border-gray-200"></div>
+      <BottomBar isExpanded={isExpanded} />
     </ul>
   );
 };
