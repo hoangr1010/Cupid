@@ -28,7 +28,10 @@ export const getUserInfo = async (req, res) => {
     }
 
     res.status(200).send({
-      userInfo: userProfile,
+      userInfo: {
+        pictureUrl: userInfo.picture,
+        userProfile,
+      },
       exist: exist,
     });
   } catch (err) {
