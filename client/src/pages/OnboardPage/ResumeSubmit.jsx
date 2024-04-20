@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { valid_url } from "../../utils/user";
 
 export function ResumeSubmit() {
   const [resumeLink, setResumeLink] = useState("");
@@ -8,27 +9,11 @@ export function ResumeSubmit() {
 
   const previewResume = (e) => {
     e.preventDefault();
-    console.log(resumeLink);
 
-    var split_url = resumeLink.split("/");
-
-    // Check if split_url is a link drive
-
-    // Make google drive link with "preview" ending
-    var new_url = "";
-    for (var i = 0; i < split_url.length; i++) {
-      if (i === split_url.length - 1) {
-        new_url += "preview";
-      } else {
-        new_url += split_url[i] + "/";
-      }
-    }
-
-    console.log(new_url);
+    var new_url = valid_url(resumeLink);
 
     setIframeSrc(new_url);
     setResumeLink(new_url);
-    console.log(iframeSrc);
   };
 
   const handleInputChange = (e) => {
@@ -42,9 +27,13 @@ export function ResumeSubmit() {
         <div className="flex flex-col gap-5 px-12 py-5 max-w-4xl">
           {/* Header */}
           <div className="flex justify-around gap-5">
-            <div className="px-5 py-2.5">Add your Resume</div>
+            <div 
+              className="px-5 py-2.5"
+            >
+              Add your Resume
+            </div>
             <button
-              className="filled-btn"
+              className="filled-btn px-5 py-2.5 text-center"
               // onClick={direct to HomePage}
             >
               Skip
@@ -63,20 +52,23 @@ export function ResumeSubmit() {
           </div>
 
           {/* display */}
-          <button onClick={previewResume} className="filled-btn w-fit">
+          <button
+            onClick={previewResume}
+            className="filled-btn w-fit px-5 py-2.5 text-center"
+          >
             Preview
           </button>
 
           <div className=" h-screen">
-            <iframe 
-              src={iframeSrc} 
+            <iframe
+              src={iframeSrc}
               className="w-full h-full bg-white"
               title="Resume"
             ></iframe>
           </div>
 
           <button
-            className="filled-btn w-fit"
+            className="filled-btn w-fit px-5 py-2.5 text-center"
             // onClick={send resumeLink to server}
           >
             Submit
