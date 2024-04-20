@@ -14,6 +14,9 @@ module.exports = {
         alt: "#ffffff",
         grayLight: "#4b5563",
       },
+      fontFamily: {
+        righteous: ["Righteous", "sans-serif"],
+      },
     },
   },
   plugins: [require("flowbite/plugin")],

@@ -14,6 +14,7 @@ import RequestDashboardPage from "./pages/RequestDashboardPage";
 import OpeningDashboardPage from "./pages/OpeningDashboardPage/OpeningDashboardPage";
 import RequestCreatePage from "./pages/RequestCreatePage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import SideBarContainer from "./components/Sidebar/RouteContainer";
 import { useSelector } from "react-redux";
 
 function App() {
@@ -23,7 +24,6 @@ function App() {
   return (
     <Router>
       <Routes>
-
         <Route
           path="/"
           element={
@@ -35,18 +35,21 @@ function App() {
           path="/auth/redirect"
           element={
             // user is already login can not access to Redirect page
-            isAuthenticated ? <Navigate to="/profile" /> : 
-            <Redirect />
+            isAuthenticated ? <Navigate to="/profile" /> : <Redirect />
           }
         />
 
         {/* only authenticated user can access to these routes */}
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
           <Route path="/onboard" element={<OnboardPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/request" element={<RequestDashboardPage />} />
-          <Route path="/opening" element={<OpeningDashboardPage />} />
           <Route path="/request/create" element={<RequestCreatePage />} />
+
+          {/* routes including sidebar */}
+          <Route element={<SideBarContainer />}>
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/request" element={<RequestDashboardPage />} />
+            <Route path="/opening" element={<OpeningDashboardPage />} />
+          </Route>
         </Route>
       </Routes>
     </Router>
