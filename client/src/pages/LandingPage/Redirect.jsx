@@ -18,10 +18,7 @@ const Redirect = () => {
 
   return (
     <div className="h-screen flex items-center justify-center">
-      <Spinner
-        className="fill-primary w-16 h-16"
-        aria-label="Loading"
-      />
+      <Spinner className="fill-primary w-16 h-16" aria-label="Loading" />
     </div>
   );
 };

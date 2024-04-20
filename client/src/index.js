@@ -48,7 +48,7 @@ root.render(
   <PersistGate persistor={persistor}>
     <Provider store={store}>
       <App />
-      <Toaster richColors closeButton/>
+      <Toaster richColors closeButton />
     </Provider>
   </PersistGate>,
 );
