@@ -17,3 +17,17 @@ export const createOpenings = async (formData, userId) => {
     console.error(err);
   }
 };
+
+export const getAllOpenings = async (userId) => {
+  if (userId) {
+    setUserId(userId);
+  }
+
+  try {
+    const response = await API.get(`/opening/getAll/${userId}`);
+    console.log(response.data.data);
+    return response;
+  } catch (err) {
+    console.error(err);
+  }
+};

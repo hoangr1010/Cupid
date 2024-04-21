@@ -1,13 +1,12 @@
-const OpeningSlotCard = (company, status) => {
+const OpeningSlotCard = ({ company, status }) => {
   return (
-    <a href="#" class="widget_container">
-      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-        {company}
-      </h5>
-      <p class="font-normal text-gray-700 dark:text-gray-400">
-        Status: {status}
-      </p>
-    </a>
+    <div className="widget_container flex justify-between">
+      <div className="flex flex-col gap-3">
+        <div className="text-2xl flex items-center gap-2">
+          {company} - {status}
+        </div>
+      </div>
+    </div>
   );
 };
 

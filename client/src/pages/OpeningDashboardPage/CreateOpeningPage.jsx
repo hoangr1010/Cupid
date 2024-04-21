@@ -28,6 +28,7 @@ const CreateOpeningPage = () => {
     }
 
     createOpenings(formData, userId);
+    toast.success("Form successfully submitted");
   };
 
   return (

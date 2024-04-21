@@ -11,7 +11,7 @@ import OnboardPage from "./pages/OnboardPage";
 import Redirect from "./pages/LandingPage/Redirect";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import RequestDashboardPage from "./pages/RequestDashboardPage";
-import OpeningDashboardPage from "./pages/OpeningDashboardPage/OpeningDashboardPage";
+import OpeningDashboardPage from "./pages/OpeningDashboardPage";
 import CreateOpeningPage from "./pages/OpeningDashboardPage/CreateOpeningPage";
 import RequestCreatePage from "./pages/RequestCreatePage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -44,6 +44,7 @@ function App() {
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
           <Route path="/onboard" element={<OnboardPage />} />
           <Route path="/request/create" element={<RequestCreatePage />} />
+          <Route path="/opening/create" element={<CreateOpeningPage />} />
 
           {/* routes including sidebar */}
           <Route element={<SideBarContainer />}>
