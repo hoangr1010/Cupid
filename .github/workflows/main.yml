@@ -15,6 +15,9 @@ jobs:
         with:
           path: server
 
+      - name: Print working directory
+        run: pwd
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
