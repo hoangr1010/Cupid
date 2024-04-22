@@ -1,0 +1,14 @@
+name: test automate
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  run_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Hello
+        run: echo "Hello, world!"
