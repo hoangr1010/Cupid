@@ -16,12 +16,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Print working directory
-        run: pwd
-      
-      - name: Print list folder
-        run: ls
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -31,4 +25,6 @@ jobs:
         run: npm ci
     
       - name: run test
-        run: npm run test            
+        run: npm run test    
+        env:
+          MOCK_DATABASE_CONNECTION_STRING: ${{ secrets.MOCK_DATABASE_CONNECTION_STRING }}
