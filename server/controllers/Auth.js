@@ -57,7 +57,7 @@ async function getLinkedInToken(authCode) {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-      }
+      },
     );
     return response.data.access_token;
   } catch (error) {
