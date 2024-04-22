@@ -3,7 +3,7 @@ import {
   createRequest,
   getOneRequest,
   getAllRequests,
-} from "../controllers/RequestController.js";
+} from "../controllers/Request.js";
 
 const requestRouter = express.Router();
 

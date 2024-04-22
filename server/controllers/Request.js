@@ -1,5 +1,5 @@
 import Request from "../models/Request.js";
-import { getBatchPeriod } from "./date-utilities.js";
+import { getBatchPeriod } from "../utils/date.js";
 
 export const getOneRequest = async (req, res) => {
   try {

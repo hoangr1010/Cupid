@@ -1,5 +1,9 @@
 import express from "express";
-import { createOpening, getOneOpening, getAllOpenings } from "../controllers/OpeningController.js";
+import {
+  createOpening,
+  getOneOpening,
+  getAllOpenings,
+} from "../controllers/Opening.js";
 
 const OpeningRouter = express.Router();
 

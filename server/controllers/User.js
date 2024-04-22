@@ -13,7 +13,7 @@ export const createUser = async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({
-      message: "Error creating course",
+      message: "Error creating user",
       error: error.message,
     });
   }
