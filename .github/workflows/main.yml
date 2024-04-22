@@ -17,6 +17,9 @@ jobs:
 
       - name: Print working directory
         run: pwd
+      
+      - name: Print list folder
+        run: ls
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -25,5 +28,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+    
       - name: run test
         run: npm run test            
