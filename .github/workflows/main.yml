@@ -8,12 +8,13 @@ on:
 jobs:
   run_test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./server
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          path: ./server
 
       - name: Print working directory
         run: pwd
