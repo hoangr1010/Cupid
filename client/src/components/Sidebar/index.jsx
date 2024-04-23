@@ -18,8 +18,8 @@ const Sidebar = () => {
     <ul
       className={
         isExpanded
-          ? "h-screen flex flex-col bg-alt shadow-md w-56 min-w-fit"
-          : "h-screen flex flex-col bg-alt shadow-md w-fit"
+          ? "fixed h-screen flex flex-col bg-alt shadow-md w-56 min-w-fit"
+          : "fixed h-screen flex flex-col bg-alt shadow-md w-fit"
       }
     >
       <div className="flex-1 flex flex-col w-full">
