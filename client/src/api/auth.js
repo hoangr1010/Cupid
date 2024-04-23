@@ -1,5 +1,6 @@
 import { changeUser } from "./../state";
 import API from "./index";
+import { toast } from "sonner"
 
 export const getUserInfo = async (authCode, navigate, dispatch) => {
   try {
@@ -17,5 +18,7 @@ export const getUserInfo = async (authCode, navigate, dispatch) => {
     }
   } catch (err) {
     console.log(err);
+    navigate("/");
+    toast.error("Failed to login. Please try again.");
   }
 };
