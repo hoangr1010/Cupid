@@ -24,14 +24,12 @@ export const getUserInfo = async (req, res) => {
         linkedin_id: userInfo.sub,
         first_name: userInfo.given_name,
         last_name: userInfo.family_name,
+        picture_url: userInfo.picture,
       });
     }
-
+    
     res.status(200).send({
-      userInfo: {
-        pictureUrl: userInfo.picture,
-        userProfile,
-      },
+      userInfo: userProfile,
       exist: exist,
     });
   } catch (err) {
