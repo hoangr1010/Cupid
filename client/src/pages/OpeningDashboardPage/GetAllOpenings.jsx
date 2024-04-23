@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getAllOpenings } from "../../api/opening";
 import OpeningSlotCard from "./OpeningSlotCard";
+import { Toaster, toast } from "sonner";
 
 const GetAllOpenings = () => {
   const userId = useSelector((state) => state.auth.user?._id) || null;
@@ -12,8 +13,10 @@ const GetAllOpenings = () => {
       try {
         const response = await getAllOpenings(userId);
         setOpenings(response.data.data);
+        toast.success("Successfully retrieved opening slots");
       } catch (err) {
         console.error(err);
+        toast.error("There exists an error when retrieving opening slots");
       }
     };
 
