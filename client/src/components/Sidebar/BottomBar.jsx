@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Avatar, Dropdown } from "flowbite-react";
-import { clearAuth } from "./../../state";
 import { logout } from "./../../utils/auth";
 
 export default function BottomBar({ isExpanded }) {

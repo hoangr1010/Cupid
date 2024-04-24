@@ -1,11 +1,23 @@
-const OpeningSlotCard = ({ company, status }) => {
+import { Badge } from "flowbite-react";
+
+const OpeningSlotCard = ({ company, status, index }) => {
+
+  const badgeColor = {
+    waiting: "warning",
+    matched: "info",
+    approved: "success",
+    default: "purple",
+  };
+  
   return (
-    <div className="widget_container flex justify-between">
-      <div className="flex flex-col gap-3">
-        <div className="text-2xl flex items-center gap-2">
-          {company} - {status}
-        </div>
-      </div>
+    <div index={index} className="widget_container flex justify-between">
+      <p className="text-xl">{company}</p>
+      <Badge
+        color={badgeColor[status]}
+        size="sm"
+      >
+        {status}
+      </Badge>
     </div>
   );
 };
