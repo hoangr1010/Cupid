@@ -11,3 +11,26 @@ export const getAllRequests = async (userId) => {
     toast.error(err);
   }
 };
+
+export const createRequest = async (formData, userId) => {
+  if (userId) {
+    setUserId(userId);
+  }
+
+  try {
+    const body = {
+      candidate_id: userId,
+      company: formData.company,
+      priority: formData.priority,
+      status: formData.status,
+      scale: formData.scale,
+    };
+
+    const response = await API.post(`/request/create`, body);
+    console.log(response.data.data);
+    toast.success("New request has been created");
+  } catch (err) {
+    console.error(err);
+    toast.error("Error creating new request");
+  }
+};

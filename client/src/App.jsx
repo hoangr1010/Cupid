@@ -13,7 +13,7 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import RequestDashboardPage from "./pages/RequestDashboardPage";
 import OpeningDashboardPage from "./pages/OpeningDashboardPage";
 import CreateOpeningPage from "./pages/OpeningDashboardPage/CreateOpeningPage";
-import RequestCreatePage from "./pages/RequestCreatePage";
+import CreateRequestPage from "./pages/RequestDashboardPage/CreateRequestPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import SideBarContainer from "./components/Sidebar/RouteContainer";
 import { useSelector } from "react-redux";
@@ -43,13 +43,13 @@ function App() {
         {/* only authenticated user can access to these routes */}
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
           <Route path="/onboard" element={<OnboardPage />} />
-          <Route path="/request/create" element={<RequestCreatePage />} />
           <Route path="/opening/create" element={<CreateOpeningPage />} />
 
           {/* routes including sidebar */}
           <Route element={<SideBarContainer />}>
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/request" element={<RequestDashboardPage />} />
+            <Route path="/request/create" element={<CreateRequestPage />} />
             <Route path="/opening" element={<OpeningDashboardPage />} />
           </Route>
         </Route>
