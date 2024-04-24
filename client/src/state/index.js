@@ -8,12 +8,8 @@ const authSlice = createSlice({
   name: "auth",
   initialState: authInitialState,
   reducers: {
-    changeUser(state, action) {
-      console.log(action.payload);
-      state.user = {
-        pictureUrl: action.payload.pictureUrl,
-        ...action.payload.userProfile,
-      };
+    updateUser(state, action) {
+      state.user = action.payload;
     },
 
     clearAuth(state, action) {
@@ -36,7 +32,7 @@ const requestSlice = createSlice({
   },
 });
 
-export const { changeUser, clearAuth } = authSlice.actions;
+export const { updateUser, clearAuth } = authSlice.actions;
 export const { changeRequestList } = requestSlice.actions;
 
 export default {

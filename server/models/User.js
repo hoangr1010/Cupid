@@ -25,6 +25,9 @@ const UserSchema = new Schema({
   resume_url: {
     type: String,
   },
+  picture_url: {
+    type: String
+  }
 });
 
 const User = mongoose.model("User", UserSchema, "Users");
