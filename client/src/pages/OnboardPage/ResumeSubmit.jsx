@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { valid_url } from "../../utils/user";
+import { sendResumeLink } from "../../api/user";
 
 export function ResumeSubmit() {
   const [resumeLink, setResumeLink] = useState("");
@@ -65,7 +66,7 @@ export function ResumeSubmit() {
 
           <button
             className="filled-btn w-fit px-5 py-2.5 text-center"
-            // onClick={send resumeLink to server}
+            onClick={() => { sendResumeLink({resumeLink}) } }
           >
             Submit
           </button>

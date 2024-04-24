@@ -18,3 +18,26 @@ export const createUser = async (req, res) => {
     });
   }
 };
+
+export const updateResume = async (req, res) => {
+  try {
+    const resume_url = req.body;
+    const userid = req.headers.userid;
+    console.log(req.headers.userid);
+    console.log(resume_url);
+
+    const user = await User.findByIdAndUpdate(userid, {resume_url: resume_url});
+
+    // return user to update redux-toolkit
+
+    res.status(201).json({
+      message: "Update resume successfully",
+    })
+
+  } catch (error) {
+    res.status(400).json({
+      message: "Error updating resume",
+      error: error.message,
+    });
+  }
+}
