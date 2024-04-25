@@ -23,15 +23,16 @@ export const updateResume = async (req, res) => {
   try {
     const resume_url = req.body;
     const userid = req.headers.userid;
-    console.log(req.headers.userid);
-    console.log(resume_url);
 
-    const user = await User.findByIdAndUpdate(userid, {resume_url: resume_url});
-
-    // return user to update redux-toolkit
+    const user = await User.findByIdAndUpdate(
+      userid, 
+      {resume_url: resume_url.resumeLink},
+      {returnOriginal: false}
+    );
 
     res.status(201).json({
       message: "Update resume successfully",
+      data: user,
     })
 
   } catch (error) {

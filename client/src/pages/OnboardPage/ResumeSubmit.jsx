@@ -2,8 +2,13 @@ import React from "react";
 import { useState } from "react";
 import { valid_url } from "../../utils/user";
 import { sendResumeLink } from "../../api/user";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 export function ResumeSubmit() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [resumeLink, setResumeLink] = useState("");
 
   const [iframeSrc, setIframeSrc] = useState("");
@@ -66,7 +71,9 @@ export function ResumeSubmit() {
 
           <button
             className="filled-btn w-fit px-5 py-2.5 text-center"
-            onClick={() => { sendResumeLink({resumeLink}) } }
+            onClick={() => {
+              sendResumeLink({ resumeLink }, dispatch, navigate);
+            }}
           >
             Submit
           </button>
