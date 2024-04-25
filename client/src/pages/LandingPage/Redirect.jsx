@@ -14,7 +14,7 @@ const Redirect = () => {
     if (authCode) {
       getUserInfo(authCode, navigate, dispatch);
     }
-  }, []);
+  }, [authCode,navigate,dispatch]);
 
   return (
     <div className="h-screen flex items-center justify-center">
