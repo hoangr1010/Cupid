@@ -1,0 +1,42 @@
+name: server deployment
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'server/**'
+
+jobs:
+  deploy_lambda:
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./server
+      
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Deploy to AWS Lambda
+        run: |
+          npx serverless config credentials --provider aws --key ${{ secrets.AWS_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }} --overwrite
+          npx serverless deploy
+        env:
+          PORT: ${{ env.PORT }}
+          DATABASE_CONNECTION_STRING: ${{ secrets.DATABASE_CONNECTION_STRING }}
+          MOCK_DATABASE_CONNECTION_STRING: ${{ secrets.MOCK_DATABASE_CONNECTION_STRING }}
+          LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
+          LINKEDIN_ClIENT_SECRET: ${{ secrets.LINKEDIN_ClIENT_SECRET }}
+          LINKEDIN_REDIRECT_URL: ${{ env.LINKEDIN_REDIRECT_URL }}
+    
+  

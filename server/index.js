@@ -10,3 +10,5 @@ connectDB(process.env.DATABASE_CONNECTION_STRING);
 app.listen(process.env.PORT, () => {
   console.log(`Server running at localhost ${process.env.PORT}`);
 });
+
+export default app;

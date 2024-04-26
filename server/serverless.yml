@@ -1,0 +1,28 @@
+service: cupid-server
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  memorySize: 2048
+  timeout: 15
+  stage: production
+  region: us-west-1
+  deploymentBucket:
+    name: cupid-server-deployment-bucket
+
+plugins:
+  - serverless-deployment-bucket
+
+functions:
+  api:
+    handler: handler.api
+    events:
+      - http: ANY /{proxy+}
+      - http: ANY /
+    environment:
+      DATABASE_CONNECTION_STRING: ${env:DATABASE_CONNECTION_STRING}
+      MOCK_DATABASE_CONNECTION_STRING: ${env:MOCK_DATABASE_CONNECTION_STRING}
+      LINKEDIN_CLIENT_ID: ${env:LINKEDIN_CLIENT_ID}
+      LINKEDIN_ClIENT_SECRET: ${env:LINKEDIN_ClIENT_SECRET}
+      LINKEDIN_REDIRECT_URL: ${env:LINKEDIN_REDIRECT_URL}
