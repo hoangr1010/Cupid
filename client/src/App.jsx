@@ -12,7 +12,8 @@ import Redirect from "./pages/LandingPage/Redirect";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import RequestDashboardPage from "./pages/RequestDashboardPage";
 import OpeningDashboardPage from "./pages/OpeningDashboardPage";
-import RequestCreatePage from "./pages/RequestCreatePage";
+import CreateOpeningPage from "./pages/OpeningDashboardPage/CreateOpeningPage";
+import CreateRequestPage from "./pages/RequestDashboardPage/CreateRequestPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import SideBarContainer from "./components/Sidebar/RouteContainer";
 import { useSelector } from "react-redux";
@@ -25,7 +26,7 @@ function App() {
 
   if (user) {
     // Set global headers include userId
-    setUserId(user._id)
+    setUserId(user._id);
   } else {
     // delete userId in global header if logout
     setUserId(null);
@@ -41,17 +42,21 @@ function App() {
             isAuthenticated ? <Navigate to="/profile" /> : <LandingPage />
           }
         />
-        <Route path="/auth/redirect" element={<Redirect isAuthenticated={isAuthenticated} />} />
+        <Route
+          path="/auth/redirect"
+          element={<Redirect isAuthenticated={isAuthenticated} />}
+        />
 
         {/* only authenticated user can access to these routes */}
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
           <Route path="/onboard" element={<OnboardPage />} />
-          <Route path="/request/create" element={<RequestCreatePage />} />
+          <Route path="/opening/create" element={<CreateOpeningPage />} />
 
           {/* routes including sidebar */}
           <Route element={<SideBarContainer />}>
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/request" element={<RequestDashboardPage />} />
+            <Route path="/request/create" element={<CreateRequestPage />} />
             <Route path="/opening" element={<OpeningDashboardPage />} />
           </Route>
         </Route>
