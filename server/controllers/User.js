@@ -8,7 +8,7 @@ export const createUser = async (req, res) => {
     const newUser = await User.create(data);
 
     res.status(201).json({
-      message: "User created successfully",
+      message: "User created successfully hehe",
       data: newUser,
     });
   } catch (error) {
