@@ -16,10 +16,20 @@ import RequestCreatePage from "./pages/RequestCreatePage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import SideBarContainer from "./components/Sidebar/RouteContainer";
 import { useSelector } from "react-redux";
+import { setUserId } from "./utils/api";
+import API from "./api";
 
 function App() {
   const user = useSelector((state) => state.auth.user);
   const isAuthenticated = Boolean(user);
+
+  if (user) {
+    // Set global headers include userId
+    setUserId(user._id)
+  } else {
+    // delete userId in global header if logout
+    setUserId(null);
+  }
 
   return (
     <Router>
