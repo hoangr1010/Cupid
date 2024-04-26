@@ -32,10 +32,12 @@ const requestSlice = createSlice({
   },
 });
 
-export const { updateUser, clearAuth } = authSlice.actions;
-export const { changeRequestList } = requestSlice.actions;
-
-export default {
+const allReducers = {
   auth: authSlice.reducer,
   request: requestSlice.reducer,
 };
+
+export const { updateUser, clearAuth } = authSlice.actions;
+export const { changeRequestList } = requestSlice.actions;
+
+export default allReducers;

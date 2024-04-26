@@ -1,6 +1,6 @@
 import API from "./index";
 import { setUserId } from "./../utils/api.js";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 
 export const createOpenings = async (formData, userId) => {
   if (userId) {
@@ -13,11 +13,12 @@ export const createOpenings = async (formData, userId) => {
       company: formData.company,
     };
     const response = await API.post(`/opening/create`, body);
-    console.log(response.data.data);
     toast.success("New openings have been created");
+    return response.data.data;
   } catch (err) {
     console.error(err);
     toast.error("New openings have not been created");
+    return
   }
 };
 

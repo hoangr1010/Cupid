@@ -46,7 +46,30 @@ export const getAllRequests = async (req, res) => {
 
 export const createRequest = async (req, res) => {
   try {
+    let [startDate, endDate] = getBatchPeriod();
+
+    const user_id = req.get("userId");
+
+    const requests = await Request.find({
+      candidate_id: user_id,
+      createdAt: {
+        $gte: startDate,
+        $lte: endDate,
+      },
+    });
+
     const data = req.body;
+
+    if (requests.length == 10) {
+      throw new Error("Maximum number of requests reached");
+    } else if (requests.length > 10) {
+      throw new Error("Somehow there are already more than 10 requests. Something wrong must have happened");
+    }
+
+    if (requests.find((request) => request.priority == data.priority)) {
+      throw new Error("Request with this priority already exists")
+    }
+
     const newRequest = await Request.create(data);
 
     res.status(201).json({

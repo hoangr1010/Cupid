@@ -17,10 +17,20 @@ import CreateRequestPage from "./pages/RequestDashboardPage/CreateRequestPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import SideBarContainer from "./components/Sidebar/RouteContainer";
 import { useSelector } from "react-redux";
+import { setUserId } from "./utils/api";
+import API from "./api";
 
 function App() {
   const user = useSelector((state) => state.auth.user);
   const isAuthenticated = Boolean(user);
+
+  if (user) {
+    // Set global headers include userId
+    setUserId(user._id);
+  } else {
+    // delete userId in global header if logout
+    setUserId(null);
+  }
 
   return (
     <Router>
@@ -34,10 +44,7 @@ function App() {
         />
         <Route
           path="/auth/redirect"
-          element={
-            // user is already login can not access to Redirect page
-            isAuthenticated ? <Navigate to="/profile" /> : <Redirect />
-          }
+          element={<Redirect isAuthenticated={isAuthenticated} />}
         />
 
         {/* only authenticated user can access to these routes */}
