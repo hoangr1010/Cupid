@@ -32,16 +32,11 @@ jobs:
           npx serverless config credentials --provider aws --key ${{ secrets.AWS_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }} --overwrite
           npx serverless deploy
         env:
-          # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           PORT: ${{ env.PORT }}
           DATABASE_CONNECTION_STRING: ${{ secrets.DATABASE_CONNECTION_STRING }}
           MOCK_DATABASE_CONNECTION_STRING: ${{ secrets.MOCK_DATABASE_CONNECTION_STRING }}
           LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
           LINKEDIN_ClIENT_SECRET: ${{ secrets.LINKEDIN_ClIENT_SECRET }}
           LINKEDIN_REDIRECT_URL: ${{ env.LINKEDIN_REDIRECT_URL }}
-        # uses: serverless/github-action@v3.2
-        # with:
-        #   args: deploy -s stage -c ./serverless.yml
     
   
