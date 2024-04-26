@@ -20,9 +20,6 @@ const createApp = () => {
   app.use("/auth", AuthRouter);
   app.use("/request", requestRouter);
   app.use("/opening", OpeningRouter);
-  app.get("/", (req, res) => {
-    res.send("Hello from the API");
-  })
 
   return app;
 };
