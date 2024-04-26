@@ -41,13 +41,7 @@ function App() {
             isAuthenticated ? <Navigate to="/profile" /> : <LandingPage />
           }
         />
-        <Route
-          path="/auth/redirect"
-          element={
-            // user is already login can not access to Redirect page
-            isAuthenticated ? <Navigate to="/profile" /> : <Redirect />
-          }
-        />
+        <Route path="/auth/redirect" element={<Redirect isAuthenticated={isAuthenticated} />} />
 
         {/* only authenticated user can access to these routes */}
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
