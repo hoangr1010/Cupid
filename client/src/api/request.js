@@ -1,6 +1,6 @@
 import API from ".";
 import { setUserId } from "../utils/api";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 
 export const getAllRequests = async (userId) => {
   try {

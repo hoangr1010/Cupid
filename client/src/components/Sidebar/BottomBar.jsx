@@ -1,11 +1,10 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Avatar, Dropdown } from "flowbite-react";
-import { clearAuth } from "./../../state";
 import { logout } from "./../../utils/auth";
 
 export default function BottomBar({ isExpanded }) {
-  const pictureUrl = useSelector((state) => state.auth.user.pictureUrl);
+  const pictureUrl = useSelector((state) => state.auth.user.picture_url);
   const firstName = useSelector((state) => state.auth.user.first_name);
   const lastName = useSelector((state) => state.auth.user.last_name);
   const dispatch = useDispatch();
