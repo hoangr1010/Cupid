@@ -30,7 +30,7 @@ jobs:
       - name: Deploy to AWS Lambda
         uses: serverless/github-action@v3.2
         with:
-          args: deploy -s stage -c path/to/file/serverless.yml
+          args: deploy -s stage -c ./serverless.yml
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
