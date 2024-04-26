@@ -38,4 +38,4 @@ jobs:
           LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
           LINKEDIN_ClIENT_SECRET: ${{ secrets.LINKEDIN_ClIENT_SECRET }}
           LINKEDIN_REDIRECT_URL: ${{ secrets.LINKEDIN_REDIRECT_URL }}
-        working-directory: ./deploy
+        working-directory: server/deploy
