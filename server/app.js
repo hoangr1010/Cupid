@@ -21,7 +21,7 @@ const createApp = () => {
   app.use("/request", requestRouter);
   app.use("/opening", OpeningRouter);
   app.get("/", (req, res) => {
-    res.send("Welcome to the API");
+    res.send("Hi, we're Cupid");
   })
 
   return app;
