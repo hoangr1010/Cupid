@@ -2,6 +2,7 @@ import RequestCard from "./RequestCard";
 import { getAllRequests } from "../../api/request";
 import { useEffect } from "react";
 import { changeRequestList } from "../../state";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Toaster, toast } from "sonner";
 
@@ -10,6 +11,7 @@ const RequestDashboard = () => {
 
   const requestList = useSelector((state) => state.request.list);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const getRequests = async () => {
     try {
@@ -25,8 +27,16 @@ const RequestDashboard = () => {
   }, []);
 
   return (
-    <main className="flex-1 flex flex-col items-center gap-12 py-7 px-12 overflow-auto">
-      <h1 className="text-3xl">Referral Request</h1>
+    <main className="flex-1 flex flex-col gap-12 py-7 px-12 overflow-auto">
+      <h1 className="text-3xl font-bold">Referral Request</h1>
+
+      <button
+        type="button"
+        onClick={() => navigate("/request/create")}
+        className="filled-btn p-2 self-center"
+      >
+        Create Referral Request
+      </button>
 
       {requestList.length > 0 ? (
         <div className="w-full grid grid-cols-2 gap-10">
