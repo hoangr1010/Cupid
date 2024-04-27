@@ -32,12 +32,31 @@ const requestSlice = createSlice({
   },
 });
 
+const openingInitialState = {
+  list: [],
+};
+
+const openingSlice = createSlice({
+  name: "opening",
+  initialState: openingInitialState,
+  reducers: {
+    changeOpeningList(state, action) {
+      state.list = action.payload;
+    },
+    pushOpeningList(state, action) {
+      state.list = [...state.list, ...action.payload];
+    },
+  },
+});
+
 const allReducers = {
   auth: authSlice.reducer,
   request: requestSlice.reducer,
+  opening: openingSlice.reducer,
 };
 
 export const { updateUser, clearAuth } = authSlice.actions;
 export const { changeRequestList } = requestSlice.actions;
+export const { changeOpeningList, pushOpeningList } = openingSlice.actions;
 
 export default allReducers;

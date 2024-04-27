@@ -29,7 +29,6 @@ export const getAllOpenings = async (userId) => {
 
   try {
     const response = await API.get(`/opening/getAll/${userId}`);
-    console.log(response.data.data);
     return response;
   } catch (err) {
     console.error(err);
