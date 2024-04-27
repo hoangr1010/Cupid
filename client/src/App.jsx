@@ -12,7 +12,6 @@ import Redirect from "./pages/LandingPage/Redirect";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import RequestDashboardPage from "./pages/RequestDashboardPage";
 import OpeningDashboardPage from "./pages/OpeningDashboardPage";
-import CreateOpeningPage from "./pages/OpeningDashboardPage/CreateOpeningPage";
 import CreateRequestPage from "./pages/RequestDashboardPage/CreateRequestPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import SideBarContainer from "./components/Sidebar/RouteContainer";
@@ -50,7 +49,6 @@ function App() {
         {/* only authenticated user can access to these routes */}
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
           <Route path="/onboard" element={<OnboardPage />} />
-          <Route path="/opening/create" element={<CreateOpeningPage />} />
 
           {/* routes including sidebar */}
           <Route element={<SideBarContainer />}>
