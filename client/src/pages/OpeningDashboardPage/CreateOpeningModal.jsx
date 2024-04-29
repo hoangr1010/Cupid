@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Modal } from "flowbite-react";
 import { createOpenings } from "../../api/opening";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { pushOpeningList } from "../../state";
 import { toast } from "sonner";
 
 const CreateOpeningModal = ({ openCreate, onClose }) => {
+  const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.user._id) || null;
+  const openingList = useSelector((state) => state.opening.list);
 
   const [formData, setFormData] = useState({
     company: "",
@@ -30,6 +33,7 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
     const response = await createOpenings(formData, userId);
     if (response) {
       console.log(response);
+      dispatch(pushOpeningList(response));
       onClose();
     }
   };
