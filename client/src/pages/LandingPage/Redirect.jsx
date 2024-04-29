@@ -10,8 +10,6 @@ const Redirect = ({ isAuthenticated }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  
-  
   React.useEffect(() => {
     if (isAuthenticated) {
       // if user is authenticated, directly redirect to profile page
@@ -22,7 +20,7 @@ const Redirect = ({ isAuthenticated }) => {
         getUserInfo(authCode, navigate, dispatch);
       } else {
         // if Params doesn't contain a authorization code
-        if(isAuthenticated) {
+        if (isAuthenticated) {
           // but user is authenticated, direct to profile page
           navigate("/profile");
         } else {
@@ -30,8 +28,8 @@ const Redirect = ({ isAuthenticated }) => {
           navigate("/");
         }
       }
-    } 
-  }, [authCode,navigate,dispatch]);
+    }
+  }, []);
 
   return (
     <div className="h-screen flex items-center justify-center">
