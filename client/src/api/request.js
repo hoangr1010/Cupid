@@ -4,7 +4,6 @@ import { toast } from "sonner";
 
 export const getAllRequests = async (userId) => {
   try {
-    setUserId(userId);
     const response = await API.get(`/request`);
     return response;
   } catch (err) {
@@ -13,10 +12,6 @@ export const getAllRequests = async (userId) => {
 };
 
 export const createRequest = async (formData, userId) => {
-  if (userId) {
-    setUserId(userId);
-  }
-
   try {
     const body = {
       candidate_id: userId,
@@ -27,8 +22,8 @@ export const createRequest = async (formData, userId) => {
     };
 
     const response = await API.post(`/request/create`, body);
-    console.log(response.data.data);
     toast.success("New request has been created");
+    return response.data.data;
   } catch (err) {
     console.error(err);
     toast.error("Error creating new request");

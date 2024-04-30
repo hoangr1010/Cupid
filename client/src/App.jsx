@@ -12,7 +12,6 @@ import Redirect from "./pages/LandingPage/Redirect";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import RequestDashboardPage from "./pages/RequestDashboardPage";
 import OpeningDashboardPage from "./pages/OpeningDashboardPage";
-import CreateRequestPage from "./pages/RequestDashboardPage/CreateRequestPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import SideBarContainer from "./components/Sidebar/RouteContainer";
 import { useSelector } from "react-redux";
@@ -54,7 +53,6 @@ function App() {
           <Route element={<SideBarContainer />}>
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/request" element={<RequestDashboardPage />} />
-            <Route path="/request/create" element={<CreateRequestPage />} />
             <Route path="/opening" element={<OpeningDashboardPage />} />
           </Route>
         </Route>

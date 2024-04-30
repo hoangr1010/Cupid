@@ -29,6 +29,9 @@ const requestSlice = createSlice({
     changeRequestList(state, action) {
       state.list = action.payload;
     },
+    pushRequestList(state, action) {
+      state.list = [...state.list, action.payload];
+    },
   },
 });
 
@@ -56,7 +59,7 @@ const allReducers = {
 };
 
 export const { updateUser, clearAuth } = authSlice.actions;
-export const { changeRequestList } = requestSlice.actions;
+export const { changeRequestList, pushRequestList } = requestSlice.actions;
 export const { changeOpeningList, pushOpeningList } = openingSlice.actions;
 
 export default allReducers;
