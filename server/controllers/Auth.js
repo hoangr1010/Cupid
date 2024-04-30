@@ -49,7 +49,7 @@ async function getLinkedInToken(authCode) {
         code: authCode,
         client_id: process.env.LINKEDIN_CLIENT_ID,
         client_secret: process.env.LINKEDIN_ClIENT_SECRET,
-        redirect_uri: "http://localhost:3000/auth/redirect",
+        redirect_uri: process.env.LINKEDIN_REDIRECT_URL,
       },
       {
         headers: {
