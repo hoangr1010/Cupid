@@ -4,7 +4,6 @@ import {
   Routes,
   Route,
   Navigate,
-  // Redirect;
 } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import OnboardPage from "./pages/OnboardPage";
@@ -21,8 +20,6 @@ import { setUserId } from "./utils/api";
 function App() {
   const user = useSelector((state) => state.auth.user);
   const isAuthenticated = Boolean(user);
-
-  console.log(process.env.REACT_APP_LINKEDIN_CLIENT_ID)
 
   if (user) {
     // Set global headers include userId
