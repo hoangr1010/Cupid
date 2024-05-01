@@ -6,7 +6,7 @@ const OpeningSlotCard = ({ company, status, index }) => {
     waiting: "warning",
     matched: "info",
     approved: "success",
-    default: "purple",
+    referred: "purple",
   };
   
   return (
