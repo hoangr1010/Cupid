@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { previewUser } from "./../constant/auth";
 
 const authInitialState = {
-  user: null,
+  user: process.env.REACT_APP_VERCEL_PREVIEW ? previewUser : null,
 };
 
 const authSlice = createSlice({
@@ -18,6 +19,8 @@ const authSlice = createSlice({
   },
 });
 
+console.log(authSlice)
+
 const requestInitialState = {
   list: [],
 };
@@ -33,7 +36,7 @@ const requestSlice = createSlice({
 });
 
 const openingInitialState = {
-  list: [],
+  list: []
 };
 
 const openingSlice = createSlice({
