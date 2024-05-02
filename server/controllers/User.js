@@ -38,7 +38,7 @@ export const updateResume = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       message: "Error updating resume",
-      error: error.message,
+      error: error.message
     });
   }
 }

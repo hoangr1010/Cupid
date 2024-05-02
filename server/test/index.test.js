@@ -1,6 +1,7 @@
 import connectDB from "../utils/connectDB.js";
 import mongoose from "mongoose";
 import UserTest from "./User/index.js";
+import RequestTest from "./Request/index.js";
 
 describe("GENERAL TEST", () => {
   beforeAll(async () => {
@@ -14,6 +15,7 @@ describe("GENERAL TEST", () => {
   });
 
   describe("ENDPOINT TESTING", () => {
-    UserTest();
+    // UserTest();
+    RequestTest();
   });
 });

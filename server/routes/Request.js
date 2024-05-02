@@ -4,13 +4,14 @@ import {
   getOneRequest,
   getAllRequests,
 } from "../controllers/Request.js";
+import { checkUserId } from "./../middleware/Request.js";
 
 const requestRouter = express.Router();
 
-requestRouter.get("/", getAllRequests);
+requestRouter.get("/", checkUserId, getAllRequests);
 
 requestRouter.get("/:request_id", getOneRequest);
 
-requestRouter.post("/create", createRequest);
+requestRouter.post("/create", checkUserId, createRequest);
 
 export default requestRouter;

@@ -1,3 +1,4 @@
+import { request } from "express";
 import Request from "../models/Request.js";
 import { getBatchPeriod } from "../utils/date.js";
 
@@ -60,14 +61,21 @@ export const createRequest = async (req, res) => {
 
     const data = req.body;
 
+    // check if the maximum number of requests has been reached
     if (requests.length == 10) {
       throw new Error("Maximum number of requests reached");
     } else if (requests.length > 10) {
       throw new Error("Somehow there are already more than 10 requests. Something wrong must have happened");
     }
 
+    // check if the request with the priority exists
     if (requests.find((request) => request.priority == data.priority)) {
       throw new Error("Request with this priority already exists")
+    }
+
+    // check if the company exists
+    if (requests.find((request) => request.company == data.company)) {
+      throw new Error("Request with this company already exists")
     }
 
     const newRequest = await Request.create(data);
