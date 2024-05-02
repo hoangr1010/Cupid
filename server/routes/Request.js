@@ -4,7 +4,7 @@ import {
   getOneRequest,
   getAllRequests,
 } from "../controllers/Request.js";
-import { checkUserId } from "./../middleware/Request.js";
+import { checkUserId } from "../middleware/User.js";
 
 const requestRouter = express.Router();
 
