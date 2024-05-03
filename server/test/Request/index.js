@@ -1,5 +1,5 @@
 import getOneRequestTest from "./getOneRequest";
-import getAllRequestsTest from "./getAllRequests";
+import getAllRequestsTest from "./getAllRequest";
 import createRequestTest from "./createRequest";
 
 export default RequestTest = () => {

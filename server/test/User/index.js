@@ -4,6 +4,6 @@ import updateResumeTest from "./updateResume";
 export default UserTest = () => {
   describe("User", () => {
     createUserTest();
-    // updateResumeTest();
+    updateResumeTest();
   });
 };

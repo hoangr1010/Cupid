@@ -7,6 +7,10 @@ export const getOneRequest = async (req, res) => {
     const request_id = req.params.request_id;
     const foundRequest = await Request.find({ _id: request_id });
 
+    if (foundRequest.length < 1) {
+      throw new Error("Request not found");
+    }
+
     res.status(200).json({
       message: "Request gotten successfully",
       data: foundRequest,

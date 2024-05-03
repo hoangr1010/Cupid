@@ -1,8 +1,8 @@
 import request from "supertest";
 import createApp from "../../app";
 import mongoose from "mongoose";
-import Request from "./../../models/Request";
-import User from "./../../models/User";
+import Request from "../../models/Request";
+import User from "../../models/User";
 
 export default getAllRequestsTest = () => {
   describe("Get All Request in 3 months Test", () => {
