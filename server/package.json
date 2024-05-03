@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon index.js",
     "seeds": "node seeds/index.js",
-    "test": "jest"
+    "test": "jest",
+    "algo": "node matching-algorithm/index.js"
   },
   "keywords": [],
   "author": "",

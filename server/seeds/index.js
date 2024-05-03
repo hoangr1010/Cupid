@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config(); // change this to {./../.env} if run in seeds folder
-import Opening from "../models/Opening.js";
-import Request from "../models/Request.js";
-import connectDB from "./../utils/connectDB.js";
+import Opening from "../src/models/Opening.js";
+import Request from "../src/models/Request.js";
+import connectDB from "./../src/utils/connectDB.js";
 import {
   userOpening,
   testRequest,
