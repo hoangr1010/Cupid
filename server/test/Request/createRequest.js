@@ -1,8 +1,8 @@
 import request from "supertest";
 import createApp from "../../app";
 import mongoose from "mongoose";
-import Request from "./../../models/Request";
-import User from "./../../models/User";
+import Request from "./../../src/models/Request";
+import User from "./../../src/models/User";
 
 export default createRequestTest = () => {
   describe("Create Request", () => {

@@ -1,4 +1,4 @@
-import connectDB from "../utils/connectDB.js";
+import connectDB from "../src/utils/connectDB.js";
 import mongoose from "mongoose";
 import UserTest from "./User/index.js";
 import RequestTest from "./Request/index.js";

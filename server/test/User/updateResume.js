@@ -1,7 +1,7 @@
 import request from "supertest";
 import createApp from "../../app";
 import mongoose from "mongoose";
-import User from "./../../models/User";
+import User from "./../../src/models/User";
 
 export default updateResumeTest = () => {
   describe("Update resume", () => {

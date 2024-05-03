@@ -1,7 +1,7 @@
 import request from "supertest";
 import createApp from "../../app";
 import mongoose from "mongoose";
-import Request from "./../../models/Request";
+import Request from "./../../src/models/Request";
 
 export default getOneRequestTest = () => {
   describe("Get One Request Test", () => {

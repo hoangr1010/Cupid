@@ -1,8 +1,7 @@
 import request from "supertest";
-import createApp from "../../app";
+import createApp from "./../../app";
 import mongoose from "mongoose";
-import Opening from "./../../models/Opening";
-import User from "./../../models/User";
+import User from "./../../src/models/User";
 
 export default createOpeningTest = () => {
   describe("create", () => {
