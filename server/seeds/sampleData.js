@@ -94,7 +94,6 @@ const testUserRequest = [
   },
   {
     candidate_id: TEST_USER_ID,
-    opening_id: openingID5,
     company: "Meta",
     priority: 5,
     status: "waiting",
