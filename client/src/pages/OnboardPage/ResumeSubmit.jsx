@@ -36,7 +36,9 @@ export function ResumeSubmit() {
             <div className="px-5 py-2.5">Add your Resume</div>
             <button
               className="filled-btn px-5 py-2.5 text-center"
-              // onClick={direct to HomePage}
+              onClick={() => {
+                navigate("/profile");
+              }}
             >
               Skip
             </button>
