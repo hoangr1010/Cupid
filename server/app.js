@@ -3,10 +3,10 @@ dotenv.config();
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import UserRouter from "./routes/User.js";
-import AuthRouter from "./routes/Auth.js";
-import requestRouter from "./routes/Request.js";
-import OpeningRouter from "./routes/Opening.js";
+import UserRouter from "./src/routes/User.js";
+import AuthRouter from "./src/routes/Auth.js";
+import requestRouter from "./src/routes/Request.js";
+import OpeningRouter from "./src/routes/Opening.js";
 
 const createApp = () => {
   // CONFIGURATION

@@ -23,12 +23,8 @@ export const createOpenings = async (formData, userId) => {
 };
 
 export const getAllOpenings = async (userId) => {
-  if (userId) {
-    setUserId(userId);
-  }
-
   try {
-    const response = await API.get(`/opening/getAll/${userId}`);
+    const response = await API.get(`/opening/getAll`);
     return response;
   } catch (err) {
     console.error(err);
