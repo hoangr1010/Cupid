@@ -31,7 +31,6 @@ const requestSchema = new Schema(
     },
     scale: {
       type: Number,
-      required: true,
     },
   },
   {

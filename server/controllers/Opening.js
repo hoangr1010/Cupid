@@ -5,6 +5,10 @@ export const getOneOpening = async (req, res) => {
     const opening_id = req.params.opening_id;
     const foundOpening = await Opening.find({ _id: opening_id });
 
+    if (foundOpening.length < 1) {
+      throw new Error("Opening not found");
+    }
+
     res.status(200).json({
       message: "Opening gotten successfully",
       data: foundOpening,
@@ -19,7 +23,7 @@ export const getOneOpening = async (req, res) => {
 
 export const getAllOpenings = async (req, res) => {
   try {
-    const { user_id } = req.params;
+    const user_id = req.get("userid");
     const openings = await Opening.find({
       referrer_id: user_id,
     });
@@ -42,7 +46,7 @@ export const createOpening = async (req, res) => {
     const { userid } = req.headers;
     const openings = [];
 
-    if (number < 1) {
+    if (number < 1 || !number) {
       throw new Error("Invalid request number");
     }
 

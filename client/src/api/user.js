@@ -8,5 +8,4 @@ export const sendResumeLink = async (resumeLink, dispatch, navigate) => {
   await dispatch(updateUser(response.data.data));
 
   navigate("/profile");
-  console.log(response);
 };
