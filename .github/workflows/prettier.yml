@@ -12,14 +12,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          # Make sure the actual branch is checked out when running on pull requests
           ref: ${{ github.head_ref }}
-          # This is important to fetch the changes to the previous commit
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Prettify code
-        uses: creyD/prettier_action@v4.3
+        run: |
+          npm install
+          npx prettier --write .
+        
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          # This part is also where you can pass other options, for example:
-          prettier_options: --write **/*.{js,md,json}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: Prettier formatting 
+          commit_user_name: github-actions[bot]
+          commit_user_email: github-actions[bot]@users.noreply.github.com
+          commit_author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
