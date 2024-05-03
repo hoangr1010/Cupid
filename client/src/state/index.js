@@ -19,7 +19,7 @@ const authSlice = createSlice({
   },
 });
 
-console.log(authSlice)
+console.log(authSlice);
 
 const requestInitialState = {
   list: [],
@@ -36,7 +36,7 @@ const requestSlice = createSlice({
 });
 
 const openingInitialState = {
-  list: []
+  list: [],
 };
 
 const openingSlice = createSlice({

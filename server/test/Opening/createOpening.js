@@ -33,7 +33,7 @@ export default createOpeningTest = () => {
       expect(response.body.message).toBe("Opening created successfully");
       expect(response.body.data.length).toBe(3);
     });
-    
+
     // Test that when userid is not provided
     it("Missing user", async () => {
       const response = await request(app)
@@ -63,7 +63,7 @@ export default createOpeningTest = () => {
         .post(`/opening/create`)
         .set("userid", userId)
         .send({ company: "Google" });
-      
+
       expect(response.status).toBe(400);
       expect(response.body.error).toBe("Invalid request number");
     });
@@ -87,7 +87,9 @@ export default createOpeningTest = () => {
         .send({ number: 3 });
 
       expect(response.status).toBe(400);
-      expect(response.body.error).toBe("Opening validation failed: company: Path `company` is required.");
+      expect(response.body.error).toBe(
+        "Opening validation failed: company: Path `company` is required.",
+      );
     });
   });
 };

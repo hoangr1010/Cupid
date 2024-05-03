@@ -48,7 +48,6 @@ if (!process.argv[2]) {
 if (process.argv[2] === "-d") {
   deleteSampleData();
 } else if (process.argv[2] === "-w") {
-  
   // Exit if no user id is provided
   if (!process.argv[3]) {
     console.log("Please specify your user id");

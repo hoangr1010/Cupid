@@ -27,7 +27,7 @@ export const getUserInfo = async (req, res) => {
         picture_url: userInfo.picture,
       });
     }
-    
+
     res.status(200).send({
       userInfo: userProfile,
       exist: exist,

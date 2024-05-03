@@ -38,7 +38,9 @@ export default getOneOpeningTest = () => {
 
     // opening not found: Test that when an openingid that doesn't exist in the database is provided, the function returns a 400 status code with an appropriate error message.
     it("should return an error when opening is not found", async () => {
-      const opening_id = new mongoose.Types.ObjectId("663009c09004ced3b81eeaf1");
+      const opening_id = new mongoose.Types.ObjectId(
+        "663009c09004ced3b81eeaf1",
+      );
       const response = await request(app).get(`/opening/${opening_id}`);
 
       expect(response.status).toBe(400);
@@ -57,7 +59,7 @@ export default getOneOpeningTest = () => {
     // missing opening id: Test that when an invalid openingid
     it("should return an error when opening id is missing", async () => {
       const response = await request(app).get("/opening/");
-      
+
       expect(response.status).toBe(404);
     });
   });

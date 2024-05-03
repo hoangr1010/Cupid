@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 import Request from "./../../models/Request";
 
 export default getOneRequestTest = () => {
-
   describe("Get One Request Test", () => {
     let app;
 
@@ -25,7 +24,7 @@ export default getOneRequestTest = () => {
         status: "waiting",
         scale: 2,
       };
-  
+
       // Create a new request using the Request model
       const createdRequest = await Request.create(requestData);
       // Make a GET request to retrieve the created request
@@ -35,7 +34,6 @@ export default getOneRequestTest = () => {
       expect(response.status).toBe(200);
       // Assert that the response body matches the created request data
       expect(response.body.data[0]._id).toBe(createdRequest._id.toString());
-      
     });
 
     // Request Not Found: Test that when a requestid that doesn't exist in the database is provided, the function returns a 400 status code with an appropriate error message.

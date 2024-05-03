@@ -46,7 +46,7 @@ export default updateResumeTest = () => {
       expect(response.status).toBe(400);
       expect(response.body.message).toBe("User not found");
     });
-    
+
     // Missing User ID: Test that when no userid is provided, the function returns a 400 status code with an appropriate error message.
     it("Missing User ID", async () => {
       const resumeLink = "https://example.com/test3";
@@ -56,9 +56,11 @@ export default updateResumeTest = () => {
         .send({ resumeLink });
 
       expect(response.status).toBe(400);
-      expect(response.body.message).toBe("No userId specified in the request header");
+      expect(response.body.message).toBe(
+        "No userId specified in the request header",
+      );
     });
-    
+
     // Missing Resume Link: Test that when no resumeLink is provided, the function returns a 400 status code with an appropriate error message.
     it("Missing Resume Link", async () => {
       const response = await request(app)
@@ -66,7 +68,9 @@ export default updateResumeTest = () => {
         .set("userid", userId);
 
       expect(response.status).toBe(400);
-      expect(response.body.error).toBe("No resumeLink specified in the request body");
+      expect(response.body.error).toBe(
+        "No resumeLink specified in the request body",
+      );
     });
   });
 };
