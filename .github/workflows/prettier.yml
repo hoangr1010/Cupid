@@ -16,10 +16,17 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Prettify code
+      - name: Prettify code client
         run: |
           npm install
           npx prettier --write .
+        working-directory: client
+      
+      - name: Prettier code server
+        run: |
+          npm install
+          npx prettier --write .
+        working-directory: server
         
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v4
