@@ -1,12 +1,8 @@
-name: Prettier
+name: Prettier Formatting
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   prettier:
@@ -16,26 +12,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          # Make sure the actual branch is checked out when running on pull requests
+          ref: ${{ github.head_ref }}
+          # This is important to fetch the changes to the previous commit
+          fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.3
         with:
-          node-version: 14
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: check code quality
-        run: npx prettier --check .
-
-      - name: Run Prettier
-        run: npx prettier --write .
-
-      - name: Commit changes
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add -A
-          git commit -m "Format code with Prettier" || echo "No changes to commit"
-          git push origin || echo "No changes to push"
+          # This part is also where you can pass other options, for example:
+          prettier_options: --write **/*.{js,md,json}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
