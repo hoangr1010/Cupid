@@ -1,6 +1,6 @@
 import { updateUser } from "./../state";
 import API from "./index";
-import { toast } from "sonner"
+import { toast } from "sonner";
 
 export const getUserInfo = async (authCode, navigate, dispatch) => {
   try {

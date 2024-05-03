@@ -69,17 +69,19 @@ export const createRequest = async (req, res) => {
     if (requests.length == 10) {
       throw new Error("Maximum number of requests reached");
     } else if (requests.length > 10) {
-      throw new Error("Somehow there are already more than 10 requests. Something wrong must have happened");
+      throw new Error(
+        "Somehow there are already more than 10 requests. Something wrong must have happened",
+      );
     }
 
     // check if the request with the priority exists
     if (requests.find((request) => request.priority == data.priority)) {
-      throw new Error("Request with this priority already exists")
+      throw new Error("Request with this priority already exists");
     }
 
     // check if the company exists
     if (requests.find((request) => request.company == data.company)) {
-      throw new Error("Request with this company already exists")
+      throw new Error("Request with this company already exists");
     }
 
     const newRequest = await Request.create(data);

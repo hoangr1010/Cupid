@@ -135,7 +135,9 @@ export default createRequestTest = () => {
         });
 
       expect(response.statusCode).toBe(400);
-      expect(response.body.error).toBe("Request with this priority already exists");
+      expect(response.body.error).toBe(
+        "Request with this priority already exists",
+      );
     });
 
     // Request with this company already exists
@@ -151,11 +153,13 @@ export default createRequestTest = () => {
         .send({
           ...request1,
           candidate_id: userId,
-          priority: 2
+          priority: 2,
         });
 
       expect(response.statusCode).toBe(400);
-      expect(response.body.error).toBe("Request with this company already exists");
+      expect(response.body.error).toBe(
+        "Request with this company already exists",
+      );
     });
   });
 };

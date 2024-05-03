@@ -18,7 +18,7 @@ export const createOpenings = async (formData, userId) => {
   } catch (err) {
     console.error(err);
     toast.error("New openings have not been created");
-    return
+    return;
   }
 };
 

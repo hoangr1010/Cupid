@@ -22,7 +22,7 @@ const createApp = () => {
   app.use("/opening", OpeningRouter);
   app.get("/", (req, res) => {
     res.send("Hi, we're Cupid");
-  })
+  });
 
   return app;
 };
