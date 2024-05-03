@@ -23,7 +23,6 @@ export const createOpenings = async (formData, userId) => {
 };
 
 export const getAllOpenings = async (userId) => {
-
   try {
     const response = await API.get(`/opening/getAll`);
     return response;
