@@ -11,25 +11,35 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  monospace;
 }
 
 @layer components {
   .widget_container {
     @apply border p-6 rounded-lg shadow-md bg-alt;
   }
-
+  
   .text-field {
     @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-primary focus:border-primary;
   }
-
+  
   .filled-btn {
     @apply text-white bg-primary hover:text-primaryDark hover:bg-primaryLight font-medium rounded-md text-sm transition-all;
   }
-
+  
   .sidebar-btn {
     @apply text-grayLight font-normal hover:bg-primaryLight hover:font-bold hover:text-primary focus:text-primaryDark transition-all;
   }
+}
+
+/* Custom react select style */
+input[id="react-select-2-input"],
+input[id="react-select-3-input"],
+input[id="react-select-4-input"],
+input[id="react-select-5-input"],
+input[id="react-select-6-input"] {
+  --tw-ring-shadow: none !important;
 }
