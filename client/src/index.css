@@ -33,3 +33,12 @@ code {
     @apply text-grayLight font-normal hover:bg-primaryLight hover:font-bold hover:text-primary focus:text-primaryDark transition-all;
   }
 }
+
+/* Custom react select style */
+input[id="react-select-2-input"],
+input[id="react-select-3-input"],
+input[id="react-select-4-input"],
+input[id="react-select-5-input"],
+input[id="react-select-6-input"] {
+  --tw-ring-shadow: none !important;
+}

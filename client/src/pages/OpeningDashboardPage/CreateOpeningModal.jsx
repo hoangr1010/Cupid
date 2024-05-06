@@ -4,35 +4,29 @@ import { createOpenings } from "../../api/opening";
 import { useSelector, useDispatch } from "react-redux";
 import { pushOpeningList } from "../../state";
 import { toast } from "sonner";
+import { CompanyDropDown } from "./../../components/CompanyDropDown";
 
 const CreateOpeningModal = ({ openCreate, onClose }) => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.user._id) || null;
-  const openingList = useSelector((state) => state.opening.list);
+  const [company, setCompany] = useState(null);
+  const [number, setNumber] = useState(0);
 
-  const [formData, setFormData] = useState({
-    company: "",
-    number: 0,
-  });
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
+  const handleNumberChange = (e) => {
+    setNumber(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.number < 1) {
+    if (number < 1) {
       toast.error("Please enter a number greater than 0");
       return;
     }
 
+    const formData = { company: company.value, number };
     const response = await createOpenings(formData, userId);
     if (response) {
-      console.log(response);
       dispatch(pushOpeningList(response));
       onClose();
     }
@@ -44,28 +38,20 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
         <Modal.Header />
         <Modal.Body>
           <form onSubmit={handleSubmit}>
-            <div class="mb-6">
+            <div className="mb-6">
               <label
-                for="company"
-                class="block mb-2 text-sm font-medium text-gray-900"
+                htmlFor="company"
+                className="block mb-2 text-sm font-medium text-gray-900"
               >
                 Company
               </label>
-              <input
-                type="text"
-                id="company"
-                placeholder="Google"
-                value={formData.company}
-                onChange={handleChange}
-                className="text-field block w-full p-2.5"
-                required
-              />
+              <CompanyDropDown comapny={company} setCompany={setCompany} />
             </div>
 
-            <div class="mb-6">
+            <div className="mb-6">
               <label
-                for="number"
-                class="block mb-2 text-sm font-medium text-gray-900"
+                htmlFor="number"
+                className="block mb-2 text-sm font-medium text-gray-900"
               >
                 Number of Slots
               </label>
@@ -73,8 +59,8 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
                 type="number"
                 id="number"
                 placeholder="20"
-                value={formData.number}
-                onChange={handleChange}
+                value={number}
+                onChange={handleNumberChange}
                 className="text-field block w-full p-2.5"
                 required
               />

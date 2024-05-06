@@ -19,8 +19,6 @@ const authSlice = createSlice({
   },
 });
 
-console.log(authSlice);
-
 const requestInitialState = {
   list: [],
 };
