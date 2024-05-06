@@ -112,7 +112,6 @@ export const applyMatchingChanges = async (matchList) => {
         { _id: pair[1] },
         { request_id: pair[0], status: "matched" },
       );
-      
     } catch (error) {
       console.log("Error updating opening");
       console.log(error.message);
