@@ -2,7 +2,10 @@ import Company from "./../models/Company.js";
 
 export const getCompany = async (req, res) => {
   try {
-    const { value, page = 1, limit = 25 } = req.query;
+    const { value } = req.query;
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 25;
+
     const options = {
       skip: (page - 1) * limit,
       limit: limit,
@@ -23,21 +26,15 @@ export const getCompany = async (req, res) => {
     const currentPage = parseInt(page);
     const size = companies.length;
 
-    if (currentPage > totalPages) {
-      throw new Error("Page number is greater than total pages");
-    }
-
     res.status(200).json({
       totalDocuments,
-      data: companies,
+      items: companies,
       totalPages,
       currentPage,
       size,
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Error getting company",
-      error: error.message,
-    });
+    console.log(error)
+    res.status(400).json(error);
   }
 };
