@@ -14,7 +14,7 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
 
   const handleNumberChange = (e) => {
     setNumber(e.target.value);
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
       return;
     }
 
-    const formData = {company: company.value, number}
+    const formData = { company: company.value, number };
     const response = await createOpenings(formData, userId);
     if (response) {
       dispatch(pushOpeningList(response));

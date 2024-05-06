@@ -6,7 +6,6 @@ import tailwindConfig from "./../../tailwind";
 import resolveConfig from "tailwindcss/resolveConfig";
 
 export const CompanyDropDown = ({ company, setCompany }) => {
-
   // get tailwind Theme
   const config = resolveConfig(tailwindConfig);
   const { accentColor } = config.theme;

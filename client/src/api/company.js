@@ -7,6 +7,6 @@ export const getCompany = async (string) => {
     return response.data.items;
   } catch (err) {
     console.error(err);
-    toast.error("Error getting company")
+    toast.error("Error getting company");
   }
-}
+};

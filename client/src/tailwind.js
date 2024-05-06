@@ -1,4 +1,3 @@
-
 const tailwindConfig = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -20,6 +19,6 @@ const tailwindConfig = {
     },
   },
   plugins: [require("flowbite/plugin")],
-}
+};
 
 export default tailwindConfig;

@@ -10,7 +10,7 @@ const companySchema = new mongoose.Schema({
     required: true,
   },
   logo: {
-    type: String
+    type: String,
   },
   description: String,
   short_description: String,
@@ -20,7 +20,7 @@ const companySchema = new mongoose.Schema({
   linkedin: String,
   year_founded: Number,
   company_size: String,
-  benefits: [String], 
+  benefits: [String],
   values: [String],
   url_safe_slug: String,
   verified: Boolean,
