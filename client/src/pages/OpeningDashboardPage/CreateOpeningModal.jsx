@@ -38,20 +38,20 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
         <Modal.Header />
         <Modal.Body>
           <form onSubmit={handleSubmit}>
-            <div class="mb-6">
+            <div className="mb-6">
               <label
-                for="company"
-                class="block mb-2 text-sm font-medium text-gray-900"
+                htmlFor="company"
+                className="block mb-2 text-sm font-medium text-gray-900"
               >
                 Company
               </label>
               <CompanyDropDown comapny={company} setCompany={setCompany} />
             </div>
 
-            <div class="mb-6">
+            <div className="mb-6">
               <label
-                for="number"
-                class="block mb-2 text-sm font-medium text-gray-900"
+                htmlFor="number"
+                className="block mb-2 text-sm font-medium text-gray-900"
               >
                 Number of Slots
               </label>
