@@ -1,6 +1,7 @@
 import RequestCard from "./RequestCard";
+import CreateRequestModal from "./CreateRequestModal";
 import { getAllRequests } from "../../api/request";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { changeRequestList } from "../../state";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,7 +12,16 @@ const RequestDashboard = () => {
 
   const requestList = useSelector((state) => state.request.list);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
+  const [openCreate, setOpenCreate] = useState(false);
+
+  function onCloseCreate() {
+    setOpenCreate(false);
+  }
+
+  function onOpenCreate() {
+    setOpenCreate(true);
+  }
 
   const getRequests = async () => {
     try {
@@ -27,32 +37,37 @@ const RequestDashboard = () => {
   }, []);
 
   return (
-    <main className="flex-1 flex flex-col gap-12 py-7 px-12 overflow-auto">
-      <h1 className="text-3xl font-bold">Referral Request</h1>
+    <>
+      <CreateRequestModal openCreate={openCreate} onClose={onCloseCreate} />
+      <main className="flex-1 flex flex-col gap-12 py-7 px-12 overflow-auto">
+        <h1 className="text-3xl font-bold">Referral Request</h1>
 
-      <button
-        type="button"
-        onClick={() => navigate("/request/create")}
-        className="filled-btn p-2 self-center"
-      >
-        Create Referral Request
-      </button>
+        <button
+          onClick={onOpenCreate}
+          type="button"
+          className="filled-btn p-2 self-center"
+        >
+          Create Referral Request
+        </button>
 
-      {requestList.length > 0 ? (
-        <div className="w-full grid grid-cols-2 gap-10">
-          {requestList.map((request) => (
-            <RequestCard
-              key={request._id}
-              company={request.company}
-              priority={request.priority}
-              status={request.status}
-            />
-          ))}
-        </div>
-      ) : (
-        <div>You currently have 0 referral request</div>
-      )}
-    </main>
+        {requestList.length > 0 ? (
+          <div className="w-full grid grid-cols-2 gap-10">
+            {requestList.map((request) => (
+              <RequestCard
+                key={request._id}
+                company={request.company}
+                priority={request.priority}
+                status={request.status}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="self-center">
+            You currently have 0 referral request
+          </div>
+        )}
+      </main>
+    </>
   );
 };
 export default RequestDashboard;
