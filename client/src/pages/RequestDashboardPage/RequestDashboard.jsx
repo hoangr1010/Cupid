@@ -6,6 +6,8 @@ import { changeRequestList } from "../../state";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Toaster, toast } from "sonner";
+import { Table } from "flowbite-react";
+const dayjs = require("dayjs");
 
 const RequestDashboard = () => {
   const user = useSelector((state) => state.auth.user);
@@ -51,20 +53,46 @@ const RequestDashboard = () => {
         </button>
 
         {requestList.length > 0 ? (
-          <div className="w-full grid grid-cols-2 gap-10">
-            {requestList.map((request) => (
-              <RequestCard
-                key={request._id}
-                company={request.company}
-                priority={request.priority}
-                status={request.status}
-              />
-            ))}
+          <div className="overflow-x-auto">
+            <Table hoverable>
+              <Table.Head>
+                <Table.HeadCell>Priority</Table.HeadCell>
+                <Table.HeadCell>Company</Table.HeadCell>
+                <Table.HeadCell>Status</Table.HeadCell>
+                <Table.HeadCell>Date</Table.HeadCell>
+                <Table.HeadCell>
+                  <span className="sr-only">More</span>
+                </Table.HeadCell>
+              </Table.Head>
+
+              <Table.Body className="divide-y">
+                {requestList.map((request) => (
+                  <Table.Row className="bg-white">
+                    <Table.Cell>{request.priority}</Table.Cell>
+                    <Table.Cell>{request.company}</Table.Cell>
+                    <Table.Cell>
+                      <div className="w-fit">
+                        <RequestCard status={request.status} />
+                      </div>
+                    </Table.Cell>
+                    <Table.Cell>
+                      {dayjs(request.createdAt).format("DD-MM-YYYY")}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <a
+                        href="#"
+                        className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+                      >
+                        More
+                      </a>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
           </div>
         ) : (
-          <div className="self-center">
-            You currently have 0 referral request
-          </div>
+          <div>You currently have 0 referral request</div>
         )}
       </main>
     </>
