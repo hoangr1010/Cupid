@@ -120,12 +120,21 @@ export const applyMatchingChanges = async (matchList) => {
 };
 
 // For testing purposes:
-(async () => {
-  connectDB(process.env.DATABASE_CONNECTION_STRING);
+const algorithmFunction = async () => {
+  await connectDB(process.env.DATABASE_CONNECTION_STRING);
 
-  const inp = await getMatchingInput();
-  const matchList = runMatchingAlgorithm(inp[0], inp[1]);
-  await applyMatchingChanges(matchList);
+  try {
+    const inp = await getMatchingInput();
+    const matchList = runMatchingAlgorithm(inp[0], inp[1]);
+    await applyMatchingChanges(matchList);
+    console.log("Matching algorithm ran successfully");
+  } catch (err) {
+    console.log(err.message);
+  }
 
   mongoose.connection.close();
-})();
+};
+
+// algorithmFunction(); // this only call when use command
+
+export default algorithmFunction;
