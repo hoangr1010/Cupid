@@ -1,9 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { pushRequestList } from "../../state";
+import { Modal } from "flowbite-react";
 import { createRequest } from "../../api/request";
 
-function CreateRequestPage() {
+function CreateRequestModal({ openCreate, onClose }) {
+  const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.user._id) || null;
 
   const [formData, setFormData] = useState({
@@ -22,12 +26,19 @@ function CreateRequestPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    createRequest(formData, userId);
+
+    const response = await createRequest(formData, userId);
+    if (response) {
+      console.log(response);
+      dispatch(pushRequestList(response));
+      onClose();
+    }
   };
 
   return (
-    <div className="flex h-screen border-3 w-full">
-      <div className="mt-4 ml-5 w-full">
+    <Modal show={openCreate} size="md" onClose={onClose} popup>
+      <Modal.Header />
+      <Modal.Body>
         <h1 className="text-3xl">Create Request</h1>
 
         <form onSubmit={handleSubmit}>
@@ -72,9 +83,9 @@ function CreateRequestPage() {
             Create
           </button>
         </form>
-      </div>
-    </div>
+      </Modal.Body>
+    </Modal>
   );
 }
 
-export default CreateRequestPage;
+export default CreateRequestModal;

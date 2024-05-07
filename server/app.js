@@ -7,6 +7,7 @@ import UserRouter from "./src/routes/User.js";
 import AuthRouter from "./src/routes/Auth.js";
 import requestRouter from "./src/routes/Request.js";
 import OpeningRouter from "./src/routes/Opening.js";
+import CompanyRouter from "./src/routes/Company.js";
 
 const createApp = () => {
   // CONFIGURATION
@@ -20,6 +21,7 @@ const createApp = () => {
   app.use("/auth", AuthRouter);
   app.use("/request", requestRouter);
   app.use("/opening", OpeningRouter);
+  app.use("/company", CompanyRouter);
   app.get("/", (req, res) => {
     res.send("Hi, we're Cupid");
   });
