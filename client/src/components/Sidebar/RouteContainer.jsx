@@ -6,7 +6,9 @@ export default function SideBarContainer() {
   return (
     <div className="flex">
       <Sidebar />
-      <Outlet />
+      <div className="w-full h-screen max-h-screen p-6">
+        <Outlet />
+      </div>
     </div>
   );
 }

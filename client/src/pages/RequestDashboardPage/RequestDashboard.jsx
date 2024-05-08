@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { changeRequestList } from "../../state";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 import { Table } from "flowbite-react";
 const dayjs = require("dayjs");
 
@@ -41,7 +41,7 @@ const RequestDashboard = () => {
   return (
     <>
       <CreateRequestModal openCreate={openCreate} onClose={onCloseCreate} />
-      <main className="flex-1 flex flex-col gap-12 py-7 px-12 overflow-auto">
+      <main className="flex-1 flex flex-col gap-12 overflow-auto">
         <h1 className="text-3xl font-bold">Referral Request</h1>
 
         <button
