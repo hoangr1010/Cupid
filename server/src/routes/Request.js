@@ -3,7 +3,7 @@ import {
   createRequest,
   getOneRequest,
   getAllRequests,
-  changePriority
+  changePriority,
 } from "../controllers/Request.js";
 import { checkUserId } from "../middleware/User.js";
 
@@ -15,6 +15,6 @@ requestRouter.get("/:request_id", getOneRequest);
 
 requestRouter.post("/create", checkUserId, createRequest);
 
-requestRouter.put("/priority", checkUserId, changePriority)
+requestRouter.put("/priority", checkUserId, changePriority);
 
 export default requestRouter;

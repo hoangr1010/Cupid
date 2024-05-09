@@ -53,9 +53,8 @@ const RequestDashboard = () => {
         if (newRequestList) {
           dispatch(changeRequestList(newRequestList));
         } else {
-          throw new Error("Error changing priority")
+          throw new Error("Error changing priority");
         }
-        
       } catch (err) {
         toast.error(err);
       }

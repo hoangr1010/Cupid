@@ -78,9 +78,9 @@ const CreateRequest = () => {
             }
           }}
         >
-          {
-            requests.length > 0 ? "Create new requests" : "You do not have any request, create your first request"
-          }
+          {requests.length > 0
+            ? "Create new requests"
+            : "You do not have any request, create your first request"}
         </button>
       )}
     </>
