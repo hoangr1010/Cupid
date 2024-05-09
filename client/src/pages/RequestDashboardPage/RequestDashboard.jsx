@@ -47,8 +47,18 @@ const RequestDashboard = () => {
     );
 
     if (newRequests) {
-      const newRequestList = await changeRequestPriority(newRequests);
-      dispatch(changeRequestList(newRequestList));
+      try {
+        const newRequestList = await changeRequestPriority(newRequests);
+
+        if (newRequestList) {
+          dispatch(changeRequestList(newRequestList));
+        } else {
+          throw new Error("Error changing priority")
+        }
+        
+      } catch (err) {
+        toast.error(err);
+      }
     }
     setIsLoadingDrag(false);
   };
