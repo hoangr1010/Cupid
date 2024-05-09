@@ -107,7 +107,7 @@ export const changePriority = async (req, res) => {
     const newRequests = [];
     for (const request of newRequestsData) {
       const { _id, priority, status } = request;
-      
+
       if (status != "waiting") {
         // if request is non-waiting, do nothing
         newRequests.push(request);

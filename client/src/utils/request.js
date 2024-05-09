@@ -2,7 +2,11 @@ import { toast } from "sonner";
 
 // This function get drag priority and draggedOver priority and requestArray
 // it will perform reorder request priority and return new requestArray
-export const reorderRequests = (requestArray, dragPriority, draggedOverPriority) => {
+export const reorderRequests = (
+  requestArray,
+  dragPriority,
+  draggedOverPriority,
+) => {
   // get all waiting requests
   let waitingRequests = requestArray.filter(
     (request) => request.status === "waiting",
