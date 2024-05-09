@@ -5,7 +5,7 @@ import { getCompany } from "./../../api/company";
 import tailwindConfig from "./../../tailwind";
 import resolveConfig from "tailwindcss/resolveConfig";
 
-export const CompanyDropDown = ({ company, setCompany }) => {
+export const CompanyDropDown = ({ company, setCompany, className = "" }) => {
   // get tailwind Theme
   const config = resolveConfig(tailwindConfig);
   const { accentColor } = config.theme;
@@ -51,6 +51,7 @@ export const CompanyDropDown = ({ company, setCompany }) => {
         theme={theme}
         onChange={handleChange}
         value={company}
+        className={className}
       />
     </>
   );

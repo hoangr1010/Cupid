@@ -29,3 +29,12 @@ export const createRequest = async (formData, userId) => {
     toast.error("Error creating new request");
   }
 };
+
+export const changeRequestPriority = async (newRequests) => {
+  try {
+    const response = await API.put("/request/priority", { newRequests });
+    return response.data.data;
+  } catch (err) {
+    toast.error(err);
+  }
+};

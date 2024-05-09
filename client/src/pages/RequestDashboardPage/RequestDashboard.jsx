@@ -1,29 +1,33 @@
 import RequestCard from "./RequestCard";
-import CreateRequestModal from "./CreateRequestModal";
-import { getAllRequests } from "../../api/request";
-import { useEffect, useState } from "react";
+import { getAllRequests, changeRequestPriority } from "../../api/request";
+import { useEffect, useRef, useState } from "react";
 import { changeRequestList } from "../../state";
-import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "sonner";
 import { Table } from "flowbite-react";
-const dayjs = require("dayjs");
+import CreateRequest from "./CreateRequest";
+import { reorderRequests } from "./../../utils/request";
+import dayjs from "dayjs";
+import { Spinner } from "flowbite-react";
 
 const RequestDashboard = () => {
   const user = useSelector((state) => state.auth.user);
-
   const requestList = useSelector((state) => state.request.list);
   const dispatch = useDispatch();
 
-  const [openCreate, setOpenCreate] = useState(false);
+  // save drag and draggedOver priority
+  const dragPriority = useRef(0);
+  const draggedOverPriority = useRef(0);
+  const [isLoadingDrag, setIsLoadingDrag] = useState(false);
 
-  function onCloseCreate() {
-    setOpenCreate(false);
-  }
+  // Sort requests by priority
+  const sortedRequestList = [...requestList].sort(
+    (a, b) => a.priority - b.priority,
+  );
 
-  function onOpenCreate() {
-    setOpenCreate(true);
-  }
+  useEffect(() => {
+    getRequests();
+  }, []);
 
   const getRequests = async () => {
     try {
@@ -34,65 +38,88 @@ const RequestDashboard = () => {
     }
   };
 
-  useEffect(() => {
-    getRequests();
-  }, []);
+  const handleDragEnd = async () => {
+    setIsLoadingDrag(true);
+    const newRequests = reorderRequests(
+      [...(sortedRequestList || [])],
+      dragPriority,
+      draggedOverPriority,
+    );
+
+    if (newRequests) {
+      const newRequestList = await changeRequestPriority(newRequests);
+      dispatch(changeRequestList(newRequestList));
+    }
+    setIsLoadingDrag(false);
+  };
 
   return (
     <>
-      <CreateRequestModal openCreate={openCreate} onClose={onCloseCreate} />
-      <main className="flex-1 flex flex-col gap-12 overflow-auto">
+      <main className="flex-1 flex flex-col gap-12 overflow-auto h-full">
         <h1 className="text-3xl font-bold">Referral Request</h1>
+        {sortedRequestList.length > 0 ? (
+          <>
+            <div className="overflow-x-auto h-full">
+              <div>
+                {isLoadingDrag && (
+                  <Spinner
+                    className="fill-primary w-16 h-16 absolute left-1/2 top-1/4 z-10"
+                    aria-label="Loading"
+                  />
+                )}
+                <Table
+                  hoverable
+                  className={
+                    isLoadingDrag ? "opacity-50 pointer-events-none" : ""
+                  }
+                >
+                  <Table.Head>
+                    <Table.HeadCell>Priority</Table.HeadCell>
+                    <Table.HeadCell>Company</Table.HeadCell>
+                    <Table.HeadCell>Status</Table.HeadCell>
+                    <Table.HeadCell>Date</Table.HeadCell>
+                    <Table.HeadCell>
+                      <span className="sr-only">More</span>
+                    </Table.HeadCell>
+                  </Table.Head>
 
-        <button
-          onClick={onOpenCreate}
-          type="button"
-          className="filled-btn p-2 self-center"
-        >
-          Create Referral Request
-        </button>
-
-        {requestList.length > 0 ? (
-          <div className="overflow-x-auto">
-            <Table hoverable>
-              <Table.Head>
-                <Table.HeadCell>Priority</Table.HeadCell>
-                <Table.HeadCell>Company</Table.HeadCell>
-                <Table.HeadCell>Status</Table.HeadCell>
-                <Table.HeadCell>Date</Table.HeadCell>
-                <Table.HeadCell>
-                  <span className="sr-only">More</span>
-                </Table.HeadCell>
-              </Table.Head>
-
-              <Table.Body className="divide-y">
-                {requestList.map((request) => (
-                  <Table.Row className="bg-white">
-                    <Table.Cell>{request.priority}</Table.Cell>
-                    <Table.Cell>{request.company}</Table.Cell>
-                    <Table.Cell>
-                      <div className="w-fit">
-                        <RequestCard status={request.status} />
-                      </div>
-                    </Table.Cell>
-                    <Table.Cell>
-                      {dayjs(request.createdAt).format("DD-MM-YYYY")}
-                    </Table.Cell>
-                    <Table.Cell>
-                      <a
-                        href="#"
-                        className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+                  <Table.Body className="divide-y transition-all">
+                    {sortedRequestList.map((request) => (
+                      <Table.Row
+                        key={request._id}
+                        draggable
+                        onDragStart={() => {
+                          dragPriority.current = request.priority;
+                        }}
+                        onDragEnter={() => {
+                          draggedOverPriority.current = request.priority;
+                        }}
+                        onDragEnd={handleDragEnd}
+                        onDragOver={(e) => {
+                          e.preventDefault();
+                        }}
+                        className="bg-white cursor-grab"
                       >
-                        More
-                      </a>
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table>
-          </div>
+                        <Table.Cell>{request.priority}</Table.Cell>
+                        <Table.Cell>{request.company}</Table.Cell>
+                        <Table.Cell>
+                          <div className="w-fit">
+                            <RequestCard status={request.status} />
+                          </div>
+                        </Table.Cell>
+                        <Table.Cell>
+                          {dayjs(request.createdAt).format("DD-MM-YYYY")}
+                        </Table.Cell>
+                      </Table.Row>
+                    ))}
+                  </Table.Body>
+                </Table>
+              </div>
+              <CreateRequest />
+            </div>
+          </>
         ) : (
-          <div>You currently have 0 referral request</div>
+          <CreateRequest />
         )}
       </main>
     </>
