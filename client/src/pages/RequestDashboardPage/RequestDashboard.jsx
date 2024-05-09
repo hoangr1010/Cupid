@@ -1,20 +1,20 @@
 import RequestCard from "./RequestCard";
-import CreateRequestModal from "./CreateRequestModal";
 import { getAllRequests } from "../../api/request";
 import { useEffect, useState } from "react";
 import { changeRequestList } from "../../state";
-import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "sonner";
 import { Table } from "flowbite-react";
+import CreateRequest from "./CreateRequest";
 const dayjs = require("dayjs");
 
 const RequestDashboard = () => {
   const user = useSelector((state) => state.auth.user);
-
   const requestList = useSelector((state) => state.request.list);
   const dispatch = useDispatch();
 
+  const sortedRequestList = [...requestList].sort((a, b) => a.priority - b.priority);
+  
   const [openCreate, setOpenCreate] = useState(false);
 
   function onCloseCreate() {
@@ -40,20 +40,10 @@ const RequestDashboard = () => {
 
   return (
     <>
-      <CreateRequestModal openCreate={openCreate} onClose={onCloseCreate} />
-      <main className="flex-1 flex flex-col gap-12 overflow-auto">
+      <main className="flex-1 flex flex-col gap-12 overflow-auto h-full">
         <h1 className="text-3xl font-bold">Referral Request</h1>
-
-        <button
-          onClick={onOpenCreate}
-          type="button"
-          className="filled-btn p-2 self-center"
-        >
-          Create Referral Request
-        </button>
-
-        {requestList.length > 0 ? (
-          <div className="overflow-x-auto">
+        {sortedRequestList.length > 0 ? (
+          <div className="overflow-x-auto h-full">
             <Table hoverable>
               <Table.Head>
                 <Table.HeadCell>Priority</Table.HeadCell>
@@ -66,7 +56,7 @@ const RequestDashboard = () => {
               </Table.Head>
 
               <Table.Body className="divide-y">
-                {requestList.map((request) => (
+                {sortedRequestList.map((request) => (
                   <Table.Row className="bg-white">
                     <Table.Cell>{request.priority}</Table.Cell>
                     <Table.Cell>{request.company}</Table.Cell>
@@ -78,21 +68,15 @@ const RequestDashboard = () => {
                     <Table.Cell>
                       {dayjs(request.createdAt).format("DD-MM-YYYY")}
                     </Table.Cell>
-                    <Table.Cell>
-                      <a
-                        href="#"
-                        className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                      >
-                        More
-                      </a>
-                    </Table.Cell>
                   </Table.Row>
                 ))}
               </Table.Body>
             </Table>
+
+            <CreateRequest />
           </div>
         ) : (
-          <div>You currently have 0 referral request</div>
+          <CreateRequest />
         )}
       </main>
     </>

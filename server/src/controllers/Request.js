@@ -84,7 +84,10 @@ export const createRequest = async (req, res) => {
       throw new Error("Request with this company already exists");
     }
 
-    const newRequest = await Request.create(data);
+    const newRequest = await Request.create({
+      candidate_id: user_id,
+      ...data,
+    });
 
     res.status(201).json({
       message: "Request created successfully",
