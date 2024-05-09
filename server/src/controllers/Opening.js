@@ -70,3 +70,29 @@ export const createOpening = async (req, res) => {
     });
   }
 };
+
+export const updateOneOpeningField = async (req, res) => {
+  try {
+    const { openingId, field, newValue } = req.body;
+    console.log(req.body);
+    const updatedOpening = await Opening.findByIdAndUpdate(
+      openingId,
+      { [field]: newValue },
+      { new: true },
+    );
+
+    if (!updatedOpening) {
+      throw new Error("Opening not found");
+    }
+
+    res.status(200).json({
+      message: "Opening status updated successfully",
+      data: updatedOpening,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Error updating opening status",
+      error: error.message,
+    });
+  }
+};
