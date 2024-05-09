@@ -4,7 +4,7 @@ import { Avatar } from "flowbite-react";
 
 function ProfilePage() {
   const user = useSelector((state) => state.auth.user);
-  console.log(user);
+
   return (
     <main className="flex overflow-auto gap-6 h-full w-full">
       <div className="widget_container h-fit items-center">

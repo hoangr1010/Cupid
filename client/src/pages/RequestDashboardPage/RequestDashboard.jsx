@@ -1,6 +1,6 @@
 import RequestCard from "./RequestCard";
 import { getAllRequests } from "../../api/request";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { changeRequestList } from "../../state";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "sonner";
@@ -13,17 +13,9 @@ const RequestDashboard = () => {
   const requestList = useSelector((state) => state.request.list);
   const dispatch = useDispatch();
 
-  const sortedRequestList = [...requestList].sort((a, b) => a.priority - b.priority);
-  
-  const [openCreate, setOpenCreate] = useState(false);
-
-  function onCloseCreate() {
-    setOpenCreate(false);
-  }
-
-  function onOpenCreate() {
-    setOpenCreate(true);
-  }
+  const sortedRequestList = [...requestList].sort(
+    (a, b) => a.priority - b.priority,
+  );
 
   const getRequests = async () => {
     try {
@@ -37,6 +29,32 @@ const RequestDashboard = () => {
   useEffect(() => {
     getRequests();
   }, []);
+
+  const dragRow = useRef(0);
+  const draggedOverRow = useRef(0);
+
+  const handleDragEnd = () => {
+    let updatedRequestList = [...sortedRequestList];
+    const dragRowObj = updatedRequestList.find((request) => request.priority === dragRow.current);
+    
+    // remove dragRow from updatedRequestList
+    updatedRequestList.splice(dragRow.current - 1, 1);
+    const draggedOverRowIndex = updatedRequestList.findIndex((request) => request.priority === draggedOverRow.current);
+
+    // get the left and right side of the draggedOverRow
+    const left = updatedRequestList.slice(0, draggedOverRowIndex);
+    const right = updatedRequestList.slice(draggedOverRowIndex);
+
+    // insert dragRow in between the left and right side of the draggedOverRow
+    updatedRequestList = [...left, dragRowObj, ...right];
+
+    // change priority inorder of the list
+    updatedRequestList = updatedRequestList.map((request, index) => {
+      return {...request, priority: index + 1};
+    });
+
+    dispatch(changeRequestList(updatedRequestList));
+  };
 
   return (
     <>
@@ -55,9 +73,21 @@ const RequestDashboard = () => {
                 </Table.HeadCell>
               </Table.Head>
 
-              <Table.Body className="divide-y">
+              <Table.Body className="divide-y transition-all">
                 {sortedRequestList.map((request) => (
-                  <Table.Row className="bg-white">
+                  <Table.Row
+                    key={request._id}
+                    draggable
+                    onDragStart={() => {
+                      dragRow.current = request.priority;
+                    }}
+                    onDragEnter={() => {
+                      draggedOverRow.current = request.priority;
+                    }}
+                    onDragEnd={handleDragEnd}
+                    onDragOver={(e) => {e.preventDefault()}}
+                    className="bg-white cursor-grab"
+                  >
                     <Table.Cell>{request.priority}</Table.Cell>
                     <Table.Cell>{request.company}</Table.Cell>
                     <Table.Cell>
