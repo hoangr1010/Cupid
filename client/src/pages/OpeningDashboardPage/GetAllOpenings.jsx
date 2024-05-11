@@ -12,7 +12,7 @@ const GetAllOpenings = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.user?._id) || null;
   const openingList = useSelector((state) => state.opening.list);
-  console.log(openingList);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -28,7 +28,7 @@ const GetAllOpenings = () => {
   }, [userId]);
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto w-full">
       <Table hoverable>
         <Table.Head>
           <Table.HeadCell>Index</Table.HeadCell>
@@ -43,7 +43,7 @@ const GetAllOpenings = () => {
 
         <Table.Body className="divide-y">
           {openingList.map((opening, index) => (
-            <Table.Row className="bg-white">
+            <Table.Row key={opening._id} className="bg-white">
               <Table.Cell>{index + 1}</Table.Cell>
               <Table.Cell>{opening.company}</Table.Cell>
               <Table.Cell>
@@ -55,8 +55,9 @@ const GetAllOpenings = () => {
                 {dayjs(opening.createdAt).format("DD-MM-YYYY")}
               </Table.Cell>
               <Table.Cell>
-                {opening.status === "matched" && (
-                  <Badge color="pink" size="sm">
+                {(opening.status === "matched" ||
+                  opening.status === "approved") && (
+                  <Badge color="pink" size="sm" className='w-fit'>
                     required
                   </Badge>
                 )}

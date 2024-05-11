@@ -1,4 +1,5 @@
 import Opening from "../models/Opening.js";
+import Request from "../models/Request.js"
 
 export const getOneOpening = async (req, res) => {
   try {
@@ -71,27 +72,65 @@ export const createOpening = async (req, res) => {
   }
 };
 
-export const updateOneOpeningField = async (req, res) => {
+export const changeStatus = async (req, res) => {
   try {
-    const { openingId, field, newValue } = req.body;
-    console.log(req.body);
-    const updatedOpening = await Opening.findByIdAndUpdate(
-      openingId,
-      { [field]: newValue },
-      { new: true },
-    );
-
-    if (!updatedOpening) {
+    const { openingId, newStatus } = req.body;
+    
+    // check if openingId exist
+    const opening = await Opening.findById(openingId);
+    if (!opening) {
       throw new Error("Opening not found");
+    }
+    
+    // if opening having status is non-waiting but no request_id associated with, throw error
+    if (newStatus != "waiting") {
+      if (!opening.request_id) {
+        throw new Error("not valid opening");
+      }
+    }
+
+    // check if request_id exist and match with opening
+    const request = await Request.findById(opening.request_id);
+    if (!request) {
+      throw new Error("Request not found");
+    } else if ((request._id).toString() !== (opening.request_id).toString()) {
+      throw new Error("Request not matched with opening");
+    }
+
+    // update status in both opening and request
+    let updatedOpening, updatedRequest;
+    if (newStatus != "waiting") {
+      updatedOpening = await Opening.findByIdAndUpdate(
+        openingId,
+        { status: newStatus },
+        { new: true },
+      );
+      updatedRequest = await Request.findByIdAndUpdate(
+        opening.request_id,
+        { status: newStatus },
+        { new: true }
+      )
+    } else {
+      // if new status is waiting, delete request_id and opening_id in document
+      updatedOpening = await Opening.findByIdAndUpdate(
+        openingId,
+        { $unset: { request_id: 1 }, status: newStatus },
+        { new: true },
+      );
+      updatedRequest = await Request.findByIdAndUpdate(
+        opening.request_id,
+        { $unset: { opening_id: 1 }, status: newStatus },
+        { new: true }
+      )
     }
 
     res.status(200).json({
-      message: "Opening status updated successfully",
+      message: "Status updated successfully",
       data: updatedOpening,
     });
   } catch (error) {
     res.status(400).json({
-      message: "Error updating opening status",
+      message: "Error updating status",
       error: error.message,
     });
   }

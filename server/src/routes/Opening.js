@@ -3,7 +3,7 @@ import {
   createOpening,
   getOneOpening,
   getAllOpenings,
-  updateOneOpeningField,
+  changeStatus,
 } from "../controllers/Opening.js";
 import { checkUserId } from "../middleware/User.js";
 
@@ -15,6 +15,6 @@ OpeningRouter.get("/:opening_id", getOneOpening);
 
 OpeningRouter.post("/create", checkUserId, createOpening);
 
-OpeningRouter.put("/updateOneField", updateOneOpeningField);
+OpeningRouter.put("/changeStatus", changeStatus);
 
 export default OpeningRouter;

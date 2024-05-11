@@ -31,14 +31,14 @@ export const getAllOpenings = async (userId) => {
   }
 };
 
-export const updateOneOpeningField = async (formData) => {
+export const changeStatus = async (formData) => {
   try {
     const body = {
       openingId: formData.openingId,
-      field: formData.field,
-      newValue: formData.newValue,
+      newStatus: formData.newStatus,
     };
-    const response = await API.put(`/opening/updateOneField`, body);
+
+    const response = await API.put(`/opening/changeStatus`, body);
     toast.success("Opening has been updated");
     return response.data.data;
   } catch (err) {
