@@ -44,6 +44,10 @@ code {
   .success-btn {
     @apply bg-green-400 hover:bg-green-500 transition-all;
   }
+
+  .btn-padding {
+    @apply py-1 px-2;
+  }
 }
 
 /* Custom react select style */

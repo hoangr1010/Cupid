@@ -30,7 +30,7 @@ const OpeningInfoModal = (opening) => {
     <div>
       {/* Button to show up Modal */}
       <button
-        className="secondary-btn p-2 rounded-sm font-bold"
+        className="secondary-btn btn-padding rounded-sm font-bold"
         onClick={() => setOpenModal(true)}
       >
         Details
@@ -56,7 +56,7 @@ const OpeningInfoModal = (opening) => {
             <div className="flex flex-wrap gap-2">
               {/* Approve button */}
               <button
-                className="success-btn text-white h-fit rounded-md px-2 py-1"
+                className="success-btn text-white h-fit rounded-md btn-padding"
                 onClick={() =>
                   changeOpeningStatus({
                     openingId: opening.openingId,
@@ -69,7 +69,7 @@ const OpeningInfoModal = (opening) => {
 
               {/* Deny button */}
               <button
-                className="failure-btn text-white h-fit rounded-md px-2 py-1"
+                className="failure-btn text-white h-fit rounded-md btn-padding"
                 onClick={() =>
                   changeOpeningStatus({
                     openingId: opening.openingId,
@@ -89,7 +89,7 @@ const OpeningInfoModal = (opening) => {
             <div className="flex flex-wrap gap-2">
               {/* Refer button */}
               <button
-                className="success-btn text-white h-fit rounded-md px-2 py-1"
+                className="success-btn text-white h-fit rounded-md btn-padding"
                 onClick={() =>
                   changeOpeningStatus({
                     openingId: opening.openingId,
