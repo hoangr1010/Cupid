@@ -1,5 +1,5 @@
 import Opening from "../models/Opening.js";
-import Request from "../models/Request.js"
+import Request from "../models/Request.js";
 
 export const getOneOpening = async (req, res) => {
   try {
@@ -75,13 +75,13 @@ export const createOpening = async (req, res) => {
 export const changeStatus = async (req, res) => {
   try {
     const { openingId, newStatus } = req.body;
-    
+
     // check if openingId exist
     const opening = await Opening.findById(openingId);
     if (!opening) {
       throw new Error("Opening not found");
     }
-    
+
     // if opening having status is non-waiting but no request_id associated with, throw error
     if (newStatus != "waiting") {
       if (!opening.request_id) {
@@ -93,7 +93,7 @@ export const changeStatus = async (req, res) => {
     const request = await Request.findById(opening.request_id);
     if (!request) {
       throw new Error("Request not found");
-    } else if ((request._id).toString() !== (opening.request_id).toString()) {
+    } else if (request._id.toString() !== opening.request_id.toString()) {
       throw new Error("Request not matched with opening");
     }
 
@@ -108,8 +108,8 @@ export const changeStatus = async (req, res) => {
       updatedRequest = await Request.findByIdAndUpdate(
         opening.request_id,
         { status: newStatus },
-        { new: true }
-      )
+        { new: true },
+      );
     } else {
       // if new status is waiting, delete request_id and opening_id in document
       updatedOpening = await Opening.findByIdAndUpdate(
@@ -120,8 +120,8 @@ export const changeStatus = async (req, res) => {
       updatedRequest = await Request.findByIdAndUpdate(
         opening.request_id,
         { $unset: { opening_id: 1 }, status: newStatus },
-        { new: true }
-      )
+        { new: true },
+      );
     }
 
     res.status(200).json({

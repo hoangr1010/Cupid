@@ -20,7 +20,7 @@ const OpeningInfoModal = (opening) => {
           return response;
         }
         return opening;
-      })
+      });
 
       dispatch(changeOpeningList(newOpeningList));
     }

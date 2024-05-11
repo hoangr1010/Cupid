@@ -57,7 +57,7 @@ const GetAllOpenings = () => {
               <Table.Cell>
                 {(opening.status === "matched" ||
                   opening.status === "approved") && (
-                  <Badge color="pink" size="sm" className='w-fit'>
+                  <Badge color="pink" size="sm" className="w-fit">
                     required
                   </Badge>
                 )}
