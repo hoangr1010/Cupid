@@ -36,6 +36,9 @@ const GetAllOpenings = () => {
           <Table.HeadCell>Status</Table.HeadCell>
           <Table.HeadCell>Date</Table.HeadCell>
           <Table.HeadCell>Action</Table.HeadCell>
+          <Table.HeadCell>
+            <span className="sr-only">More</span>
+          </Table.HeadCell>
         </Table.Head>
 
         <Table.Body className="divide-y">
