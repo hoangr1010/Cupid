@@ -3,7 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { changeOpeningList } from "../../state";
 import { getAllOpenings } from "../../api/opening";
 import OpeningSlotCard from "./OpeningSlotCard";
+import OpeningInfoModal from "./OpeningInfoModal";
 import { toast } from "sonner";
+import { Table, Badge } from "flowbite-react";
+const dayjs = require("dayjs");
 
 const GetAllOpenings = () => {
   const dispatch = useDispatch();
@@ -25,13 +28,54 @@ const GetAllOpenings = () => {
   }, [userId]);
 
   return (
-    <ul className="w-full grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-10">
-      {openingList.map((opening, index) => (
-        <li key={index} className="w-full">
-          <OpeningSlotCard company={opening.company} status={opening.status} />
-        </li>
-      ))}
-    </ul>
+    <div className="overflow-x-auto w-full">
+      <Table hoverable>
+        <Table.Head>
+          <Table.HeadCell>Index</Table.HeadCell>
+          <Table.HeadCell>Company</Table.HeadCell>
+          <Table.HeadCell>Status</Table.HeadCell>
+          <Table.HeadCell>Date</Table.HeadCell>
+          <Table.HeadCell>Action</Table.HeadCell>
+          <Table.HeadCell>
+            <span className="sr-only">More</span>
+          </Table.HeadCell>
+        </Table.Head>
+
+        <Table.Body className="divide-y">
+          {openingList.map((opening, index) => (
+            <Table.Row key={opening._id} className="bg-white">
+              <Table.Cell>{index + 1}</Table.Cell>
+              <Table.Cell>{opening.company}</Table.Cell>
+              <Table.Cell>
+                <div className="w-fit">
+                  <OpeningSlotCard status={opening.status} />
+                </div>
+              </Table.Cell>
+              <Table.Cell>
+                {dayjs(opening.createdAt).format("DD-MM-YYYY")}
+              </Table.Cell>
+              <Table.Cell>
+                {(opening.status === "matched" ||
+                  opening.status === "approved") && (
+                  <Badge color="pink" size="sm" className="w-fit">
+                    required
+                  </Badge>
+                )}
+              </Table.Cell>
+              <Table.Cell>
+                <OpeningInfoModal
+                  openingId={opening._id}
+                  company={opening.company}
+                  status={opening.status}
+                  date={dayjs(opening.createdAt).format("DD-MM-YYYY")}
+                  requestId={opening.request_id || null}
+                />
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
+    </div>
   );
 };
 

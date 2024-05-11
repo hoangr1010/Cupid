@@ -30,3 +30,20 @@ export const getAllOpenings = async (userId) => {
     console.error(err);
   }
 };
+
+export const changeStatus = async (formData) => {
+  try {
+    const body = {
+      openingId: formData.openingId,
+      newStatus: formData.newStatus,
+    };
+
+    const response = await API.put(`/opening/changeStatus`, body);
+    toast.success("Opening has been updated");
+    return response.data.data;
+  } catch (err) {
+    console.error(err);
+    toast.error("Opening has not been updated");
+    return;
+  }
+};
