@@ -77,7 +77,7 @@ const OpeningInfoModal = (opening) => {
                   })
                 }
               >
-                 <p>Decline</p>
+                <p>Decline</p>
               </button>
             </div>
           </Modal.Footer>
