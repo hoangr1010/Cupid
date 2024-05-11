@@ -1,5 +1,5 @@
 import { useState } from "react";
-import GetAllOpenings from "./GetAllOpenings";
+import GetAllOpenings from "./OpeningView";
 import CreateOpeningModal from "./CreateOpeningModal";
 import React from "react";
 

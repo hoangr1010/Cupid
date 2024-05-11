@@ -28,16 +28,20 @@ const OpeningInfoModal = (opening) => {
 
   return (
     <div>
+      {/* Button to show up Modal */}
       <button
-        className="secondary-btn p-2 rounded-sm font-bold"
+        className="secondary-btn btn-padding rounded-sm font-bold"
         onClick={() => setOpenModal(true)}
       >
         Details
       </button>
+
+      {/* Opening Modal */}
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>
           <h1 className="font-bold">Referral Opening</h1>
         </Modal.Header>
+
         <Modal.Body>
           <div className="text-base leading-relaxed text-grayLight">
             <li>Company: {opening.company}</li>
@@ -45,48 +49,56 @@ const OpeningInfoModal = (opening) => {
             <li>Date created: {opening.date}</li>
           </div>
         </Modal.Body>
+
+        {/* If status is matched, ask for deny/approve */}
         {opening.status === "matched" && (
           <Modal.Footer>
-            <div className="text-base text-grayLight">
-              Matched Candidate: {opening.requestId}
-              <div className="flex flex-wrap gap-2">
-                <Button
-                  color="success"
-                  onClick={() =>
-                    changeOpeningStatus({
-                      openingId: opening.openingId,
-                      newStatus: "approved",
-                    })
-                  }
-                >
-                  Approve
-                </Button>
-                <Button
-                  color="failure"
-                  onClick={() =>
-                    changeOpeningStatus({
-                      openingId: opening.openingId,
-                      newStatus: "waiting",
-                    })
-                  }
-                >
-                  Decline
-                </Button>
-              </div>
+            <div className="flex flex-wrap gap-2">
+              {/* Approve button */}
+              <button
+                className="success-btn text-white h-fit rounded-md btn-padding"
+                onClick={() =>
+                  changeOpeningStatus({
+                    openingId: opening.openingId,
+                    newStatus: "approved",
+                  })
+                }
+              >
+                <p>Approve</p>
+              </button>
+
+              {/* Deny button */}
+              <button
+                className="failure-btn text-white h-fit rounded-md btn-padding"
+                onClick={() =>
+                  changeOpeningStatus({
+                    openingId: opening.openingId,
+                    newStatus: "waiting",
+                  })
+                }
+              >
+                <p>Decline</p>
+              </button>
             </div>
           </Modal.Footer>
         )}
+
+        {/* If status is approved, ask for refer status */}
         {opening.status === "approved" && (
           <Modal.Footer>
-            <div className="text-base text-grayLight">
-              Approved Candidate: {opening.requestId}
-            </div>
-          </Modal.Footer>
-        )}
-        {opening.status === "referred" && (
-          <Modal.Footer>
-            <div className="text-base text-grayLight">
-              Referred Candidate: {opening.requestId}
+            <div className="flex flex-wrap gap-2">
+              {/* Refer button */}
+              <button
+                className="success-btn text-white h-fit rounded-md btn-padding"
+                onClick={() =>
+                  changeOpeningStatus({
+                    openingId: opening.openingId,
+                    newStatus: "referred",
+                  })
+                }
+              >
+                <p>Referred</p>
+              </button>
             </div>
           </Modal.Footer>
         )}

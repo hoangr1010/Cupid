@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { changeOpeningList } from "../../state";
 import { getAllOpenings } from "../../api/opening";
-import OpeningSlotCard from "./OpeningSlotCard";
+import StatusBadge from "../../components/StatusBadge";
 import OpeningInfoModal from "./OpeningInfoModal";
 import { toast } from "sonner";
 import { Table, Badge } from "flowbite-react";
@@ -48,7 +48,7 @@ const GetAllOpenings = () => {
               <Table.Cell>{opening.company}</Table.Cell>
               <Table.Cell>
                 <div className="w-fit">
-                  <OpeningSlotCard status={opening.status} />
+                  <StatusBadge status={opening.status} />
                 </div>
               </Table.Cell>
               <Table.Cell>

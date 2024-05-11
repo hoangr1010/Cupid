@@ -36,6 +36,18 @@ code {
   .secondary-btn {
     @apply bg-neutral-200 hover:bg-neutral-300 transition-all;
   }
+
+  .failure-btn {
+    @apply bg-red-400 hover:bg-red-500 transition-all;
+  }
+
+  .success-btn {
+    @apply bg-green-400 hover:bg-green-500 transition-all;
+  }
+
+  .btn-padding {
+    @apply py-1 px-2;
+  }
 }
 
 /* Custom react select style */

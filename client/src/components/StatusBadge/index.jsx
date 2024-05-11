@@ -1,6 +1,6 @@
 import { Badge } from "flowbite-react";
 
-const OpeningSlotCard = ({ status, index }) => {
+const StatusBadge = ({ status }) => {
   const badgeColor = {
     waiting: "warning",
     matched: "info",
@@ -9,8 +9,7 @@ const OpeningSlotCard = ({ status, index }) => {
   };
 
   return (
-    <div index={index}>
-      {/* <p className="text-xl">{company}</p> */}
+    <div>
       <Badge color={badgeColor[status]} size="sm">
         {status}
       </Badge>
@@ -18,4 +17,4 @@ const OpeningSlotCard = ({ status, index }) => {
   );
 };
 
-export default OpeningSlotCard;
+export default StatusBadge;
