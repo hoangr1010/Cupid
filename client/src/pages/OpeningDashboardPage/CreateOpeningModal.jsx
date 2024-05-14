@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal } from "flowbite-react";
-import { createOpenings, processPasscode } from "../../api/opening";
+import { createOpenings, processPasscode, verifyPasscode } from "../../api/opening";
 import { useSelector, useDispatch } from "react-redux";
 import { pushOpeningList } from "../../state";
 import { toast } from "sonner";
@@ -25,8 +25,9 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
   // FormState:
   // - "start" -> ask for company, number of slots, and company gmail address
   // - "in progress" -> already sent passcode and require passcode for verification
-  // - "verified" -> already sent passcode, and finish the creating process
   const [formState, setFormState] = useState("start");
+  const [passcode, setPasscode] = useState("")
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,6 +55,14 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
             throw new Error("Failed to send passcode, try again!");
           }
           break;
+        case "in progress":
+          // verify passcode
+          const response = await verifyPasscode(gmail, passcode)
+          // if passcode is correct, create opening
+          // if passcode is incorrect, show error message
+          setFormState("start");
+          break;
+          
       }
     } catch (err) {
       toast.error(err.message);

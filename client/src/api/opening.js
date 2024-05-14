@@ -57,3 +57,12 @@ export const processPasscode = async (gmail) => {
     return false;
   }
 };
+
+export const verifyPasscode = async (gmail, passcode) => {
+  try {
+    const response = await API.get(`/opening/verifyPasscode?gmail=${gmail}&passcode=${passcode}`);
+    return response;
+  } catch (err) {
+    console.error(err);
+  }
+};
