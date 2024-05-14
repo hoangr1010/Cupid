@@ -145,9 +145,8 @@ export const processPassCode = async (req, res) => {
     const userId = req.get("userId");
 
     // create passcode object
-    const passcode = generatePasscode();
-    await Passcode.create({
-      pass_code: passcode,
+    const passcode = await Passcode.create({
+      pass_code: generatePasscode(),
       gmail,
       user_id: userId,
     });
@@ -157,8 +156,8 @@ export const processPassCode = async (req, res) => {
       gmail,
       "hiwecupid@gmail.com",
       "Cupid: Email Verification Passcode",
-      `This is your passcode: ${passcode}`,
-      `<h1>Cupid</h1><p>This is your passcode: ${passcode}</p>`,
+      `This is your passcode: ${passcode.pass_code}`,
+      `<h1>Cupid</h1><p>This is your passcode: ${passcode.pass_code}</p>`,
     );
 
     if (emailSuccess) {

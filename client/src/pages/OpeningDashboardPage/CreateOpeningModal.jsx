@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { Modal } from "flowbite-react";
-import { createOpenings, processPasscode, verifyPasscode } from "../../api/opening";
+import {
+  createOpenings,
+  processPasscode,
+  verifyPasscode,
+} from "../../api/opening";
 import { useSelector, useDispatch } from "react-redux";
 import { pushOpeningList } from "../../state";
 import { toast } from "sonner";
 import { CompanyDropDown } from "./../../components/CompanyDropDown";
 import { VerificationBox } from "./VerificationBox";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { isGmailValid, isCompanyGmail } from "./../../utils/gmail";
+import { validateForm } from "./../../utils/opening"
 import { Spinner } from "flowbite-react";
 
 const CreateOpeningModal = ({ openCreate, onClose }) => {
@@ -25,64 +29,84 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
   // FormState:
   // - "start" -> ask for company, number of slots, and company gmail address
   // - "in progress" -> already sent passcode and require passcode for verification
+  // if passcode is verified, the creating opening will proceed immediately
   const [formState, setFormState] = useState("start");
-  const [passcode, setPasscode] = useState("")
-
+  const [passcode, setPasscode] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (submitLoading) {
+      return;
+    }
+    setSubmitLoading(true);
 
     try {
-      setSubmitLoading(true);
-      if (!company) {
-        throw new Error("Please select a company");
-      } else if (number < 1) {
-        throw new Error("Please enter a number greater than 0");
-      } else if (!isGmailValid) {
-        throw new Error("Please enter a valid gmail address");
-      } 
-      // else if (!isCompanyGmail(company.value, gmail)) {
-      //   throw new Error("Please enter a valid company gmail address");
-      // }
 
+      validateForm(company, gmail, number);
+
+      // process form based on form state
       switch (formState) {
+
+        // if form state is start, we process creating passcode and send to user
         case "start":
           // request backend to send passcode
-          const success = await processPasscode(gmail)
+          const success = await processPasscode(gmail);
           if (success) {
             setFormState("in progress");
           } else {
             throw new Error("Failed to send passcode, try again!");
           }
           break;
+
+        // if form is in progress, send passcode to verify and create opening is passcode is verified
         case "in progress":
           // verify passcode
-          const response = await verifyPasscode(gmail, passcode)
+          const response = await verifyPasscode(gmail, passcode.join(""));
+
           // if passcode is correct, create opening
-          // if passcode is incorrect, show error message
-          setFormState("start");
+          if (response) {
+            const formData = { company: company.value, number };
+            const response = await createOpenings(formData, userId);
+            if (response) {
+              dispatch(pushOpeningList(response));
+              onClose();
+            }
+          } else {
+            // if passcode is incorrect, show error message
+            throw new Error("Incorrect passcode, try again!");
+          }
+
+          resetForm();
           break;
-          
       }
     } catch (err) {
       toast.error(err.message);
     } finally {
       setSubmitLoading(false);
     }
-
-    // const formData = { company: company.value, number };
-    // const response = await createOpenings(formData, userId);
-    // if (response) {
-    //   dispatch(pushOpeningList(response));
-    //   onClose();
-    // }
   };
+
+  const resetForm = () => {
+    setFormState("start");
+    setCompany("");
+    setNumber(0);
+    setGmail("");
+  }
 
   return (
     <>
-      <Modal size={"md"} show={openCreate} onClose={onClose} popup>
+      <Modal
+        size={"md"}
+        show={openCreate}
+        onClose={() => {
+          onClose();
+          resetForm();
+        }}
+        popup
+      >
         <Modal.Header>
-          <p className="px-3 pt-1 font-bold h-fit">Create Referral</p >
+          <p className="px-3 pt-1 font-bold h-fit">Create Referral</p>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit}>
@@ -135,7 +159,9 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
               />
             </div>
 
-            {formState === "in progress" && <VerificationBox />}
+            {formState === "in progress" && (
+              <VerificationBox passcode={passcode} setPasscode={setPasscode} />
+            )}
 
             <div className="flex justify-end">
               <button type="submit" className="filled-btn m-0 px-8 py-2">

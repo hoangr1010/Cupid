@@ -64,5 +64,6 @@ export const verifyPasscode = async (gmail, passcode) => {
     return response;
   } catch (err) {
     console.error(err);
+    return
   }
 };
