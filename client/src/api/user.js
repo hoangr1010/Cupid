@@ -1,5 +1,4 @@
 import API from ".";
-import { toast } from "sonner";
 import { updateUser } from "../state";
 
 export const sendResumeLink = async (resumeLink, dispatch, navigate) => {

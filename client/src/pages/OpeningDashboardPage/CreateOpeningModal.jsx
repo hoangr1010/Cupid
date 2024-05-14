@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal } from "flowbite-react";
-import { createOpenings } from "../../api/opening";
+import { createOpenings, processPasscode } from "../../api/opening";
 import { useSelector, useDispatch } from "react-redux";
 import { pushOpeningList } from "../../state";
 import { toast } from "sonner";
@@ -26,7 +26,7 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
   // - "start" -> ask for company, number of slots, and company gmail address
   // - "in progress" -> already sent passcode and require passcode for verification
   // - "verified" -> already sent passcode, and finish the creating process
-  const [formState, setFormState] = useState("in progress");
+  const [formState, setFormState] = useState("start");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,14 +39,20 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
         throw new Error("Please enter a number greater than 0");
       } else if (!isGmailValid) {
         throw new Error("Please enter a valid gmail address");
-      } else if (!isCompanyGmail(company.value, gmail)) {
-        throw new Error("Please enter a valid company gmail address");
-      }
+      } 
+      // else if (!isCompanyGmail(company.value, gmail)) {
+      //   throw new Error("Please enter a valid company gmail address");
+      // }
 
       switch (formState) {
         case "start":
           // request backend to send passcode
-          setFormState("in progress");
+          const success = await processPasscode(gmail)
+          if (success) {
+            setFormState("in progress");
+          } else {
+            throw new Error("Failed to send passcode, try again!");
+          }
           break;
       }
     } catch (err) {
@@ -67,7 +73,7 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
     <>
       <Modal size={"md"} show={openCreate} onClose={onClose} popup>
         <Modal.Header>
-          <p className="px-3 pt-1 font-bold h-fit">Create Referral</p>
+          <p className="px-3 pt-1 font-bold h-fit">Create Referral</p >
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit}>

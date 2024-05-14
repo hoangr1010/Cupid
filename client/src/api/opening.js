@@ -47,3 +47,13 @@ export const changeStatus = async (formData) => {
     return;
   }
 };
+
+export const processPasscode = async (gmail) => {
+  try {
+    await API.post(`/opening/passcode`, { gmail });
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
