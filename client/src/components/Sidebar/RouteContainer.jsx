@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 export default function SideBarContainer() {
   return (
-    <div className="flex">
+    <div className="flex h-screen">
       <Sidebar />
       <div className="w-full h-screen max-h-screen p-6">
         <Outlet />

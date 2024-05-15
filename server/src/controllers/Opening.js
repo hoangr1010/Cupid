@@ -1,5 +1,8 @@
 import Opening from "../models/Opening.js";
 import Request from "../models/Request.js";
+import Passcode from "./../models/Passcode.js";
+import { sendEmail } from "./../services/Sendgrid/sendEmail.js";
+import { generatePasscode } from "./../utils/generatePasscode.js";
 
 export const getOneOpening = async (req, res) => {
   try {
@@ -132,6 +135,70 @@ export const changeStatus = async (req, res) => {
     res.status(400).json({
       message: "Error updating status",
       error: error.message,
+    });
+  }
+};
+
+export const processPassCode = async (req, res) => {
+  try {
+    const { gmail } = req.body;
+    const userId = req.get("userId");
+
+    // create passcode object
+    const passcode = await Passcode.create({
+      pass_code: generatePasscode(),
+      gmail,
+      user_id: userId,
+    });
+
+    // send passcode to email
+    const emailSuccess = await sendEmail(
+      gmail,
+      "hiwecupid@gmail.com",
+      "Cupid: Email Verification Passcode",
+      `This is your passcode: ${passcode.pass_code}`,
+      `<h1>Cupid</h1><p>This is your passcode: ${passcode.pass_code}</p>`,
+    );
+
+    if (emailSuccess) {
+      res.status(200).json({
+        message: "sent email successfully",
+      });
+    } else {
+      throw new Error("Error sending passcode");
+    }
+  } catch (err) {
+    res.status(400).json({
+      message: "Error processing passcode",
+      error: err.message,
+    });
+  }
+};
+
+export const verifyPasscode = async (req, res) => {
+  try {
+    const { passcode, gmail } = req.query;
+    const userId = req.get("userId");
+
+    // find passcode object
+    const foundPasscode = await Passcode.findOne({
+      pass_code: passcode,
+      gmail,
+      user_id: userId,
+    });
+
+    if (!foundPasscode) {
+      throw new Error("Passcode not found");
+    }
+
+    res.status(200).json({
+      message: "Passcode verified successfully",
+      data: foundPasscode,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: "Error verifying passcode",
+      error: err.message,
     });
   }
 };
