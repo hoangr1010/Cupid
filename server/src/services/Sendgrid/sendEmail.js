@@ -12,8 +12,7 @@ export const sendEmail = async (toAddress, fromAdress, subject, text, html) => {
   };
 
   try {
-    const response = await sgMail
-      .send(msg);
+    const response = await sgMail.send(msg);
     console.log(`sent email to ${toAddress}`);
     return true;
   } catch (error) {

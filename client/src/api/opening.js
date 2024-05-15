@@ -60,10 +60,12 @@ export const processPasscode = async (gmail) => {
 
 export const verifyPasscode = async (gmail, passcode) => {
   try {
-    const response = await API.get(`/opening/verifyPasscode?gmail=${gmail}&passcode=${passcode}`);
+    const response = await API.get(
+      `/opening/verifyPasscode?gmail=${gmail}&passcode=${passcode}`,
+    );
     return response;
   } catch (err) {
     console.error(err);
-    return
+    return;
   }
 };
