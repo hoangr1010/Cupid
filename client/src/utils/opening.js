@@ -7,8 +7,8 @@ export const validateForm = (company, gmail, number) => {
     throw new Error("Please enter a number greater than 0");
   } else if (!isGmailValid(gmail)) {
     throw new Error("Please enter a valid gmail address");
-  } 
+  }
   // else if (!isCompanyGmail(company.value, gmail)) {
   //   throw new Error("Please enter a valid company gmail address");
   // }
-}
+};
