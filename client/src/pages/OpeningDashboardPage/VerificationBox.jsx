@@ -1,7 +1,7 @@
 import React from "react";
 import { MdDone } from "react-icons/md";
 
-export const VerificationBox = ({ passcode, setPasscode}) => {
+export const VerificationBox = ({ passcode, setPasscode }) => {
   // use this function to automatically focus on the next input
   const focusNextInput = (el, prevId, nextId) => {
     if (el.value.length === 0) {
@@ -28,7 +28,7 @@ export const VerificationBox = ({ passcode, setPasscode}) => {
 
   const handleInputChange = (e) => {
     const value = e.target.value;
-    const id = e.target.id
+    const id = e.target.id;
 
     // get index of the digit in passcode array
     const index = parseInt(id.split("-")[1]) - 1;

@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import { CompanyDropDown } from "./../../components/CompanyDropDown";
 import { VerificationBox } from "./VerificationBox";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { validateForm } from "./../../utils/opening"
+import { validateForm } from "./../../utils/opening";
 import { Spinner } from "flowbite-react";
 
 const CreateOpeningModal = ({ openCreate, onClose }) => {
@@ -35,19 +35,17 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (submitLoading) {
       return;
     }
     setSubmitLoading(true);
 
     try {
-
       validateForm(company, gmail, number);
 
       // process form based on form state
       switch (formState) {
-
         // if form state is start, we process creating passcode and send to user
         case "start":
           // request backend to send passcode
@@ -92,7 +90,7 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
     setCompany("");
     setNumber(0);
     setGmail("");
-  }
+  };
 
   return (
     <>
