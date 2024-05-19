@@ -1,5 +1,6 @@
 // import User from "../models/User.js";
 import User from "../models/User.js";
+import multer from "multer";
 
 // create user profile -- POST
 export const createUser = async (req, res) => {
@@ -14,6 +15,24 @@ export const createUser = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       message: "Error creating user",
+      error: error.message,
+    });
+  }
+};
+
+export const uploadResume = async (req, res) => {
+  try {
+    const resume = req.file;
+    console.log(req);
+    console.log(resume);
+
+    res.status(201).json({
+      message: "get file",
+      data: resume,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Error",
       error: error.message,
     });
   }

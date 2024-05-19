@@ -8,3 +8,14 @@ export const sendResumeLink = async (resumeLink, dispatch, navigate) => {
 
   navigate("/profile");
 };
+
+export const sendResume = async (resume) => {
+  const formData = new FormData();
+  formData.append("resume", resume);
+
+  console.log("send resume")
+  console.log(resume);
+  console.log(formData.get("resume"));
+
+  const response = await API.post(`user/upload`, formData);
+};
