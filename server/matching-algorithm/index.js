@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import Request from "../src/models/Request.js";
 import Opening from "../src/models/Opening.js";
 import connectDB from "../src/utils/connectDB.js";
-import { scaleCalculate } from "./scale/scale.js"
+import { scaleCalculate } from "./scale/scale.js";
 import { getBatchPeriod } from "../src/utils/date.js";
 
 /* 
@@ -140,7 +140,6 @@ const algorithmFunction = async () => {
     console.log(err.message);
   }
   mongoose.connection.close();
-
 };
 
 algorithmFunction(); // this only call when use command
