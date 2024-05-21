@@ -1,5 +1,4 @@
 import API from ".";
-import { setUserId } from "../utils/api";
 import { toast } from "sonner";
 
 export const getAllRequests = async (userId) => {
@@ -19,6 +18,7 @@ export const createRequest = async (formData, userId) => {
       priority: formData.priority,
       status: formData.status,
       scale: formData.scale,
+      job_posting_url: formData.jobPostingUrl
     };
 
     const response = await API.post(`/request/create`, body);

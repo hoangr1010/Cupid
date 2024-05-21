@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { Table } from "flowbite-react";
 import CreateRequest from "./CreateRequest";
 import { reorderRequests } from "./../../utils/request";
+import { FaExternalLinkAlt } from "react-icons/fa";
 import dayjs from "dayjs";
 import { Spinner } from "flowbite-react";
 
@@ -110,7 +111,14 @@ const RequestDashboard = () => {
                         className="bg-white cursor-grab"
                       >
                         <Table.Cell>{request.priority}</Table.Cell>
-                        <Table.Cell>{request.company}</Table.Cell>
+                        <Table.Cell>
+                          <div className="flex gap-3">
+                            {request.company}
+                            <a href={request.job_posting_url} target="_blank" rel="noopener noreferrer">
+                              <FaExternalLinkAlt />
+                            </a>
+                          </div>
+                        </Table.Cell>
                         <Table.Cell>
                           <div className="w-fit">
                             <RequestCard status={request.status} />
