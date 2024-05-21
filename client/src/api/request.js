@@ -18,7 +18,7 @@ export const createRequest = async (formData, userId) => {
       priority: formData.priority,
       status: formData.status,
       scale: formData.scale,
-      job_posting_url: formData.jobPostingUrl
+      job_posting_url: formData.jobPostingUrl,
     };
 
     const response = await API.post(`/request/create`, body);

@@ -114,7 +114,11 @@ const RequestDashboard = () => {
                         <Table.Cell>
                           <div className="flex gap-3">
                             {request.company}
-                            <a href={request.job_posting_url} target="_blank" rel="noopener noreferrer">
+                            <a
+                              href={request.job_posting_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
                               <FaExternalLinkAlt />
                             </a>
                           </div>
