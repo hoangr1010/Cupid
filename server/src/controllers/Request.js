@@ -135,7 +135,7 @@ export const changePriority = async (req, res) => {
   }
 };
 
-export const getRemainingRequests = async (req, res) => {
+export const getRemainingRequestsByCompany = async (req, res) => {
   try {
     let [startDate, endDate] = getBatchPeriod();
 

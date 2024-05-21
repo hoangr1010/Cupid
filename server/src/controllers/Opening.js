@@ -204,7 +204,7 @@ export const verifyPasscode = async (req, res) => {
 };
 
 // Get all openings that haven't been matched yet, regardless of which user the opening belongs to
-export const getRemainingOpenings = async (req, res) => {
+export const getRemainingOpeningsByCompany = async (req, res) => {
   try {
     const openings = await Opening.find({
       company: req.params.company_name,
