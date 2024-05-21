@@ -134,3 +134,28 @@ export const changePriority = async (req, res) => {
     });
   }
 };
+
+export const getRemainingRequests = async (req, res) => {
+  try {
+    let [startDate, endDate] = getBatchPeriod();
+
+    const requests = await Request.find({
+      status: "waiting",
+      company: req.params.company_name,
+      createdAt: {
+        $gte: startDate,
+        $lte: endDate,
+      },
+    });
+
+    res.status(200).json({
+      message: `All remaining Requests from ${req.params.company_name} gotten successfully`,
+      data: requests,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: `Error getting remaining Openings from ${req.params.company_name}`,
+      error: error.message,
+    });
+  }
+};
