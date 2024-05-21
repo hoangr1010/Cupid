@@ -5,6 +5,7 @@ import BottomBar from "./BottomBar";
 import { BsFillPersonFill } from "react-icons/bs";
 import { FaHandHoldingMedical } from "react-icons/fa";
 import { FaHandHolding } from "react-icons/fa";
+import { FaHome } from "react-icons/fa";
 import { AiOutlineDoubleLeft } from "react-icons/ai";
 import { AiOutlineDoubleRight } from "react-icons/ai";
 
@@ -26,6 +27,13 @@ const Sidebar = () => {
         <p className="ps-5 p-2 font-righteous text-primary text-4xl">
           {isExpanded ? "Cupid" : "id"}
         </p>
+        <SidebarItem
+          path="/homepage"
+          text="Home"
+          icon={<FaHome size={iconSize} />}
+          isCurrent={currPage === "/homepage"}
+          isExpanded={isExpanded}
+        />
         <SidebarItem
           path="/request"
           text="Referral Request"
