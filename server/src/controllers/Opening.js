@@ -202,3 +202,23 @@ export const verifyPasscode = async (req, res) => {
     });
   }
 };
+
+// Get all openings that haven't been matched yet, regardless of which user the opening belongs to
+export const getRemainingOpenings = async (req, res) => {
+  try {
+    const openings = await Opening.find({
+      company: req.params.company_name,
+      status: "waiting",
+    });
+
+    res.status(200).json({
+      message: `All remaining Openings from ${req.params.company_name} gotten successfully`,
+      data: openings,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: `Error getting remaining Openings from ${req.params.company_name}`,
+      error: error.message,
+    });
+  }
+};
