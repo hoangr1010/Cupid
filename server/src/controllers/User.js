@@ -29,7 +29,7 @@ export const uploadResume = async (req, res) => {
     
     const user = await User.findByIdAndUpdate(
       userId,
-      { resume_url: `${process.env.S3_BUCKET_LINK}/${resumePath}` },
+      { resume_url: resumePath },
       { returnOriginal: false },
     );
     
