@@ -24,6 +24,10 @@ const requestSchema = new Schema(
       type: Number,
       required: true,
     },
+    job_posting_url: {
+      type: String,
+      // required: true,
+    },
     status: {
       type: String,
       enum: ["waiting", "matched", "approved", "referred"],
