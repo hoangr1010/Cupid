@@ -23,10 +23,7 @@ export const loadResumeToS3 = async (req, res, next) => {
         ContentType: "application/pdf",
       };
 
-      const data = await s3.upload(params).promise();
-      console.log("Upload successful:", data.Key);
-
-      console.log(data);
+      await s3.upload(params).promise();
 
       next();
     } else {
