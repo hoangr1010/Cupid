@@ -25,12 +25,16 @@ function ProfilePage() {
         {resume && !newResume ? (
           <div>
             <div className="h-screen pt-2.5">
-              <iframe src={user.resume_url} className="w-full h-full"></iframe>
+              <iframe
+                src={`${process.env.REACT_APP_S3_BUCKET_LINK}/${user.resume_url}`}
+                className="w-full h-full"
+              ></iframe>
             </div>
 
             <button
               className="filled-btn w-fit px-5 py-2.5 text-center m-2.5"
               onClick={() => {
+                console.log(`${process.env.S3_BUCKET_LINK}`);
                 console.log(resume && !newResume);
                 setNewResume(!newResume);
               }}
