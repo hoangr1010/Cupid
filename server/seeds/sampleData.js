@@ -63,7 +63,6 @@ const testUserRequest = [
     company: "Google",
     priority: 1,
     status: "waiting",
-    scale: 5,
   },
   {
     _id: requestID2,
@@ -72,7 +71,6 @@ const testUserRequest = [
     company: "Amazon",
     priority: 2,
     status: "matched",
-    scale: 4,
   },
   {
     _id: requestID3,
@@ -81,7 +79,6 @@ const testUserRequest = [
     company: "Netflix",
     priority: 3,
     status: "approved",
-    scale: 3,
   },
   {
     _id: requestID4,
@@ -90,14 +87,12 @@ const testUserRequest = [
     company: "Apple",
     priority: 4,
     status: "referred",
-    scale: 2,
   },
   {
     candidate_id: TEST_USER_ID,
     company: "Meta",
-    priority: 5,
+    priority: 2,
     status: "waiting",
-    scale: 1,
   },
 ];
 
@@ -108,7 +103,6 @@ const requests = [
     company: "Google",
     priority: 1,
     status: "waiting",
-    scale: 5,
   },
   {
     _id: requestID7,
@@ -117,7 +111,6 @@ const requests = [
     company: "Amazon",
     priority: 2,
     status: "matched",
-    scale: 4,
   },
   {
     _id: requestID8,
@@ -126,7 +119,6 @@ const requests = [
     company: "Neflix",
     priority: 3,
     status: "approved",
-    scale: 3,
   },
   {
     _id: requestID9,
@@ -135,7 +127,6 @@ const requests = [
     company: "Apple",
     priority: 4,
     status: "referred",
-    scale: 2,
   },
   {
     _id: requestID10,
@@ -143,7 +134,6 @@ const requests = [
     company: "Meta",
     priority: 5,
     status: "waiting",
-    scale: 1,
   },
 ];
 
