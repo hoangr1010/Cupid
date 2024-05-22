@@ -2,26 +2,14 @@ import { React, useState } from "react";
 import { useSelector } from "react-redux";
 import { Avatar } from "flowbite-react";
 import { sendResume } from "../../api/user";
+import { useDispatch } from "react-redux";
 
 function ProfilePage() {
   const user = useSelector((state) => state.auth.user);
   const resume = user.resume_url;
   const [file, setFile] = useState("");
-  const formData = new FormData();
-
-  // show reseme upon uploading the file to the app so user can see it
-  // before clicking upload
-  // not working yet
-  // const previewResume = async (e) => {
-  //   e.preventDefault();
-
-  //   console.log("preview resume");
-  //   setFile(e.target.files[0]);
-  //   formData.append("resume", file);
-
-  //   console.log(file);
-  //   console.log(formData);
-  // };
+  const [newResume, setNewResume] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <main className="flex overflow-auto gap-6 h-full w-full">
@@ -34,21 +22,30 @@ function ProfilePage() {
 
       <div className="widget_container basis-8/12 flex-grow h-fit pb-16">
         <h2 className="font-bold text-lg">Resume</h2>
-        {resume && (
+        {resume && !newResume ? (
           <div>
-            <iframe
-              src={file ? file : user.resume_url}
-              className="w-full h-full"
-            ></iframe>
+            <div className="h-screen pt-2.5">
+              <iframe src={user.resume_url} className="w-full h-full"></iframe>
+            </div>
+
+            <button
+              className="filled-btn w-fit px-5 py-2.5 text-center m-2.5"
+              onClick={() => {
+                console.log(resume && !newResume);
+                setNewResume(!newResume);
+              }}
+            >
+              Upload new resume
+            </button>
           </div>
-        )}
-        {!resume && (
+        ) : (
           <div>
-            <form
-              encType="multipart/form-data"
-              onSubmit={(e) => {
-                e.preventDefault();
-                sendResume(file);
+            <form className="pt-2.5"
+              onSubmit={() => {
+                if (newResume) {
+                  setNewResume(!newResume);
+                }
+                sendResume(file, dispatch);
               }}
             >
               <input
@@ -88,15 +85,24 @@ function ProfilePage() {
                 </div>
               </label>
               <button
-                className="filled-btn w-fit px-5 py-2.5 text-center"
+                className="filled-btn w-fit px-5 py-2.5 text-center m-2.5"
                 type="submit"
               >
                 Upload
               </button>
             </form>
+            {resume && (
+              <div>
+                <button
+                  onClick={() => setNewResume(!newResume)}
+                  className="filled-btn w-fit px-5 py-2.5 text-center m-2.5 mt-0"
+                >
+                  Back
+                </button>
+              </div>
+            )}
           </div>
         )}
-        {/* <iframe src={user.resume_url} className="w-full h-full"></iframe> */}
       </div>
     </main>
   );

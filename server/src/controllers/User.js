@@ -1,6 +1,6 @@
 // import User from "../models/User.js";
 import User from "../models/User.js";
-import multer from "multer";
+
 
 // create user profile -- POST
 export const createUser = async (req, res) => {
@@ -22,13 +22,20 @@ export const createUser = async (req, res) => {
 
 export const uploadResume = async (req, res) => {
   try {
-    const resume = req.file;
-    console.log(req);
-    console.log(resume);
-
+    const userId = req.get("userId");
+    const resumePath = `user-resume/${userId}/${req.file.originalname}`;
+    
+    console.log(resumePath);
+    
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { resume_url: `${process.env.S3_BUCKET_LINK}/${resumePath}` },
+      { returnOriginal: false },
+    );
+    
     res.status(201).json({
-      message: "get file",
-      data: resume,
+      message: "upload resume successful",
+      data: user,
     });
   } catch (error) {
     res.status(400).json({
