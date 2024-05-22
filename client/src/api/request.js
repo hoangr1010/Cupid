@@ -38,3 +38,23 @@ export const changeRequestPriority = async (newRequests) => {
     toast.error(err);
   }
 };
+
+export const getAllExistingRequests = async () => {
+  try {
+    const response = await API.get(`/request/getAllExistingRequests`);
+    return response.data.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const getRemainingRequestsByCompany = async (companyName) => {
+  try {
+    const response = await API.get(
+      `/request/getRemainingRequests/${companyName}`,
+    );
+    return response.data.data;
+  } catch (err) {
+    toast.error(err);
+  }
+};

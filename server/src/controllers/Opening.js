@@ -203,9 +203,9 @@ export const verifyPasscode = async (req, res) => {
   }
 };
 
-export const getAllPendingOpenings = async (req, res) => {
+export const getAllExistingOpenings = async (req, res) => {
   try {
-    const openings = await Opening.find({ status: "waiting" });
+    const openings = await Opening.find({});
 
     res.status(200).json({
       message: "All Openings gotten successfully",

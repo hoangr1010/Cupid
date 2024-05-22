@@ -31,6 +31,7 @@ const rootReducer = combineReducers({
   auth: allReducer.auth,
   request: allReducer.request,
   opening: allReducer.opening,
+  distinctCompanyList: allReducer.distinctCompanyList,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

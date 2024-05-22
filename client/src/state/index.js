@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { previewUser } from "./../constant/auth";
+import { act } from "react";
 
 const authInitialState = {
   user: process.env.REACT_APP_VERCEL_PREVIEW ? previewUser : null,
@@ -53,14 +54,44 @@ const openingSlice = createSlice({
   },
 });
 
+const distinctCompanyListInitialState = {
+  list: [],
+};
+
+const distinctCompanyListSlice = createSlice({
+  name: "distinctCompanyList",
+  initialState: distinctCompanyListInitialState,
+  reducers: {
+    updateDistinctCompanyList(state, action) {
+      state.list = action.payload;
+    },
+  },
+});
+
+const companyStatisticInitialState = {
+  map: new Map(),
+};
+
+const companyStatisticSlice = createSlice({
+  name: "companyStatistic",
+  initialState: companyStatisticInitialState,
+  reducers: {
+    updateCompanyStatistic(state, action) {
+      state.map.set(action.payload.company, action.payload.data);
+    },
+  },
+});
+
 const allReducers = {
   auth: authSlice.reducer,
   request: requestSlice.reducer,
   opening: openingSlice.reducer,
+  distinctCompanyList: distinctCompanyListSlice.reducer,
 };
 
 export const { updateUser, clearAuth } = authSlice.actions;
 export const { changeRequestList, pushRequestList } = requestSlice.actions;
 export const { changeOpeningList, pushOpeningList } = openingSlice.actions;
+export const { updateDistinctCompanyList } = distinctCompanyListSlice.actions;
 
 export default allReducers;

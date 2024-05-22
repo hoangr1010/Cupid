@@ -7,7 +7,7 @@ import {
   processPassCode,
   verifyPasscode,
   getRemainingOpeningsByCompany,
-  getAllPendingOpenings,
+  getAllExistingOpenings,
 } from "../controllers/Opening.js";
 import { checkUserId } from "../middleware/User.js";
 
@@ -15,7 +15,7 @@ const OpeningRouter = express.Router();
 
 OpeningRouter.get("/getAll", checkUserId, getAllOpenings);
 OpeningRouter.get("/verifyPasscode", checkUserId, verifyPasscode);
-OpeningRouter.get("/getAllPendingOpenings", getAllPendingOpenings);
+OpeningRouter.get("/getAllExistingOpenings", getAllExistingOpenings);
 OpeningRouter.get(
   "/getRemainingOpenings/:company_name",
   getRemainingOpeningsByCompany,

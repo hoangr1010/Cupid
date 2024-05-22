@@ -135,6 +135,22 @@ export const changePriority = async (req, res) => {
   }
 };
 
+export const getAllExistingRequests = async (req, res) => {
+  try {
+    const requests = await Request.find({});
+
+    res.status(200).json({
+      message: "All existing Requests gotten successfully",
+      data: requests,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Error getting all existing Requests",
+      error: error.message,
+    });
+  }
+};
+
 export const getRemainingRequestsByCompany = async (req, res) => {
   try {
     let [startDate, endDate] = getBatchPeriod();
