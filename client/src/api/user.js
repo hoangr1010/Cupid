@@ -18,5 +18,4 @@ export const sendResume = async (resume, dispatch) => {
   console.log(response);
 
   await dispatch(updateUser(response.data.data));
-
 };

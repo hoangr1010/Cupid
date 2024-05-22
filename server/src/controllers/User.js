@@ -1,7 +1,6 @@
 // import User from "../models/User.js";
 import User from "../models/User.js";
 
-
 // create user profile -- POST
 export const createUser = async (req, res) => {
   try {
@@ -24,15 +23,15 @@ export const uploadResume = async (req, res) => {
   try {
     const userId = req.get("userId");
     const resumePath = `user-resume/${userId}/${req.file.originalname}`;
-    
+
     console.log(resumePath);
-    
+
     const user = await User.findByIdAndUpdate(
       userId,
       { resume_url: `${process.env.S3_BUCKET_LINK}/${resumePath}` },
       { returnOriginal: false },
     );
-    
+
     res.status(201).json({
       message: "upload resume successful",
       data: user,

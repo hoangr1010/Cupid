@@ -40,9 +40,10 @@ function ProfilePage() {
           </div>
         ) : (
           <div>
-            <form className="pt-2.5"
+            <form
+              className="pt-2.5"
               onSubmit={(e) => {
-                e.preventDefault()
+                e.preventDefault();
                 if (resume) {
                   setNewResume(!newResume);
                 }
