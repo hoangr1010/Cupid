@@ -3,6 +3,7 @@ import { previewUser } from "./../constant/auth";
 
 const authInitialState = {
   user: process.env.REACT_APP_VERCEL_PREVIEW ? previewUser : null,
+  token: null,
 };
 
 const authSlice = createSlice({
@@ -11,6 +12,10 @@ const authSlice = createSlice({
   reducers: {
     updateUser(state, action) {
       state.user = action.payload;
+    },
+
+    updateToken(state, action) {
+      state.token = action.payload;
     },
 
     clearAuth(state, action) {
@@ -59,7 +64,7 @@ const allReducers = {
   opening: openingSlice.reducer,
 };
 
-export const { updateUser, clearAuth } = authSlice.actions;
+export const { updateUser, updateToken, clearAuth } = authSlice.actions;
 export const { changeRequestList, pushRequestList } = requestSlice.actions;
 export const { changeOpeningList, pushOpeningList } = openingSlice.actions;
 

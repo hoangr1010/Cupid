@@ -14,18 +14,21 @@ import OpeningDashboardPage from "./pages/OpeningDashboardPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import SideBarContainer from "./components/Sidebar/RouteContainer";
 import { useSelector } from "react-redux";
-import { setUserId } from "./utils/api";
+import { setUserId, setToken } from "./utils/api";
 
 function App() {
   const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
   const isAuthenticated = Boolean(user);
 
   if (user) {
     // Set global headers include userId
     setUserId(user._id);
+    setToken(token);
   } else {
     // delete userId in global header if logout
     setUserId(null);
+    setToken(null);
   }
 
   return (
