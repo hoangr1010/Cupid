@@ -41,8 +41,9 @@ function ProfilePage() {
         ) : (
           <div>
             <form className="pt-2.5"
-              onSubmit={() => {
-                if (newResume) {
+              onSubmit={(e) => {
+                e.preventDefault()
+                if (resume) {
                   setNewResume(!newResume);
                 }
                 sendResume(file, dispatch);
