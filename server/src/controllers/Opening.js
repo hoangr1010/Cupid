@@ -203,6 +203,22 @@ export const verifyPasscode = async (req, res) => {
   }
 };
 
+export const getAllPendingOpenings = async (req, res) => {
+  try {
+    const openings = await Opening.find({ status: "waiting" });
+
+    res.status(200).json({
+      message: "All Openings gotten successfully",
+      data: openings,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Error getting all Openings",
+      error: error.message,
+    });
+  }
+};
+
 // Get all openings that haven't been matched yet, regardless of which user the opening belongs to
 export const getRemainingOpeningsByCompany = async (req, res) => {
   try {
