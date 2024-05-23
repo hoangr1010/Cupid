@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
 export const getUserInfo = async (req, res) => {
@@ -28,9 +29,18 @@ export const getUserInfo = async (req, res) => {
       });
     }
 
+    const payload = {
+      firstName: userProfile.first_name,
+      lastName: userProfile.last_name,
+      email: userProfile.email,
+      linkedin_id: userProfile.linkedin_id,
+    };
+    const token = jwt.sign(payload, process.env.ACCESS_JWT_SECRET);
+
     res.status(200).send({
       userInfo: userProfile,
       exist: exist,
+      token,
     });
   } catch (err) {
     res.status(400).send({

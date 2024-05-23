@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import API from ".";
 import { updateUser } from "../state";
 
@@ -13,10 +14,14 @@ export const sendResume = async (resume, dispatch) => {
   const formData = new FormData();
   formData.append("resume", resume);
 
-  const response = await API.post(`user/upload`, formData);
+  try {
+    const response = await API.post(`user/upload`, formData);
 
-  console.log(response);
+    console.log(response);
 
-  await dispatch(updateUser(response.data.data));
-
+    await dispatch(updateUser(response.data.data));
+    toast.success("Resume uploaded");
+  } catch (error) {
+    toast.error("error uploading file: " + error);
+  }
 };

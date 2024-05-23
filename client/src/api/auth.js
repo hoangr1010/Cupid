@@ -1,4 +1,4 @@
-import { updateUser } from "./../state";
+import { updateUser, updateToken } from "./../state";
 import API from "./index";
 import { toast } from "sonner";
 
@@ -8,6 +8,7 @@ export const getUserInfo = async (authCode, navigate, dispatch) => {
 
     // put data into redux
     dispatch(updateUser(response.data.userInfo));
+    dispatch(updateToken(response.data.token));
 
     // redirect to page
     if (response.data.exist) {

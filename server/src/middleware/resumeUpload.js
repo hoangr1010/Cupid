@@ -15,24 +15,20 @@ export const loadResumeToS3 = async (req, res, next) => {
   try {
     if (req.file) {
       const userId = req.get("userId");
-      
+
       const params = {
         Bucket: `cupid-server-deployment-bucket/user-resume/${userId}`,
         Key: req.file.originalname,
         Body: req.file.buffer,
-        ContentType : 'application/pdf'
+        ContentType: "application/pdf",
       };
 
-      const data = await s3.upload(params).promise();
-      console.log("Upload successful:", data.Key);
-
-      console.log(data);
+      await s3.upload(params).promise();
 
       next();
     } else {
       res.status(400).send({ message: "No file uploaded" });
     }
-
   } catch (err) {
     console.log("fail load resume to s3");
     console.log(err.message);
