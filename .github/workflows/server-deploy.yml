@@ -39,3 +39,7 @@ jobs:
           LINKEDIN_ClIENT_SECRET: ${{ secrets.LINKEDIN_ClIENT_SECRET }}
           LINKEDIN_REDIRECT_URL: ${{ secrets.LINKEDIN_REDIRECT_URL }}          
           SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+          ACCESS_JWT_SECRET: ${{ secrets.ACCESS_JWT_SECRET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    
