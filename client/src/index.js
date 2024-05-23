@@ -32,6 +32,7 @@ const rootReducer = combineReducers({
   request: allReducer.request,
   opening: allReducer.opening,
   distinctCompanyList: allReducer.distinctCompanyList,
+  companyStatistic: allReducer.companyStatistic,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

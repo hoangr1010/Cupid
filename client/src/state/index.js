@@ -69,7 +69,7 @@ const distinctCompanyListSlice = createSlice({
 });
 
 const companyStatisticInitialState = {
-  map: new Map(),
+  map: new Object(),
 };
 
 const companyStatisticSlice = createSlice({
@@ -77,7 +77,7 @@ const companyStatisticSlice = createSlice({
   initialState: companyStatisticInitialState,
   reducers: {
     updateCompanyStatistic(state, action) {
-      state.map.set(action.payload.company, action.payload.data);
+      state.map[action.payload.company] = action.payload.data;
     },
   },
 });
@@ -87,11 +87,13 @@ const allReducers = {
   request: requestSlice.reducer,
   opening: openingSlice.reducer,
   distinctCompanyList: distinctCompanyListSlice.reducer,
+  companyStatistic: companyStatisticSlice.reducer,
 };
 
 export const { updateUser, clearAuth } = authSlice.actions;
 export const { changeRequestList, pushRequestList } = requestSlice.actions;
 export const { changeOpeningList, pushOpeningList } = openingSlice.actions;
 export const { updateDistinctCompanyList } = distinctCompanyListSlice.actions;
+export const { updateCompanyStatistic } = companyStatisticSlice.actions;
 
 export default allReducers;
