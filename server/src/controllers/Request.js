@@ -159,7 +159,7 @@ export const getRemainingRequestsByCompany = async (req, res) => {
     const [startDate, endDate] = getBatchPeriod();
 
     const data = await redisClient.get(
-      `${companyName}:${startDate}:${endDate}`,
+      `GET:getRemainingRequests:${companyName}:${startDate}:${endDate}`,
     );
 
     if (data) {
@@ -180,7 +180,7 @@ export const getRemainingRequestsByCompany = async (req, res) => {
       });
 
       redisClient.set(
-        `${companyName}:${startDate}:${endDate}`,
+        `GET:getRemainingRequests:${companyName}:${startDate}:${endDate}`,
         JSON.stringify(requests),
         {
           EX: 1800,

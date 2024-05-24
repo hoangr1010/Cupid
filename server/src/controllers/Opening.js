@@ -225,7 +225,9 @@ export const getRemainingOpeningsByCompany = async (req, res) => {
   const companyName = req.params.company_name;
 
   try {
-    const data = await redisClient.get(companyName);
+    const data = await redisClient.get(
+      `GET:getRemaningOpenings:${companyName}`,
+    );
 
     if (data) {
       console.log("Cache Hit");
@@ -240,9 +242,13 @@ export const getRemainingOpeningsByCompany = async (req, res) => {
         status: "waiting",
       });
 
-      redisClient.set(companyName, JSON.stringify(openings), {
-        EX: 1800,
-      });
+      redisClient.set(
+        `GET:getRemaningOpenings:${companyName}`,
+        JSON.stringify(openings),
+        {
+          EX: 1800,
+        },
+      );
 
       res.status(200).json({
         message: `All remaining Openings from ${companyName} gotten successfully`,
