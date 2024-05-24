@@ -221,19 +221,36 @@ export const getAllExistingOpenings = async (req, res) => {
 
 // Get all openings that haven't been matched yet, regardless of which user the opening belongs to
 export const getRemainingOpeningsByCompany = async (req, res) => {
-  try {
-    const openings = await Opening.find({
-      company: req.params.company_name,
-      status: "waiting",
-    });
+  const companyName = req.params.company_name;
 
-    res.status(200).json({
-      message: `All remaining Openings from ${req.params.company_name} gotten successfully`,
-      data: openings,
-    });
+  try {
+    const data = await redisClient.get(companyName);
+
+    if (data) {
+      console.log("Cache Hit");
+      res.status(200).json({
+        message: `All remaining Openings from ${companyName} gotten successfully`,
+        data: JSON.parse(data),
+      });
+    } else {
+      console.log("Cache Miss");
+      const openings = await Opening.find({
+        company: companyName,
+        status: "waiting",
+      });
+
+      redisClient.set(companyName, JSON.stringify(openings), {
+        EX: 1800,
+      });
+
+      res.status(200).json({
+        message: `All remaining Openings from ${companyName} gotten successfully`,
+        data: openings,
+      });
+    }
   } catch (error) {
     res.status(400).json({
-      message: `Error getting remaining Openings from ${req.params.company_name}`,
+      message: `Error getting remaining Openings from ${companyName}`,
       error: error.message,
     });
   }
