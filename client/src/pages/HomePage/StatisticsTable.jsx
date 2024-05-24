@@ -32,19 +32,23 @@ const StatisticsTable = () => {
     };
 
     const getCompanyStatistic = async () => {
-      distinctCompanyList.forEach(async (company) => {
-        dispatch(
-          updateCompanyStatistic({
-            company: company,
-            data: {
-              remainingRequests: (await getRemainingRequestsByCompany(company))
-                .length,
-              remainingOpenings: (await getRemainingOpeningsByCompany(company))
-                .length,
-            },
-          }),
-        );
-      });
+      await Promise.all(
+        distinctCompanyList.map(async (company) => {
+          dispatch(
+            updateCompanyStatistic({
+              company: company,
+              data: {
+                remainingRequests: (
+                  await getRemainingRequestsByCompany(company)
+                ).length,
+                remainingOpenings: (
+                  await getRemainingOpeningsByCompany(company)
+                ).length,
+              },
+            }),
+          );
+        }),
+      );
     };
 
     await getDistinctCompany();
