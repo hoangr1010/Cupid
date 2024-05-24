@@ -19,6 +19,31 @@ export const createUser = async (req, res) => {
   }
 };
 
+export const uploadResume = async (req, res) => {
+  try {
+    const userId = req.get("userId");
+    const resumePath = `user-resume/${userId}/${req.file.originalname}`;
+
+    console.log(resumePath);
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { resume_url: resumePath },
+      { returnOriginal: false },
+    );
+
+    res.status(201).json({
+      message: "upload resume successful",
+      data: user,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Error",
+      error: error.message,
+    });
+  }
+};
+
 export const updateResume = async (req, res) => {
   try {
     const resume_url = req.body;

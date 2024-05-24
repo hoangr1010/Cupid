@@ -7,3 +7,11 @@ export const setUserId = (userId) => {
     delete API.defaults.headers.common["userId"];
   }
 };
+
+export const setToken = (token) => {
+  if (token) {
+    API.defaults.headers["authorization"] = `Bearer ${token}`;
+  } else {
+    delete API.defaults.headers.common["authorization"];
+  }
+};

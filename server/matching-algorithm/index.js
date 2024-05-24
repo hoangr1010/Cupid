@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import Request from "../src/models/Request.js";
 import Opening from "../src/models/Opening.js";
 import connectDB from "../src/utils/connectDB.js";
+import { scaleCalculate } from "./scale/scale.js";
 import { getBatchPeriod } from "../src/utils/date.js";
 
 /* 
@@ -124,17 +125,23 @@ const algorithmFunction = async () => {
   await connectDB(process.env.DATABASE_CONNECTION_STRING);
 
   try {
+    // retrieve all requests and openings
     const inp = await getMatchingInput();
-    const matchList = runMatchingAlgorithm(inp[0], inp[1]);
+    const [requests, openings] = inp;
+
+    // update request scale
+    await scaleCalculate(requests);
+
+    // run matching algorithm
+    const matchList = runMatchingAlgorithm(requests, openings);
     await applyMatchingChanges(matchList);
     console.log("Matching algorithm ran successfully");
   } catch (err) {
     console.log(err.message);
   }
-
   mongoose.connection.close();
 };
 
-// algorithmFunction(); // this only call when use command
+algorithmFunction(); // this only call when use command
 
 export default algorithmFunction;
