@@ -138,7 +138,7 @@ export const changePriority = async (req, res) => {
 
 export const getAllExistingRequests = async (req, res) => {
   try {
-    const requests = await Request.find({});
+    const requests = await Request.find({ status: "waiting" });
 
     res.status(200).json({
       message: "All existing Requests gotten successfully",
