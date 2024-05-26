@@ -1,14 +1,20 @@
 import AWS from "aws-sdk";
 
 export const loadResumeToS3 = async (req, res, next) => {
-  console.log(req);
   console.log("load resume to s3");
 
-  AWS.config.update({
-    region: "us-west-1",
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  });
+  if (process.env.REACT_APP_ENVIRONMENT === "development") {
+    AWS.config.update({
+      region: "us-west-1",
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    });
+  
+  } else if (process.env.REACT_APP_ENVIRONMENT === "production") {
+    AWS.config.update({
+      region: "us-west-1",
+    });
+  }
 
   const s3 = new AWS.S3();
 
