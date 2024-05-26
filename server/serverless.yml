@@ -13,7 +13,7 @@ provider:
     name: cupid-server-deployment-bucket
   apiGateway:
     binaryMediaTypes:
-        - 'multipart/form-data'
+      - "multipart/form-data"
 
 plugins:
   - serverless-deployment-bucket
