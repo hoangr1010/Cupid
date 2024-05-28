@@ -47,7 +47,7 @@ const GetAllOpenings = () => {
               <Table.Cell>{index + 1}</Table.Cell>
               <Table.Cell>
                 <div className="flex items-center gap-2 text-black font-bold">
-                  {opening.company}
+                  {opening.request_id.candidate_id.first_name} {opening.request_id.candidate_id.last_name}
                   {opening.status == "matched" || opening.status == "approved" && (
                     <div class="h-3 w-3 rounded-full bg-red-500"></div>
                   )}
