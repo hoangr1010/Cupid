@@ -33,6 +33,9 @@ functions:
       LINKEDIN_REDIRECT_URL: ${env:LINKEDIN_REDIRECT_URL}
       SENDGRID_API_KEY: ${env:SENDGRID_API_KEY}
       ACCESS_JWT_SECRET: ${env:ACCESS_JWT_SECRET}
+      REDIS_PASSWORD: ${ env:REDIS_PASSWORD }
+      REDIS_HOST: ${ env:REDIS_HOST }
+      REDIS_PORT: ${ env:REDIS_PORT }
 
   cronJob-algo:
     handler: handler.algorithm

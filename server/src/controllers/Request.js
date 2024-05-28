@@ -1,6 +1,7 @@
 import { request } from "express";
 import Request from "../models/Request.js";
 import { getBatchPeriod } from "../utils/date.js";
+import redisClient from "../utils/connectRedis.js";
 
 export const getOneRequest = async (req, res) => {
   try {
@@ -130,6 +131,70 @@ export const changePriority = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       message: "Error changing priority",
+      error: error.message,
+    });
+  }
+};
+
+export const getAllExistingRequests = async (req, res) => {
+  try {
+    const requests = await Request.find({ status: "waiting" });
+
+    res.status(200).json({
+      message: "All existing Requests gotten successfully",
+      data: requests,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Error getting all existing Requests",
+      error: error.message,
+    });
+  }
+};
+
+export const getRemainingRequestsByCompany = async (req, res) => {
+  const companyName = req.params.company_name;
+
+  try {
+    const [startDate, endDate] = getBatchPeriod();
+
+    const data = await redisClient.get(
+      `GET:getRemainingRequests:${companyName}:${startDate}:${endDate}`,
+    );
+
+    if (data) {
+      console.log("Cache Hit");
+      res.status(200).json({
+        message: `All remaining Requests from ${req.params.company_name} gotten successfully`,
+        data: JSON.parse(data),
+      });
+    } else {
+      console.log("Cache Miss");
+      const requests = await Request.find({
+        status: "waiting",
+        company: companyName,
+        createdAt: {
+          $gte: startDate,
+          $lte: endDate,
+        },
+      });
+
+      redisClient.set(
+        `GET:getRemainingRequests:${companyName}:${startDate}:${endDate}`,
+        JSON.stringify(requests),
+        {
+          EX: 1800,
+        },
+      );
+
+      res.status(200).json({
+        message: `All remaining Requests from ${companyName} gotten successfully`,
+        data: requests,
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      message: `Error getting remaining Openings from ${companyName}`,
       error: error.message,
     });
   }

@@ -41,4 +41,6 @@ jobs:
           LINKEDIN_REDIRECT_URL: ${{ secrets.LINKEDIN_REDIRECT_URL }}          
           SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
           ACCESS_JWT_SECRET: ${{ secrets.ACCESS_JWT_SECRET }}
-    
+          REDIS_PASSWORD: ${ secrets.REDIS_PASSWORD }
+          REDIS_HOST: ${ secrets.REDIS_HOST }
+          REDIS_PORT: ${ secrets.REDIS_PORT }
