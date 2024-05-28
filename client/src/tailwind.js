@@ -14,7 +14,9 @@ const tailwindConfig = {
         grayLight: "#4b5563",
       },
       fontFamily: {
+        dm: ["DM Sans", "sans-serif"],
         righteous: ["Righteous", "sans-serif"],
+        darker: ["Darker Grotesque", "sans-serif"]
       },
     },
   },

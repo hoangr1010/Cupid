@@ -29,13 +29,13 @@ const GetAllOpenings = () => {
 
   return (
     <div className="overflow-x-auto w-full">
+      <h1 className="text-4xl font-bold font-darker mb-8">Referral Openings</h1>
       <Table hoverable>
         <Table.Head>
-          <Table.HeadCell>Index</Table.HeadCell>
+          <Table.HeadCell>#</Table.HeadCell>
           <Table.HeadCell>Company</Table.HeadCell>
           <Table.HeadCell>Status</Table.HeadCell>
           <Table.HeadCell>Date</Table.HeadCell>
-          <Table.HeadCell>Action</Table.HeadCell>
           <Table.HeadCell>
             <span className="sr-only">More</span>
           </Table.HeadCell>
@@ -45,29 +45,28 @@ const GetAllOpenings = () => {
           {openingList.map((opening, index) => (
             <Table.Row key={opening._id} className="bg-white">
               <Table.Cell>{index + 1}</Table.Cell>
-              <Table.Cell>{opening.company}</Table.Cell>
+              <Table.Cell>
+                <div className="flex items-center gap-2 text-black font-bold">
+                  {opening.company}
+                  {opening.status == "matched" || opening.status == "approved" && (
+                    <div class="h-3 w-3 rounded-full bg-red-500"></div>
+                  )}
+                </div>
+              </Table.Cell>
               <Table.Cell>
                 <div className="w-fit">
                   <StatusBadge status={opening.status} />
                 </div>
               </Table.Cell>
               <Table.Cell>
-                {dayjs(opening.createdAt).format("DD-MM-YYYY")}
-              </Table.Cell>
-              <Table.Cell>
-                {(opening.status === "matched" ||
-                  opening.status === "approved") && (
-                  <Badge color="pink" size="sm" className="w-fit">
-                    required
-                  </Badge>
-                )}
+                {dayjs(opening.createdAt).format("DD MMM")}
               </Table.Cell>
               <Table.Cell>
                 <OpeningInfoModal
                   openingId={opening._id}
                   company={opening.company}
                   status={opening.status}
-                  date={dayjs(opening.createdAt).format("DD-MM-YYYY")}
+                  date={dayjs(opening.createdAt).format("DD MMM YYYY")}
                   requestId={opening.request_id || null}
                 />
               </Table.Cell>

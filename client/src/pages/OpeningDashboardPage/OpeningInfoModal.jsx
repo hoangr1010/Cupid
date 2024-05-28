@@ -30,7 +30,7 @@ const OpeningInfoModal = (opening) => {
     <div>
       {/* Button to show up Modal */}
       <button
-        className="secondary-btn btn-padding rounded-sm font-bold"
+        className="secondary-btn btn-padding rounded-md font-bold"
         onClick={() => setOpenModal(true)}
       >
         Details
