@@ -42,4 +42,6 @@ jobs:
           ACCESS_JWT_SECRET: ${{ secrets.ACCESS_JWT_SECRET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    
+          REDIS_PASSWORD: ${ secrets.REDIS_PASSWORD }
+          REDIS_HOST: ${ secrets.REDIS_HOST }
+          REDIS_PORT: ${ secrets.REDIS_PORT }
