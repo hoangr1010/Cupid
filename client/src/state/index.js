@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { previewUser } from "./../constant/auth";
-import { act } from "react";
 
 const authInitialState = {
   user: process.env.REACT_APP_VERCEL_PREVIEW ? previewUser : null,
@@ -82,7 +81,10 @@ const companyStatisticSlice = createSlice({
   initialState: companyStatisticInitialState,
   reducers: {
     updateCompanyStatistic(state, action) {
-      state.map[action.payload.company] = action.payload.data;
+      state.map = {
+        ...state.map,
+        [action.payload.company]: action.payload.data,
+      };
     },
   },
 });

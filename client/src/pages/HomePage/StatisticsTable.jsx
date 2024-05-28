@@ -34,16 +34,19 @@ const StatisticsTable = () => {
     const getCompanyStatistic = async () => {
       await Promise.all(
         distinctCompanyList.map(async (company) => {
+          const remainingRequestsLength = (
+            await getRemainingRequestsByCompany(company)
+          ).length;
+          const remainingOpeningsLength = (
+            await getRemainingOpeningsByCompany(company)
+          ).length;
+
           dispatch(
             updateCompanyStatistic({
               company: company,
               data: {
-                remainingRequests: (
-                  await getRemainingRequestsByCompany(company)
-                ).length,
-                remainingOpenings: (
-                  await getRemainingOpeningsByCompany(company)
-                ).length,
+                remainingRequests: remainingRequestsLength,
+                remainingOpenings: remainingOpeningsLength,
               },
             }),
           );
@@ -57,7 +60,7 @@ const StatisticsTable = () => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [distinctCompanyList, companyStatistic]);
 
   return (
     <main className="h-full gap-12 overflow-auto">
@@ -68,8 +71,14 @@ const StatisticsTable = () => {
           <li key={company}>
             {" "}
             {company} (Remaining Requests:{" "}
-            {companyStatistic[company].remainingRequests} / Remaining Openings:{" "}
-            {companyStatistic[company].remainingOpenings})
+            {companyStatistic.hasOwnProperty(company)
+              ? companyStatistic[company].remainingRequests
+              : "Loading"}{" "}
+            / Remaining Openings:{" "}
+            {companyStatistic.hasOwnProperty(company)
+              ? companyStatistic[company].remainingOpenings
+              : "Loading"}
+            )
           </li>
         ))}
       </ul>
