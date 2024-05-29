@@ -16,7 +16,7 @@ const tailwindConfig = {
       fontFamily: {
         dm: ["DM Sans", "sans-serif"],
         righteous: ["Righteous", "sans-serif"],
-        darker: ["Darker Grotesque", "sans-serif"]
+        darker: ["Darker Grotesque", "sans-serif"],
       },
     },
   },
