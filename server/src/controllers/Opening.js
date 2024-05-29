@@ -31,6 +31,11 @@ export const getAllOpenings = async (req, res) => {
     const user_id = req.get("userid");
     const openings = await Opening.find({
       referrer_id: user_id,
+    }).populate({
+      path: "request_id",
+      populate: {
+        path: "candidate_id",
+      },
     });
 
     res.status(200).json({
