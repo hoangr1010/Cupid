@@ -18,49 +18,42 @@ const StatisticsTable = () => {
   const dispatch = useDispatch();
 
   const getData = async () => {
-    const getDistinctCompany = async () => {
-      const responseOpening = await getAllExistingOpenings();
-      const responseRequest = await getAllExistingRequests();
+    const responseOpening = await getAllExistingOpenings();
+    const responseRequest = await getAllExistingRequests();
 
-      const companyList = responseRequest
-        .concat(responseOpening)
-        .map((item) => item.company);
+    const companyList = responseRequest
+      .concat(responseOpening)
+      .map((item) => item.company);
 
-      const distinctCompanyList = [...new Set(companyList)];
+    const distinctCompanyList = [...new Set(companyList)];
 
-      dispatch(updateDistinctCompanyList(distinctCompanyList));
-    };
+    dispatch(updateDistinctCompanyList(distinctCompanyList));
 
-    const getCompanyStatistic = async () => {
-      await Promise.all(
-        distinctCompanyList.map(async (company) => {
-          const remainingRequestsLength = (
-            await getRemainingRequestsByCompany(company)
-          ).length;
-          const remainingOpeningsLength = (
-            await getRemainingOpeningsByCompany(company)
-          ).length;
+    for (const company of distinctCompanyList) {
+      const remainingRequestsLength = (
+        await getRemainingRequestsByCompany(company)
+      ).length;
+      const remainingOpeningsLength = (
+        await getRemainingOpeningsByCompany(company)
+      ).length;
 
-          dispatch(
-            updateCompanyStatistic({
-              company: company,
-              data: {
-                remainingRequests: remainingRequestsLength,
-                remainingOpenings: remainingOpeningsLength,
-              },
-            }),
-          );
+      console.log(company);
+
+      dispatch(
+        updateCompanyStatistic({
+          company: company,
+          data: {
+            remainingRequests: remainingRequestsLength,
+            remainingOpenings: remainingOpeningsLength,
+          },
         }),
       );
-    };
-
-    await getDistinctCompany();
-    await getCompanyStatistic();
+    }
   };
 
   useEffect(() => {
     getData();
-  }, [distinctCompanyList, companyStatistic]);
+  }, []);
 
   return (
     <main className="h-full gap-12 overflow-auto">
