@@ -11,7 +11,7 @@ const tailwindConfig = {
         primaryDark: "#00705E",
         background: "#F8FBF1",
         alt: "#ffffff",
-        grayLight: "#4b5563",
+        grayLight: "#717885",
       },
       fontFamily: {
         dm: ["DM Sans", "sans-serif"],

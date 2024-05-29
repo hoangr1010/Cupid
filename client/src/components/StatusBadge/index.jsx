@@ -10,8 +10,8 @@ const StatusBadge = ({ status }) => {
 
   return (
     <div>
-      <Badge color={badgeColor[status]} size="sm">
-        {status}
+      <Badge className="p-1" color={badgeColor[status]} size="sm">
+        <p className="text-xs">{status}</p>
       </Badge>
     </div>
   );

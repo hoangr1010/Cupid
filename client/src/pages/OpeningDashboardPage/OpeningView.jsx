@@ -13,6 +13,11 @@ const GetAllOpenings = () => {
   const userId = useSelector((state) => state.auth.user?._id) || null;
   const openingList = useSelector((state) => state.opening.list);
 
+  const nonWaitingOpeningList = openingList.filter(
+    (opening) => opening.status != "waiting",
+  );
+  const waitingOpeningList = openingList.filter(opening => opening.status === "waiting");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,7 +34,10 @@ const GetAllOpenings = () => {
 
   return (
     <div className="overflow-x-auto w-full">
-      <h1 className="text-4xl font-bold font-darker mb-8">Referral Openings</h1>
+      <h1 className="text-4xl font-bold font-darker mb-3">Opening Slots</h1>
+      <p className="text-grayLight font-bold mb-2">
+        Opening Slots: {waitingOpeningList.length}
+      </p>
       <Table hoverable>
         <Table.Head>
           <Table.HeadCell>#</Table.HeadCell>
@@ -42,15 +50,26 @@ const GetAllOpenings = () => {
         </Table.Head>
 
         <Table.Body className="divide-y">
-          {openingList.map((opening, index) => (
+          {nonWaitingOpeningList.map((opening, index) => (
             <Table.Row key={opening._id} className="bg-white">
               <Table.Cell>{index + 1}</Table.Cell>
               <Table.Cell>
-                <div className="flex items-center gap-2 text-black font-bold">
-                  {opening.request_id.candidate_id.first_name} {opening.request_id.candidate_id.last_name}
-                  {opening.status == "matched" || opening.status == "approved" && (
-                    <div class="h-3 w-3 rounded-full bg-red-500"></div>
-                  )}
+                <div className="flex items-center gap-2 text-black">
+                  <p
+                    className={
+                      opening.status == "matched" ||
+                      opening.status == "approved"
+                        ? "font-bold"
+                        : null
+                    }
+                  >
+                    {opening.request_id.candidate_id.first_name}{" "}
+                    {opening.request_id.candidate_id.last_name}
+                  </p>
+                  {(opening.status == "matched" ||
+                    opening.status == "approved") && (
+                      <div class="h-3 w-3 rounded-full bg-red-500"></div>
+                    )}
                 </div>
               </Table.Cell>
               <Table.Cell>

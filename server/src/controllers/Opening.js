@@ -33,7 +33,7 @@ export const getAllOpenings = async (req, res) => {
     }).populate({
       path: "request_id",
       populate: {
-      path: "candidate_id",
+        path: "candidate_id",
       },
     });
 

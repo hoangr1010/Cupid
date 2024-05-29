@@ -17,7 +17,7 @@ const OpeningInfoModal = (opening) => {
       // change opening list with updated status Object
       const newOpeningList = openings.map((opening) => {
         if (opening._id === response._id) {
-          return response;
+          return { ...opening, status: response.status };
         }
         return opening;
       });

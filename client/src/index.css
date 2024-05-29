@@ -34,7 +34,7 @@ code {
   }
 
   .secondary-btn {
-    @apply border hover:bg-gray-100 transition-all;
+    @apply border hover:bg-gray-100 hover:text-black transition-all;
   }
 
   .failure-btn {
