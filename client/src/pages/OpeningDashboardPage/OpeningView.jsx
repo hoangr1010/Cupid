@@ -16,7 +16,9 @@ const GetAllOpenings = () => {
   const nonWaitingOpeningList = openingList.filter(
     (opening) => opening.status != "waiting",
   );
-  const waitingOpeningList = openingList.filter(opening => opening.status === "waiting");
+  const waitingOpeningList = openingList.filter(
+    (opening) => opening.status === "waiting",
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,8 +70,8 @@ const GetAllOpenings = () => {
                   </p>
                   {(opening.status == "matched" ||
                     opening.status == "approved") && (
-                      <div class="h-3 w-3 rounded-full bg-red-500"></div>
-                    )}
+                    <div class="h-3 w-3 rounded-full bg-red-500"></div>
+                  )}
                 </div>
               </Table.Cell>
               <Table.Cell>
