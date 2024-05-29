@@ -3,6 +3,7 @@ import Request from "../models/Request.js";
 import Passcode from "./../models/Passcode.js";
 import { sendEmail } from "./../services/Sendgrid/sendEmail.js";
 import { generatePasscode } from "./../utils/generatePasscode.js";
+import redisClient from "../utils/connectRedis.js";
 
 export const getOneOpening = async (req, res) => {
   try {
@@ -204,6 +205,65 @@ export const verifyPasscode = async (req, res) => {
     res.status(400).json({
       message: "Error verifying passcode",
       error: err.message,
+    });
+  }
+};
+
+export const getAllExistingOpenings = async (req, res) => {
+  try {
+    const openings = await Opening.find({ status: "waiting" });
+
+    res.status(200).json({
+      message: "All Openings gotten successfully",
+      data: openings,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Error getting all Openings",
+      error: error.message,
+    });
+  }
+};
+
+// Get all openings that haven't been matched yet, regardless of which user the opening belongs to
+export const getRemainingOpeningsByCompany = async (req, res) => {
+  const companyName = req.params.company_name;
+
+  try {
+    const data = await redisClient.get(
+      `GET:getRemaningOpenings:${companyName}`,
+    );
+
+    if (data) {
+      console.log("Cache Hit");
+      res.status(200).json({
+        message: `All remaining Openings from ${companyName} gotten successfully`,
+        data: JSON.parse(data),
+      });
+    } else {
+      console.log("Cache Miss");
+      const openings = await Opening.find({
+        company: companyName,
+        status: "waiting",
+      });
+
+      redisClient.set(
+        `GET:getRemaningOpenings:${companyName}`,
+        JSON.stringify(openings),
+        {
+          EX: 1800,
+        },
+      );
+
+      res.status(200).json({
+        message: `All remaining Openings from ${companyName} gotten successfully`,
+        data: openings,
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      message: `Error getting remaining Openings from ${companyName}`,
+      error: error.message,
     });
   }
 };

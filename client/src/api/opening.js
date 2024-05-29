@@ -70,3 +70,23 @@ export const verifyPasscode = async (gmail, passcode) => {
     return;
   }
 };
+
+export const getAllExistingOpenings = async () => {
+  try {
+    const response = await API.get(`/opening/getAllExistingOpenings`);
+    return response.data.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const getRemainingOpeningsByCompany = async (companyName) => {
+  try {
+    const response = await API.get(
+      `/opening/getRemainingOpenings/${companyName}`,
+    );
+    return response.data.data;
+  } catch (err) {
+    toast.error(err);
+  }
+};
