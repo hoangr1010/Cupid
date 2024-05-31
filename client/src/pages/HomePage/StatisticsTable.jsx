@@ -8,6 +8,7 @@ import {
   getRemainingOpeningsByCompany,
 } from "../../api/opening";
 import { getAllExistingRequests } from "../../api/request";
+import CompanyCard from "./CompanyCard";
 
 const StatisticsTable = () => {
   const distinctCompanyList = useSelector(
@@ -55,24 +56,13 @@ const StatisticsTable = () => {
     getData();
   }, []);
 
+  console.log(distinctCompanyList, companyStatistic);
+
   return (
     <main className="h-full gap-12 overflow-auto">
-      <h1 className="text-3xl mb-5">Statistics</h1>
-
-      <ul>
+      <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {distinctCompanyList.map((company) => (
-          <li key={company}>
-            {" "}
-            {company} (Remaining Requests:{" "}
-            {companyStatistic.hasOwnProperty(company)
-              ? companyStatistic[company].remainingRequests
-              : "Loading"}{" "}
-            / Remaining Openings:{" "}
-            {companyStatistic.hasOwnProperty(company)
-              ? companyStatistic[company].remainingOpenings
-              : "Loading"}
-            )
-          </li>
+          <CompanyCard company={company} companyStatistic={companyStatistic} />
         ))}
       </ul>
     </main>

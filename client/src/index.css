@@ -28,7 +28,7 @@ code {
 
 @layer components {
   .widget_container {
-    @apply border p-6 rounded-lg shadow-md bg-alt;
+    @apply border p-6 rounded-lg bg-alt;
   }
 
   .text-field {
@@ -36,7 +36,7 @@ code {
   }
 
   .filled-btn {
-    @apply text-white bg-primary hover:text-primaryDark hover:bg-primaryLight font-medium rounded-md text-sm transition-all;
+    @apply text-white bg-primary hover:text-primaryDark hover:bg-primaryLight font-bold rounded-md text-sm transition-all;
   }
 
   .sidebar-btn {
