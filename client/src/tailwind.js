@@ -12,7 +12,7 @@ const tailwindConfig = {
         background: "#F8FBF1",
         alt: "#ffffff",
         grayLight: "#717885",
-        pinkDark: "#E91E63"
+        pinkDark: "#E91E63",
       },
       fontFamily: {
         dm: ["DM Sans", "sans-serif"],
