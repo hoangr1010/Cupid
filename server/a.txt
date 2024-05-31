@@ -1,0 +1,72 @@
+**About GitHub**
+
+As the global home for all developers, GitHub is the complete AI-powered developer platform to build, scale, and deliver secure software. Over 100 million people, including developers from 90 of the Fortune 100 companies, use GitHub to build amazing things together across 330+ million repositories. With all the collaborative features of GitHub, it has never been easier for individuals and teams to write faster, better code.
+
+**Locations**
+
+In this role you can work from Remote, United States
+
+**Overview**
+
+GitHub Copilot has changed the way software is built, and we have a unique opportunity to look further ahead to identify how software development can be faster, safer, easier, and more accessible. We’re looking for a talented and experienced Software Engineer to join us in this mission! 
+ GitHub Copilot Extensibility owns the platform and marketplace that expands Copilot's abilities to a rich ecosystem of developer tools and services from directly within our industry-leading experiences.
+
+As a Software Engineer on the Copilot Extensibility Team, you will work closely with a distributed, diverse, and passionate team of engineers and product managers with multiple teams across GitHub and Microsoft to improve and maintain our platform that integrators depend on in their software development cycle. Together, we are dedicated to shaping the future of software development by continuously enhancing AI-powered capabilities in GitHub and beyond.
+
+The Copilot team is highly distributed and you will thrive in an environment of remote work and asynchronous communication. You're expected to have strong written communication skills and be able to develop working relationships with coworkers in locations around the globe. As an engineer at GitHub you'll always be challenged to solve interesting and novel problems that have real impact on how the world builds software.
+
+**Responsibilities**
+
+* Lead technical decision making and architecture
+* Design and implement scalable, reliable and performant solutions for problems like rate-limiting, request routing, etc.
+* Write, review, and maintain code primarily in Go
+* Mentor other engineers in their technical and architectural decision making
+
+**Qualifications**
+
+**Required Qualifications:**
+* 2+ years experience building high traffic services at scale
+* 2+ years experience building and/or consuming REST-style APIs
+* 2+ years experience architecting highly available, high volume APIs
+* 2+ years experience writing, reviewing and maintaining code in Go or Ruby on Rails or equivalent 
+* Bachelor's degree and or equivalent experience
+
+**Preferred Qualifications:**
+* Experience with distributed systems at global scale
+* Experience working with a remote, distributed team
+* Excellent written and verbal communication skills
+* Interest or prior experience in modern AI/machine learning technologies, Large Language Models or similar
+* Passionate about fostering good API Design practices and processes
+ 
+**Compensation Range**
+
+The base salary range for this job is USD $90,700.00 - USD $240,500.00 /Yr.
+
+In addition, certain roles also have the opportunity to earn sales incentives based on revenue or utilization, depending on the terms of the plan and the employee's role.
+
+These pay ranges are intended to cover roles based across the United States. An individual's base pay depends on various factors including geographical location and review of experience, knowledge, skills, abilities of the applicant. At GitHub certain roles are eligible for benefits and additional rewards, including annual bonus and stock. These rewards are allocated based on individual impact in role. In addition, certain roles also have the opportunity to earn sales incentives based on revenue or utilization, depending on the terms of the plan and the employee's role.
+GitHub values
+* Customer-obsessed
+* Ship to learn
+* Growth mindset
+* Own the outcome
+* Better together
+* Diverse and inclusive
+* Manager fundamentals
+    * Model
+    * Coach
+    * Care
+* Leadership principles
+    * Create clarity
+    * Generate energy
+    * Deliver success
+
+**Who We Are**
+
+GitHub is the world’s leading AI-powered developer platform with 100 million developers and counting. We’re also home to the biggest open-source community on earth (and 99% of the world’s software has open-source code in its DNA). Many of the apps and programs you use every day are built on GitHub.
+Our teams are dreamers, doers, and pioneers, leading the way in AI, driving humanitarian efforts around the globe, and even sending open source to Mars (and beyond!). At GitHub, our goal is to create the space you need to do your best work. We’re remote-first and offer competitive pay, generous learning and growth opportunities, and excellent benefits to support you, wherever you are—because we know that people flourish when they can work on their own terms.
+Join us, and let’s change the world, together.
+
+**EEO Statement**
+
+GitHub is made up of people from a wide variety of backgrounds and lifestyles. We embrace diversity and invite applications from people of all walks of life. We don't discriminate against employees or applicants based on gender identity or expression, sexual orientation, race, religion, age, national origin, citizenship, disability, pregnancy status, veteran status, or any other differences. Also, if you have a disability, please let us know if there's any way we can make the interview process better for you; we're happy to accommodate!
