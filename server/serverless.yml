@@ -21,9 +21,18 @@ plugins:
 functions:
   api:
     handler: handler.api
+    # events:
+    #   - http: ANY /{proxy+}
+    #   - http: ANY /
     events:
-      - http: ANY /{proxy+}
-      - http: ANY /
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true
+      - http:
+          path: /
+          method: ANY
+          cors: true
     environment:
       DATABASE_CONNECTION_STRING: ${env:DATABASE_CONNECTION_STRING}
       MOCK_DATABASE_CONNECTION_STRING: ${env:MOCK_DATABASE_CONNECTION_STRING}
