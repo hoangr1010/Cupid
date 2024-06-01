@@ -1,8 +1,7 @@
 import natural from "natural";
 import extractJobPostingText from "../job-posting.js";
 
-const compatibilityFunction = async (resumeText, jobPostingURL) => {
-  const jobPostingText = await extractJobPostingText(jobPostingURL);
+const compatibilityFunction = async (resumeText, jobPostingText) => {
   const similarity = natural.JaroWinklerDistance(resumeText, jobPostingText);
   const similarityPercentage = (Math.round(similarity * 10000) / 100).toFixed(
     2,
@@ -15,8 +14,11 @@ const compatibilityFunction = async (resumeText, jobPostingURL) => {
 
 // const resumeText = ``;
 
-// const jobPostingURL = "";
+// const jobPostingURL =
+//   "https://www.github.careers/careers-home/jobs/2958?lang=en-us";
+
+// const jobPostingText = await extractJobPostingText(jobPostingURL);
 
 // (async function () {
-//   console.log(await compatibilityFunction(resumeText, jobPostingURL));
+//   console.log(await compatibilityFunction(resumeText, jobPostingText));
 // })();

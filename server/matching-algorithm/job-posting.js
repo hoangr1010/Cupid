@@ -1,5 +1,6 @@
 import { Builder, Browser, By, Key, until } from "selenium-webdriver";
 import runGemini from "./gemini-model.js";
+// import fs from "node:fs";
 
 const extractJobPostingText = async (jobPostingURL) => {
   let driver = await new Builder().forBrowser(Browser.CHROME).build();
@@ -27,7 +28,9 @@ const extractJobPostingText = async (jobPostingURL) => {
 // For testing purposes:
 
 // try {
-//   const content = "";
+//   const content = await extractJobPostingText(
+//     "https://www.github.careers/careers-home/jobs/2958?lang=en-us",
+//   );
 
 //   fs.writeFileSync("./matching-algorithm/a.txt", content);
 //   // file written successfully
