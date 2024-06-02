@@ -38,6 +38,17 @@ const requestSlice = createSlice({
     pushRequestList(state, action) {
       state.list = [...state.list, action.payload];
     },
+    changeOneRequest(state, action) {
+      const newRequest = action.payload;
+      const updateRequestList = state.list.map((request) => {
+        if (request._id === newRequest._id) {
+          return newRequest;
+        };
+
+        return request;
+      });
+      state.list = updateRequestList;
+    }
   },
 });
 
@@ -98,7 +109,7 @@ const allReducers = {
 };
 
 export const { updateUser, updateToken, clearAuth } = authSlice.actions;
-export const { changeRequestList, pushRequestList } = requestSlice.actions;
+export const { changeRequestList, pushRequestList, changeOneRequest } = requestSlice.actions;
 export const { changeOpeningList, pushOpeningList } = openingSlice.actions;
 export const { updateDistinctCompanyList } = distinctCompanyListSlice.actions;
 export const { updateCompanyStatistic } = companyStatisticSlice.actions;
