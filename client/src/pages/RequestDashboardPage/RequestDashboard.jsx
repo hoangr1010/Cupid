@@ -10,6 +10,7 @@ import { reorderRequests } from "./../../utils/request";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import dayjs from "dayjs";
 import { Spinner } from "flowbite-react";
+import StatusBadge from "../../components/StatusBadge";
 
 const RequestDashboard = () => {
   const user = useSelector((state) => state.auth.user);
@@ -66,7 +67,9 @@ const RequestDashboard = () => {
   return (
     <>
       <main className="flex-1 flex flex-col gap-12 overflow-auto h-full">
-        <h1 className="text-3xl font-bold">Referral Request</h1>
+        <h1 className="text-5xl font-bold font-darker text-primaryDark">
+          Referral Requests
+        </h1>{" "}
         {sortedRequestList.length > 0 ? (
           <>
             <div className="overflow-x-auto h-full">
@@ -125,7 +128,7 @@ const RequestDashboard = () => {
                         </Table.Cell>
                         <Table.Cell>
                           <div className="w-fit">
-                            <RequestCard status={request.status} />
+                            <StatusBadge status={request.status} />
                           </div>
                         </Table.Cell>
                         <Table.Cell>

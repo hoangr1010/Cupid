@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button } from "flowbite-react";
+import { Modal } from "flowbite-react";
 import { changeStatus } from "../../api/opening";
 import { changeOpeningList } from "../../state";
 import { useSelector, useDispatch } from "react-redux";
