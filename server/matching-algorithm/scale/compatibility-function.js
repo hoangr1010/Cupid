@@ -22,3 +22,5 @@ const compatibilityFunction = async (resumeText, jobPostingText) => {
 // (async function () {
 //   console.log(await compatibilityFunction(resumeText, jobPostingText));
 // })();
+
+export default compatibilityFunction;
