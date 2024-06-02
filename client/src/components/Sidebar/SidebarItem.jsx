@@ -12,13 +12,13 @@ const SidebarItem = ({ path, text, icon, isCurrent, isExpanded }) => {
       onClick={nav}
       className={
         isCurrent
-          ? "px-5 p-4 bg-primaryLight font-bold text-primaryDark w-full"
+          ? "px-5 p-4 bg-primaryLight text-primaryDark w-full"
           : "px-5 p-4 sidebar-btn w-full"
       }
     >
       <div className="flex gap-2 items-center">
         {icon}
-        {isExpanded ? <p>{text}</p> : null}
+        {isExpanded ? <p className="font-dm font-semibold">{text}</p> : null}
       </div>
     </button>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button } from "flowbite-react";
+import { Modal } from "flowbite-react";
 import { changeStatus } from "../../api/opening";
 import { changeOpeningList } from "../../state";
 import { useSelector, useDispatch } from "react-redux";
@@ -17,7 +17,7 @@ const OpeningInfoModal = (opening) => {
       // change opening list with updated status Object
       const newOpeningList = openings.map((opening) => {
         if (opening._id === response._id) {
-          return response;
+          return { ...opening, status: response.status };
         }
         return opening;
       });
@@ -30,7 +30,7 @@ const OpeningInfoModal = (opening) => {
     <div>
       {/* Button to show up Modal */}
       <button
-        className="secondary-btn btn-padding rounded-sm font-bold"
+        className="secondary-btn btn-padding rounded-md font-bold"
         onClick={() => setOpenModal(true)}
       >
         Details

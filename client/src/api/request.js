@@ -40,7 +40,6 @@ export const changeRequestPriority = async (newRequests) => {
     toast.error(err);
   }
 };
-
 export const sendFile = async (request, name, file, dispatch) => {
   try {
     const formData = new FormData();
@@ -70,5 +69,25 @@ export const delFile = async (path, dispatch) => {
     toast.success("Delete file successfully");
   } catch (error) {
     toast.error("Error deleting file: " + error);
+  }
+}
+
+export const getAllExistingRequests = async () => {
+  try {
+    const response = await API.get(`/request/getAllExistingRequests`);
+    return response.data.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const getRemainingRequestsByCompany = async (companyName) => {
+  try {
+    const response = await API.get(
+      `/request/getRemainingRequests/${companyName}`,
+    );
+    return response.data.data;
+  } catch (err) {
+    toast.error(err);
   }
 };

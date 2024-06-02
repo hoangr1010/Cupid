@@ -18,7 +18,9 @@ const OpeningDashboard = () => {
     <>
       <CreateOpeningModal openCreate={openCreate} onClose={onCloseCreate} />
       <main className="w-full h-full gap-12 overflow-auto">
-        <h1 className="text-3xl font-bold mb-8">Referral Openings</h1>
+        <h1 className="text-5xl font-bold font-darker mb-8 text-primaryDark">
+          Referral Openings
+        </h1>
 
         <div className="flex-1 flex flex-col items-center gap-12 w-full">
           {/* Create Opening button */}

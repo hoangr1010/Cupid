@@ -9,6 +9,7 @@ import LandingPage from "./pages/LandingPage";
 import OnboardPage from "./pages/OnboardPage";
 import Redirect from "./pages/LandingPage/Redirect";
 import ProfilePage from "./pages/ProfilePage";
+import HomePage from "./pages/HomePage";
 import RequestDashboardPage from "./pages/RequestDashboardPage";
 import OpeningDashboardPage from "./pages/OpeningDashboardPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -52,6 +53,7 @@ function App() {
 
           {/* routes including sidebar */}
           <Route element={<SideBarContainer />}>
+            <Route path="/homepage" element={<HomePage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/request" element={<RequestDashboardPage />} />
             <Route path="/opening" element={<OpeningDashboardPage />} />

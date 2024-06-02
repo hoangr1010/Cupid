@@ -8,8 +8,12 @@ provider:
   timeout: 15
   stage: production
   region: us-west-1
+  role: arn:aws:iam::071752151881:role/LambdaToS3
   deploymentBucket:
     name: cupid-server-deployment-bucket
+  apiGateway:
+    binaryMediaTypes:
+      - "multipart/form-data"
 
 plugins:
   - serverless-deployment-bucket
@@ -21,6 +25,7 @@ functions:
       - http: ANY /{proxy+}
       - http: ANY /
     environment:
+      REACT_APP_ENVIRONMENT: ${env:REACT_APP_ENVIRONMENT}
       DATABASE_CONNECTION_STRING: ${env:DATABASE_CONNECTION_STRING}
       MOCK_DATABASE_CONNECTION_STRING: ${env:MOCK_DATABASE_CONNECTION_STRING}
       LINKEDIN_CLIENT_ID: ${env:LINKEDIN_CLIENT_ID}
@@ -28,8 +33,10 @@ functions:
       LINKEDIN_REDIRECT_URL: ${env:LINKEDIN_REDIRECT_URL}
       SENDGRID_API_KEY: ${env:SENDGRID_API_KEY}
       ACCESS_JWT_SECRET: ${env:ACCESS_JWT_SECRET}
-      AWS_ACCESS_KEY_ID: ${env:AWS_ACCESS_KEY_ID}
-      AWS_SECRET_ACCESS_KEY: ${env:AWS_SECRET_ACCESS_KEY}
+      REDIS_PASSWORD: ${ env:REDIS_PASSWORD }
+      REDIS_HOST: ${ env:REDIS_HOST }
+      REDIS_PORT: ${ env:REDIS_PORT }
+
   cronJob-algo:
     handler: handler.algorithm
     events:
@@ -43,6 +50,3 @@ functions:
       LINKEDIN_REDIRECT_URL: ${env:LINKEDIN_REDIRECT_URL}
       SENDGRID_API_KEY: ${env:SENDGRID_API_KEY}
       ACCESS_JWT_SECRET: ${env:ACCESS_JWT_SECRET}
-      AWS_ACCESS_KEY_ID: ${env:AWS_ACCESS_KEY_ID}
-      AWS_SECRET_ACCESS_KEY: ${env:AWS_SECRET_ACCESS_KEY}
-

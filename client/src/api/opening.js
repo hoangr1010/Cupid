@@ -25,6 +25,7 @@ export const createOpenings = async (formData, userId) => {
 export const getAllOpenings = async (userId) => {
   try {
     const response = await API.get(`/opening/getAll`);
+    console.log(response);
     return response;
   } catch (err) {
     console.error(err);
@@ -67,5 +68,25 @@ export const verifyPasscode = async (gmail, passcode) => {
   } catch (err) {
     console.error(err);
     return;
+  }
+};
+
+export const getAllExistingOpenings = async () => {
+  try {
+    const response = await API.get(`/opening/getAllExistingOpenings`);
+    return response.data.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const getRemainingOpeningsByCompany = async (companyName) => {
+  try {
+    const response = await API.get(
+      `/opening/getRemainingOpenings/${companyName}`,
+    );
+    return response.data.data;
+  } catch (err) {
+    toast.error(err);
   }
 };
