@@ -22,7 +22,7 @@ export const createUser = async (req, res) => {
 export const uploadResume = async (req, res) => {
   try {
     const userId = req.get("userId");
-    const resumePath = `user-resume/${userId}/${req.file.originalname}`;
+    const resumePath = `${userId}/user-resume/${req.file.originalname}`;
 
     console.log(resumePath);
 

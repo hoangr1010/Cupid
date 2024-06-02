@@ -4,7 +4,7 @@ import { createUser, updateResume, uploadResume } from "../controllers/User.js";
 import { checkUserId } from "../middleware/User.js";
 import { verifyToken } from "../middleware/Auth.js";
 
-import { loadResumeToS3 } from "../middleware/resumeUpload.js";
+import { loadResumeToS3 } from "../middleware/fileHandle.js";
 
 const UserRouter = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });

@@ -134,3 +134,58 @@ export const changePriority = async (req, res) => {
     });
   }
 };
+
+export const updateFile = async (req, res) => {
+  try {
+    const requestId = req.get("requestId");
+    const fileName = req.get("fileName");
+    const userId = req.get("userId");
+    const filePath = `${userId}/request/${requestId}/${fileName}`;
+
+    // console.log(filePath);
+
+    const request = await Request.findByIdAndUpdate(
+      requestId,
+      { $push: { request_files: filePath } },
+      { returnOriginal: false },
+    );
+
+    // console.log(request);
+    res.status(200).json({
+      message: "Upload file successfully",
+      data: request,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Error storing file path",
+      error: error.message,
+    });
+  }
+};
+
+export const deleteFile = async (req, res) => {
+  try {
+    const { path } = req.body;
+    
+    const request_id = path.split("/")[2];
+    const request = await Request.findById(request_id);
+    
+    const new_request_files = request.request_files.filter((e) => e != path);
+    const data = await Request.findByIdAndUpdate(request_id, {
+      request_files: new_request_files,
+    });
+
+    res.status(200).json({
+      message: "Delete file successfully",
+      data: data,
+    });
+    // console.log(request.request_files.filter((e) => e != path));
+    // console.log(request);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      message: "Error deleting file",
+      error: error.message,
+    });
+  }
+};

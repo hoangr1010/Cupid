@@ -134,7 +134,8 @@ const RequestDashboard = () => {
                           {dayjs(request.createdAt).format("DD-MM-YYYY")}
                         </Table.Cell>
                         <Table.Cell>
-                          <RequestInfoModal />
+                          <RequestInfoModal
+                            request={request}/>
                         </Table.Cell>
                       </Table.Row>
                     ))}
