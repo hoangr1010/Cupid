@@ -2,6 +2,7 @@ import API from ".";
 import { toast } from "sonner";
 import { changeRequestList } from "../state";
 import { validateFileName } from "../utils/request";
+import { changeOneRequest } from "../state";
 
 export const getAllRequests = async (userId) => {
   try {
@@ -51,10 +52,9 @@ export const sendFile = async (request, name, file, dispatch) => {
     // validate if name is in redux
     validateFileName(request, name);
 
-    await API.post(`request/upload`, formData);
-    const response = await getAllRequests(request.request.request.candidate_id);
-    dispatch(changeRequestList(response.data.data));
+    const response = await API.post(`request/upload`, formData);
 
+    dispatch(changeOneRequest(response.data.data));
     toast.success("Upload file successfully");
   } catch (error) {
     toast.error("Error uploading file: " + error);
@@ -63,14 +63,14 @@ export const sendFile = async (request, name, file, dispatch) => {
 
 export const delFile = async (path, dispatch) => {
   try {
-    await API.post(`request/del`, { path });
-    const response = await getAllRequests(path.split("/")[0]);
-    dispatch(changeRequestList(response.data.data));
+    const response = await API.post(`request/del`, { path });
+
+    dispatch(changeOneRequest(response.data.data));
     toast.success("Delete file successfully");
   } catch (error) {
     toast.error("Error deleting file: " + error);
   }
-}
+};
 
 export const getAllExistingRequests = async () => {
   try {
