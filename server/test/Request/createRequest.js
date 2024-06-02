@@ -170,7 +170,10 @@ const user = {
   email: "example@example.com",
   first_name: "John",
   last_name: "Doe",
-  resume_url: "https://example.com/resume",
+  resume: {
+    url: "https://example.com/resume",
+    text: "This is a resume",
+  },
   picture_url: "https://example.com/picture",
 };
 

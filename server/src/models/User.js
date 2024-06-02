@@ -22,9 +22,6 @@ const UserSchema = new Schema({
     minLength: 2,
     maxLength: 50,
   },
-  resume_url: {
-    type: String,
-  },
   resume: {
     url: {
       type: String,
