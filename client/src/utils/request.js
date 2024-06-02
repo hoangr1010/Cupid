@@ -65,19 +65,18 @@ export const reorderRequests = (
 
 export const getFileName = (path) => {
   const pathArray = path.split("/");
-  return pathArray[pathArray.length - 1]
-}
+  return pathArray[pathArray.length - 1];
+};
 
 export const validateFileName = (request, name) => {
   if (!name) {
     console.log("aa");
     throw new Error("No file name");
   }
-  
-  request.request.request.request_files.forEach(element => {
 
+  request.request.request.request_files.forEach((element) => {
     if (name === getFileName(element)) {
       throw new Error("File name existed");
     }
   });
-}
+};

@@ -70,7 +70,7 @@ export const delFile = async (path, dispatch) => {
   } catch (error) {
     toast.error("Error deleting file: " + error);
   }
-}
+};
 
 export const getAllExistingRequests = async () => {
   try {

@@ -231,10 +231,10 @@ export const updateFile = async (req, res) => {
 export const deleteFile = async (req, res) => {
   try {
     const { path } = req.body;
-    
+
     const request_id = path.split("/")[2];
     const request = await Request.findById(request_id);
-    
+
     const new_request_files = request.request_files.filter((e) => e != path);
     const data = await Request.findByIdAndUpdate(request_id, {
       request_files: new_request_files,
