@@ -29,8 +29,8 @@ const UserSchema = new Schema({
     },
     text: {
       type: String,
-      default: '',
-    }
+      default: "",
+    },
   },
   picture_url: {
     type: String,

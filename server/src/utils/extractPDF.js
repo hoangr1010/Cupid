@@ -14,7 +14,7 @@ export const parsePdfFromBuffer = async (fileBuffer) => {
   } catch (error) {
     console.error("Error parsing PDF:", error);
   }
-}
+};
 
 const parsePdf = async (filePath) => {
   try {
