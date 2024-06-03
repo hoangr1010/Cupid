@@ -36,6 +36,9 @@ const requestSchema = new Schema(
     scale: {
       type: Number,
     },
+    compatibility: {
+      type: Number,
+    },
   },
   {
     timestamps: true,
