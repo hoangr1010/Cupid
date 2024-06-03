@@ -21,11 +21,19 @@ plugins:
 functions:
   api:
     handler: handler.api
+    # events:
+    #   - http: ANY /{proxy+}
+    #   - http: ANY /
     events:
-      - http: ANY /{proxy+}
-      - http: ANY /
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true
+      - http:
+          path: /
+          method: ANY
+          cors: true
     environment:
-      REACT_APP_ENVIRONMENT: ${env:REACT_APP_ENVIRONMENT}
       DATABASE_CONNECTION_STRING: ${env:DATABASE_CONNECTION_STRING}
       MOCK_DATABASE_CONNECTION_STRING: ${env:MOCK_DATABASE_CONNECTION_STRING}
       LINKEDIN_CLIENT_ID: ${env:LINKEDIN_CLIENT_ID}

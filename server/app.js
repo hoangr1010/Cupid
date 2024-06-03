@@ -23,7 +23,7 @@ const createApp = () => {
   app.use("/opening", OpeningRouter);
   app.use("/company", CompanyRouter);
   app.get("/", (req, res) => {
-    res.send("Hi, we're Cupid");
+    res.send("Hi, we're Cupid v3");
   });
 
   return app;

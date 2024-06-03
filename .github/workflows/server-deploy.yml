@@ -1,7 +1,7 @@
 name: server deployment
 
 on:
-  push:
+  pull_request:
     branches:
       - 'main'
     paths:
@@ -33,7 +33,6 @@ jobs:
           npx serverless deploy
         env:
           PORT: ${{ secrets.PORT }}
-          REACT_APP_ENVIRONMENT: ${{ secrets.REACT_APP_ENVIRONMENT }}
           DATABASE_CONNECTION_STRING: ${{ secrets.DATABASE_CONNECTION_STRING }}
           MOCK_DATABASE_CONNECTION_STRING: ${{ secrets.MOCK_DATABASE_CONNECTION_STRING }}
           LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}

@@ -9,7 +9,7 @@ export const loadResumeToS3 = async (req, res, next) => {
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     });
-  } else if (process.env.REACT_APP_ENVIRONMENT === "production") {
+  } else {
     AWS.config.update({
       region: "us-west-1",
     });
