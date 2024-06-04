@@ -245,7 +245,6 @@ export const deleteFile = async (req, res) => {
       message: "Delete file successfully",
       data: data,
     });
-    
   } catch (error) {
     console.log(error);
     res.status(400).json({
