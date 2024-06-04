@@ -25,6 +25,16 @@ const UserSchema = new Schema({
   resume_url: {
     type: String,
   },
+  resume: {
+    url: {
+      type: String,
+      required: true,
+    },
+    text: {
+      type: String,
+      default: "",
+    },
+  },
   picture_url: {
     type: String,
   },

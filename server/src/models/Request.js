@@ -39,6 +39,9 @@ const requestSchema = new Schema(
     request_files: {
       type: [String],
     },
+    compatibility: {
+      type: Number,
+    },
   },
   {
     timestamps: true,
