@@ -40,13 +40,9 @@ const requestSlice = createSlice({
     },
     changeOneRequest(state, action) {
       const newRequest = action.payload;
-      const updateRequestList = state.list.map((request) => {
-        if (request._id === newRequest._id) {
-          return newRequest;
-        }
-
-        return request;
-      });
+      const updateRequestList = state.list.map((oldRequest) =>
+        oldRequest.id === action.payload.id ? newRequest : oldRequest,
+      );
       state.list = updateRequestList;
     },
   },

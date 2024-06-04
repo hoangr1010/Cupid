@@ -30,7 +30,7 @@ requestRouter.post("/create", checkUserId, verifyToken, createRequest);
 
 requestRouter.put("/priority", checkUserId, verifyToken, changePriority);
 
-requestRouter.post(
+requestRouter.patch(
   "/upload",
   upload.single("file"),
   checkUserId,

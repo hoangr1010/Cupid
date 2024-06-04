@@ -207,15 +207,12 @@ export const updateFile = async (req, res) => {
     const userId = req.get("userId");
     const filePath = `${userId}/request/${requestId}/${fileName}`;
 
-    // console.log(filePath);
-
     const request = await Request.findByIdAndUpdate(
       requestId,
       { $push: { request_files: filePath } },
       { returnOriginal: false },
     );
 
-    // console.log(request);
     res.status(200).json({
       message: "Upload file successfully",
       data: request,
@@ -248,8 +245,7 @@ export const deleteFile = async (req, res) => {
       message: "Delete file successfully",
       data: data,
     });
-    // console.log(request.request_files.filter((e) => e != path));
-    // console.log(request);
+    
   } catch (error) {
     console.log(error);
     res.status(400).json({

@@ -70,13 +70,18 @@ export const getFileName = (path) => {
 
 export const validateFileName = (request, name) => {
   if (!name) {
-    console.log("aa");
     throw new Error("No file name");
+    // toast.error("No file name");
+    // return false;
   }
 
   request.request.request.request_files.forEach((element) => {
     if (name === getFileName(element)) {
       throw new Error("File name existed");
+      // toast.error("File name existed");
+      // return false
     }
   });
+
+  return true;
 };

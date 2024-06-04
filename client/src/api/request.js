@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { changeRequestList } from "../state";
 import { validateFileName } from "../utils/request";
 import { changeOneRequest } from "../state";
+import axios, { Axios } from "axios";
 
 export const getAllRequests = async (userId) => {
   try {
@@ -46,13 +47,21 @@ export const sendFile = async (request, name, file, dispatch) => {
     const formData = new FormData();
 
     formData.append("file", file);
-    API.defaults.headers["requestId"] = request.request.request._id;
-    API.defaults.headers["fileName"] = name;
+    console.log("api: " + API.headers);
+    // API.defaults.headers["requestId"] = request.request.request._id;
+    // API.defaults.headers["fileName"] = name;
 
     // validate if name is in redux
     validateFileName(request, name);
 
-    const response = await API.post(`request/upload`, formData);
+    const headers = {};
+
+    headers["requestId"] = request.request.request._id;
+    headers["fileName"] = name;
+
+    const response = await API.patch(`request/upload`, formData, {
+      headers: headers,
+    });
 
     dispatch(changeOneRequest(response.data.data));
     toast.success("Upload file successfully");

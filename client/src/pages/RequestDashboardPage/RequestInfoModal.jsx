@@ -30,7 +30,7 @@ const RequestInfoModal = (request) => {
           <div>Provided files</div>
           <ul>
             {uploadedFiles.map((file) => (
-              <li>
+              <li key={file}>
                 {getFileName(file)}{" "}
                 <button
                   className="success-btn text-white h-fit rounded-md btn-padding"
