@@ -5,7 +5,6 @@ import {
   getOneRequest,
   getAllRequests,
   changePriority,
-  getRemainingRequestsByCompany,
   getAllExistingRequests,
   updateFile,
   deleteFile,
@@ -19,10 +18,6 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 requestRouter.get("/", checkUserId, verifyToken, getAllRequests);
 requestRouter.get("/getAllExistingRequests", getAllExistingRequests);
-requestRouter.get(
-  "/getRemainingRequests/:company_name",
-  getRemainingRequestsByCompany,
-);
 
 requestRouter.get("/:request_id", getOneRequest);
 

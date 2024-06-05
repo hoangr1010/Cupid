@@ -2,11 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateDistinctCompanyList, updateCompanyStatistic } from "../../state";
-import { getRemainingRequestsByCompany } from "../../api/request";
-import {
-  getAllExistingOpenings,
-  getRemainingOpeningsByCompany,
-} from "../../api/opening";
+import { getAllExistingOpenings } from "../../api/opening";
 import { getAllExistingRequests } from "../../api/request";
 import CompanyCard from "./CompanyCard";
 
@@ -22,34 +18,47 @@ const StatisticsTable = () => {
     const responseOpening = await getAllExistingOpenings();
     const responseRequest = await getAllExistingRequests();
 
-    const companyList = responseRequest
-      .concat(responseOpening)
-      .map((item) => item.company);
+    let distinctCompanyList = [];
 
-    const distinctCompanyList = [...new Set(companyList)];
+    let companyCount = {};
+
+    responseOpening.forEach((opening) => {
+      distinctCompanyList.push(opening.company);
+
+      if (!companyCount[opening.company]) {
+        companyCount[opening.company] = {
+          remainingRequests: 0,
+          remainingOpenings: 0,
+        };
+      }
+
+      companyCount[opening.company].remainingOpenings += 1;
+    });
+
+    responseRequest.forEach((request) => {
+      distinctCompanyList.push(request.company);
+      if (!companyCount[request.company]) {
+        companyCount[request.company] = {
+          remainingRequests: 0,
+          remainingOpenings: 0,
+        };
+      }
+
+      companyCount[request.company].remainingRequests += 1;
+    });
+
+    distinctCompanyList = [...new Set(distinctCompanyList)]; // Remove duplicates
 
     dispatch(updateDistinctCompanyList(distinctCompanyList));
 
-    for (const company of distinctCompanyList) {
-      const remainingRequestsLength = (
-        await getRemainingRequestsByCompany(company)
-      ).length;
-      const remainingOpeningsLength = (
-        await getRemainingOpeningsByCompany(company)
-      ).length;
-
-      console.log(company);
-
+    distinctCompanyList.forEach((company) => {
       dispatch(
         updateCompanyStatistic({
           company: company,
-          data: {
-            remainingRequests: remainingRequestsLength,
-            remainingOpenings: remainingOpeningsLength,
-          },
+          data: companyCount[company],
         }),
       );
-    }
+    });
   };
 
   useEffect(() => {
