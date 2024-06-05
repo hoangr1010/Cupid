@@ -7,12 +7,19 @@ export const getResumeFromS3 = async (resume_url) => {
   return response.data;
 };
 
+export const parsePdfFromBuffer = async (fileBuffer) => {
+  try {
+    const data = await pdf(fileBuffer);
+    return data.text;
+  } catch (error) {
+    console.error("Error parsing PDF:", error);
+  }
+};
+
 const parsePdf = async (filePath) => {
   try {
     const dataBuffer = await getResumeFromS3(filePath);
-    const data = await pdf(dataBuffer);
-
-    return data.text;
+    return parsePdfFromBuffer(dataBuffer);
   } catch (error) {
     console.error("Error parsing PDF:", error);
   }
@@ -23,4 +30,5 @@ export default parsePdf;
 // For testing purpose
 
 // const url = "https://cupid-server-deployment-bucket.s3.us-west-1.amazonaws.com/Resume-HuyHoang.pdf";
-// parsePdf(url);
+// const text = await parsePdf(url);
+// console.log(text);

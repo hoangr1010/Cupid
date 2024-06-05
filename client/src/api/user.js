@@ -17,8 +17,6 @@ export const sendResume = async (resume, dispatch) => {
   try {
     const response = await API.post(`user/upload`, formData);
 
-    console.log(response);
-
     await dispatch(updateUser(response.data.data));
     toast.success("Resume uploaded");
   } catch (error) {

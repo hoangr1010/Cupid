@@ -24,11 +24,10 @@ export const uploadResume = async (req, res) => {
     const userId = req.get("userId");
     const resumePath = `${userId}/user-resume/${req.file.originalname}`;
 
-    console.log(resumePath);
-
+    // Immediately update the user with the resume URL
     const user = await User.findByIdAndUpdate(
       userId,
-      { resume_url: resumePath },
+      { "resume.url": resumePath },
       { returnOriginal: false },
     );
 

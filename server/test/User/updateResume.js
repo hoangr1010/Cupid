@@ -31,7 +31,7 @@ export default updateResumeTest = () => {
 
       expect(response.status).toBe(201);
       expect(response.body.data._id).toBe(userId.toString());
-      expect(response.body.data.resume_url).toBe(resumeLink);
+      expect(response.body.data.resume.url).toBe(resumeLink);
     });
 
     // User Not Found: Test that when a userid that doesn't exist in the database is provided, the function returns a 400 status code with an appropriate error message.
@@ -80,6 +80,9 @@ const user = {
   email: "example@example.com",
   first_name: "John",
   last_name: "Doe",
-  resume_url: "https://example.com/resume",
+  resume: {
+    url: "https://example.com/resume",
+    text: "This is a resume",
+  },
   picture_url: "https://example.com/picture",
 };
