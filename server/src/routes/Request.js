@@ -11,13 +11,15 @@ import { verifyToken } from "../middleware/Auth.js";
 
 const requestRouter = express.Router();
 
-requestRouter.get("/", checkUserId, verifyToken, getAllRequests);
+requestRouter.use(checkUserId, verifyToken);
+
+requestRouter.get("/", getAllRequests);
 requestRouter.get("/getAllExistingRequests", getAllExistingRequests);
 
 requestRouter.get("/:request_id", getOneRequest);
 
-requestRouter.post("/create", checkUserId, verifyToken, createRequest);
+requestRouter.post("/create", createRequest);
 
-requestRouter.put("/priority", checkUserId, verifyToken, changePriority);
+requestRouter.put("/priority", changePriority);
 
 export default requestRouter;

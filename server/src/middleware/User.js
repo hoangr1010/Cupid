@@ -11,13 +11,14 @@ export const checkUserId = async (req, res, next) => {
     });
   }
 
-  // check if userId exists in the database
-  const user = await User.findById(userId);
-  if (!user) {
-    return res.status(400).json({
-      message: "User not found",
-    });
-  }
+  // // this is commented out for optimized performance
+  // // check if userId exists in the database
+  // const user = await User.findById(userId);
+  // if (!user) {
+  //   return res.status(400).json({
+  //     message: "User not found",
+  //   });
+  // }
 
   next();
 };
