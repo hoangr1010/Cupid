@@ -39,6 +39,6 @@ requestRouter.patch(
   updateFile,
 );
 
-requestRouter.post("/del", checkUserId, verifyToken, delFileS3, deleteFile);
+requestRouter.patch("/del", checkUserId, verifyToken, delFileS3, deleteFile);
 
 export default requestRouter;

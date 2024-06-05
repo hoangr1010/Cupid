@@ -72,7 +72,7 @@ export const sendFile = async (request, name, file, dispatch) => {
 
 export const delFile = async (path, dispatch) => {
   try {
-    const response = await API.post(`request/del`, { path });
+    const response = await API.patch(`request/del`, { path });
 
     dispatch(changeOneRequest(response.data.data));
     toast.success("Delete file successfully");
