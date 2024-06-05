@@ -151,3 +151,53 @@ export const getAllExistingRequests = async (req, res) => {
     });
   }
 };
+
+export const updateFile = async (req, res) => {
+  try {
+    const requestId = req.get("requestId");
+    const fileName = req.get("fileName");
+    const userId = req.get("userId");
+    const filePath = `${userId}/request/${requestId}/${fileName}`;
+
+    const request = await Request.findByIdAndUpdate(
+      requestId,
+      { $push: { request_files: filePath } },
+      { returnOriginal: false },
+    );
+
+    res.status(200).json({
+      message: "Upload file successfully",
+      data: request,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Error storing file path",
+      error: error.message,
+    });
+  }
+};
+
+export const deleteFile = async (req, res) => {
+  try {
+    const { path } = req.body;
+
+    const request_id = path.split("/")[2];
+    
+    const data = await Request.findOneAndUpdate(
+      { _id: request_id },
+      { $pullAll: { request_files: [path] } },
+      { new: true },
+    );
+
+    res.status(200).json({
+      message: "Delete file successfully",
+      data: data,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      message: "Error deleting file",
+      error: error.message,
+    });
+  }
+};
