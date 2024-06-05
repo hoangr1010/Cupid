@@ -1,5 +1,6 @@
 import RequestCard from "./RequestCard";
 import { getAllRequests, changeRequestPriority } from "../../api/request";
+import RequestInfoModal from "./RequestInfoModal";
 import { useEffect, useRef, useState } from "react";
 import { changeRequestList } from "../../state";
 import { useSelector, useDispatch } from "react-redux";
@@ -91,6 +92,7 @@ const RequestDashboard = () => {
                     <Table.HeadCell>Company</Table.HeadCell>
                     <Table.HeadCell>Status</Table.HeadCell>
                     <Table.HeadCell>Date</Table.HeadCell>
+                    <Table.HeadCell>Details</Table.HeadCell>
                     <Table.HeadCell>
                       <span className="sr-only">More</span>
                     </Table.HeadCell>
@@ -133,6 +135,9 @@ const RequestDashboard = () => {
                         </Table.Cell>
                         <Table.Cell>
                           {dayjs(request.createdAt).format("DD-MM-YYYY")}
+                        </Table.Cell>
+                        <Table.Cell>
+                          <RequestInfoModal request={request} />
                         </Table.Cell>
                       </Table.Row>
                     ))}

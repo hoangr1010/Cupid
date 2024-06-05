@@ -36,6 +36,9 @@ const requestSchema = new Schema(
     scale: {
       type: Number,
     },
+    request_files: {
+      type: [String],
+    },
     compatibility: {
       type: Number,
     },

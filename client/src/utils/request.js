@@ -31,7 +31,7 @@ export const reorderRequests = (
 
   // remove dragRow from updatedRequestList
   waitingRequests = waitingRequests.filter(
-    (request) => request.priority != dragPriority.current,
+    (request) => request.priority !== dragPriority.current,
   );
   const draggedOverRowIndex = waitingRequests.findIndex(
     (request) => request.priority === draggedOverPriority.current,
@@ -61,4 +61,27 @@ export const reorderRequests = (
   });
 
   return newRequests;
+};
+
+export const getFileName = (path) => {
+  const pathArray = path.split("/");
+  return pathArray[pathArray.length - 1];
+};
+
+export const validateFileName = (request, name) => {
+  if (!name) {
+    throw new Error("No file name");
+    // toast.error("No file name");
+    // return false;
+  }
+
+  request.request.request.request_files.forEach((element) => {
+    if (name === getFileName(element)) {
+      throw new Error("File name existed");
+      // toast.error("File name existed");
+      // return false
+    }
+  });
+
+  return true;
 };
