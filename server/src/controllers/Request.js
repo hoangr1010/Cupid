@@ -182,7 +182,7 @@ export const deleteFile = async (req, res) => {
     const { path } = req.body;
 
     const request_id = path.split("/")[2];
-    
+
     const data = await Request.findOneAndUpdate(
       { _id: request_id },
       { $pullAll: { request_files: [path] } },
