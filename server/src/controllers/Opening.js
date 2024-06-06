@@ -3,7 +3,7 @@ import Request from "../models/Request.js";
 import Passcode from "./../models/Passcode.js";
 import { sendEmail } from "./../services/Sendgrid/sendEmail.js";
 import { generatePasscode } from "./../utils/generatePasscode.js";
-import redisClient from "../utils/connectRedis.js";
+import mongoose from "mongoose";
 
 export const getOneOpening = async (req, res) => {
   try {
@@ -60,14 +60,18 @@ export const createOpening = async (req, res) => {
       throw new Error("Invalid request number");
     }
 
+    const openingPromises = [];
     for (let i = 0; i < number; i++) {
-      const newOpening = await Opening.create({
-        referrer_id: userid,
-        company,
-        status: "waiting",
+      const openingPromise = Opening.create({
+      referrer_id: userid,
+      company,
+      status: "waiting",
       });
-      openings.push(newOpening);
+      openingPromises.push(openingPromise);
     }
+
+    const createdOpenings = await Promise.all(openingPromises);
+    openings.push(...createdOpenings);
 
     res.status(201).json({
       message: "Opening created successfully",
@@ -82,6 +86,7 @@ export const createOpening = async (req, res) => {
 };
 
 export const changeStatus = async (req, res) => {
+  const session = await mongoose.startSession();
   try {
     const { openingId, newStatus } = req.body;
 
@@ -92,19 +97,11 @@ export const changeStatus = async (req, res) => {
     }
 
     // if opening having status is non-waiting but no request_id associated with, throw error
-    if (newStatus != "waiting") {
-      if (!opening.request_id) {
-        throw new Error("not valid opening");
-      }
+    if (newStatus != "waiting" && !opening.request_id) {
+      throw new Error("not valid opening");
     }
 
-    // check if request_id exist and match with opening
-    const request = await Request.findById(opening.request_id);
-    if (!request) {
-      throw new Error("Request not found");
-    } else if (request._id.toString() !== opening.request_id.toString()) {
-      throw new Error("Request not matched with opening");
-    }
+    session.startTransaction();
 
     // update status in both opening and request
     let updatedOpening, updatedRequest;
@@ -112,36 +109,49 @@ export const changeStatus = async (req, res) => {
       updatedOpening = await Opening.findByIdAndUpdate(
         openingId,
         { status: newStatus },
-        { new: true },
+        { new: true, session },
       );
       updatedRequest = await Request.findByIdAndUpdate(
         opening.request_id,
         { status: newStatus },
-        { new: true },
+        { new: true, session }
       );
     } else {
       // if new status is waiting, delete request_id and opening_id in document
       updatedOpening = await Opening.findByIdAndUpdate(
         openingId,
         { $unset: { request_id: 1 }, status: newStatus },
-        { new: true },
+        { new: true, session },
       );
       updatedRequest = await Request.findByIdAndUpdate(
         opening.request_id,
         { $unset: { opening_id: 1 }, status: newStatus },
-        { new: true },
+        { new: true, session },
       );
     }
+
+    if (updatedRequest == null) {
+      throw new Error("Fail to update request");
+    }
+
+    await session.commitTransaction();
 
     res.status(200).json({
       message: "Status updated successfully",
       data: updatedOpening,
     });
   } catch (error) {
+    // If an error occurred, abort the transaction
+    if (session.inTransaction()) {
+      await session.abortTransaction();
+    }
     res.status(400).json({
       message: "Error updating status",
       error: error.message,
     });
+  } finally {
+    // End the session whether or not an error occurred
+    session.endSession();
   }
 };
 
