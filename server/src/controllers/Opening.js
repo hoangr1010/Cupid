@@ -63,9 +63,9 @@ export const createOpening = async (req, res) => {
     const openingPromises = [];
     for (let i = 0; i < number; i++) {
       const openingPromise = Opening.create({
-      referrer_id: userid,
-      company,
-      status: "waiting",
+        referrer_id: userid,
+        company,
+        status: "waiting",
       });
       openingPromises.push(openingPromise);
     }
@@ -114,7 +114,7 @@ export const changeStatus = async (req, res) => {
       updatedRequest = await Request.findByIdAndUpdate(
         opening.request_id,
         { status: newStatus },
-        { new: true, session }
+        { new: true, session },
       );
     } else {
       // if new status is waiting, delete request_id and opening_id in document
