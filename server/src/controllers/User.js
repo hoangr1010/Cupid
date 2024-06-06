@@ -1,5 +1,6 @@
 // import User from "../models/User.js";
 import User from "../models/User.js";
+import { parsePdf, extractField } from "../utils/parsePDF.js";
 
 // create user profile -- POST
 export const createUser = async (req, res) => {
@@ -65,6 +66,38 @@ export const updateResume = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       message: "Error updating resume",
+      error: error.message,
+    });
+  }
+};
+
+export const addEducation = async (req, res) => {
+  try {
+    const userId = req.get("userId");
+    const { school, major, degree, gpa, start_year, end_year } = req.body;
+
+    const education = {
+      school: school,
+      major: major,
+      degree: degree,
+      gpa: gpa,
+      start_year: start_year,
+      end_year: end_year,
+    };
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $push: { education: education } },
+      { new: true, runValidators: true },
+    );
+
+    res.status(201).json({
+      message: "add education successfully",
+      data: user,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Error",
       error: error.message,
     });
   }
