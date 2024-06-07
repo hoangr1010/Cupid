@@ -6,7 +6,7 @@ import {
   uploadResume,
   addEducation,
 } from "../controllers/User.js";
-import { checkUserId } from "../middleware/User.js";
+import { checkUserId, updateResumeText } from "../middleware/User.js";
 import { verifyToken } from "../middleware/Auth.js";
 
 import { loadResumeToS3 } from "../middleware/fileHandle.js";
