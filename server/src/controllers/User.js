@@ -1,6 +1,5 @@
 // import User from "../models/User.js";
 import User from "../models/User.js";
-import { parsePdf, extractField } from "../utils/parsePDF.js";
 
 // create user profile -- POST
 export const createUser = async (req, res) => {
