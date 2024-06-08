@@ -26,9 +26,3 @@ const parsePdf = async (filePath) => {
 };
 
 export default parsePdf;
-
-// For testing purpose
-
-// const url = "https://cupid-server-deployment-bucket.s3.us-west-1.amazonaws.com/Resume-HuyHoang.pdf";
-// const text = await parsePdf(url);
-// console.log(text);

@@ -1,6 +1,30 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
+const EducationSchema = new Schema({
+  school: {
+    type: String,
+    required: true,
+  },
+  major: {
+    type: String,
+    required: true,
+  },
+  degree: {
+    type: String,
+    required: true,
+  },
+  gpa: {
+    type: Number,
+  },
+  start_year: {
+    type: Number,
+  },
+  end_year: {
+    type: Number,
+  },
+});
+
 const UserSchema = new Schema({
   linkedin_id: {
     type: String,
@@ -34,6 +58,7 @@ const UserSchema = new Schema({
   picture_url: {
     type: String,
   },
+  education: [EducationSchema],
 });
 
 const User = mongoose.model("User", UserSchema, "Users");

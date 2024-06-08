@@ -1,6 +1,11 @@
 import express from "express";
 import multer from "multer";
-import { createUser, uploadResume } from "../controllers/User.js";
+import {
+  createUser,
+  updateResume,
+  uploadResume,
+  addEducation,
+} from "../controllers/User.js";
 import { checkUserId, updateResumeText } from "../middleware/User.js";
 import { verifyToken } from "../middleware/Auth.js";
 
@@ -20,5 +25,7 @@ UserRouter.post(
   loadResumeToS3,
   uploadResume,
 );
+
+UserRouter.put("/addEducation", checkUserId, verifyToken, addEducation);
 
 export default UserRouter;
