@@ -43,29 +43,3 @@ export const uploadResume = async (req, res) => {
   }
 };
 
-export const updateResume = async (req, res) => {
-  try {
-    const resume_url = req.body;
-    const userid = req.headers.userid;
-
-    if (!resume_url.resumeLink) {
-      throw new Error("No resumeLink specified in the request body");
-    }
-
-    const user = await User.findByIdAndUpdate(
-      userid,
-      { resume_url: resume_url.resumeLink },
-      { returnOriginal: false },
-    );
-
-    res.status(201).json({
-      message: "Update resume successfully",
-      data: user,
-    });
-  } catch (error) {
-    res.status(400).json({
-      message: "Error updating resume",
-      error: error.message,
-    });
-  }
-};

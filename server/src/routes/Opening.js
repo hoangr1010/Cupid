@@ -14,7 +14,7 @@ import { verifyToken } from "../middleware/Auth.js";
 const OpeningRouter = express.Router();
 
 OpeningRouter.get("/getAll", checkUserId, verifyToken, getAllOpenings);
-OpeningRouter.get("/verifyPasscode", checkUserId, verifyPasscode, verifyToken);
+OpeningRouter.get("/verifyPasscode", checkUserId, verifyToken, verifyPasscode);
 OpeningRouter.get("/getAllExistingOpenings", getAllExistingOpenings);
 OpeningRouter.get("/:opening_id", verifyToken, getOneOpening);
 

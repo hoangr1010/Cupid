@@ -3,7 +3,6 @@ import Request from "../models/Request.js";
 import Passcode from "./../models/Passcode.js";
 import { sendEmail } from "./../services/Sendgrid/sendEmail.js";
 import { generatePasscode } from "./../utils/generatePasscode.js";
-import redisClient from "../utils/connectRedis.js";
 
 export const getOneOpening = async (req, res) => {
   try {

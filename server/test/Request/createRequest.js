@@ -102,8 +102,7 @@ export default createRequestTest = () => {
         ...request1,
         priority: i + 1,
       }));
-
-      const requestList = await Request.create(requests);
+      await Request.create(requests);
 
       const response = await request(app)
         .post("/request/create")
@@ -112,7 +111,7 @@ export default createRequestTest = () => {
           candidate_id: userId,
           ...request1,
         });
-
+        
       expect(response.statusCode).toBe(400);
       expect(response.body.error).toBe("Maximum number of requests reached");
 
