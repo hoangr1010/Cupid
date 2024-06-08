@@ -68,10 +68,17 @@ export const runMatchingAlgorithm = (requestList, openingList) => {
     availableOpenings.get(opening.company).push(opening);
   }
 
-  // Implement n-pointers to match requests with highest scales to openings based on company
+  // 1st Iteration: spread out available openings to as many people as possible
   const matchList = [];
   const pointers = new Map();
+  const matchedUser = new Set();
   for (const request of requests) {
+    if (matchedUser.has(request.user)) {
+      continue;
+    }
+
+    matchedUser.add(request.user);
+
     if (!pointers.has(request.company)) {
       pointers.set(request.company, 0);
     }
@@ -79,6 +86,17 @@ export const runMatchingAlgorithm = (requestList, openingList) => {
       availableOpenings.set(request.company, []);
     }
 
+    const p = pointers.get(request.company);
+    const availableList = availableOpenings.get(request.company);
+    if (p < availableList.length) {
+      matchList.push([request._id, availableList[p]._id]);
+      pointers.set(request.company, p + 1);
+    }
+  }
+
+  // 2nd Iteration: match requests with highest scales to openings based on company
+  // Implement n-pointers to match requests with highest scales to openings based on company
+  for (const request of requests) {
     const p = pointers.get(request.company);
     const availableList = availableOpenings.get(request.company);
     if (p < availableList.length) {
@@ -142,6 +160,6 @@ const algorithmFunction = async () => {
   mongoose.connection.close();
 };
 
-// algorithmFunction(); // this only call when use command
+algorithmFunction(); // this only call when use command
 
 export default algorithmFunction;
