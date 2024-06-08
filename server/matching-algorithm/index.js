@@ -77,8 +77,6 @@ export const runMatchingAlgorithm = (requestList, openingList) => {
       continue;
     }
 
-    matchedUser.add(request.user);
-
     if (!pointers.has(request.company)) {
       pointers.set(request.company, 0);
     }
@@ -89,6 +87,7 @@ export const runMatchingAlgorithm = (requestList, openingList) => {
     const p = pointers.get(request.company);
     const availableList = availableOpenings.get(request.company);
     if (p < availableList.length) {
+      matchedUser.add(request.user);
       matchList.push([request._id, availableList[p]._id]);
       pointers.set(request.company, p + 1);
     }
