@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import createApp from "./app.js";
 import connectDB from "./src/utils/connectDB.js";
 import redisClient from "./src/utils/connectRedis.js";
+import firestore from "./src/utils/firestore.js";
 
 const app = createApp();
 connectDB(process.env.DATABASE_CONNECTION_STRING);
