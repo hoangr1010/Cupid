@@ -1,28 +1,4 @@
-import { runMatchingAlgorithm } from "../../matching-algorithm";
-
-export default runMatchingAlgorithmTest = () => {
-  describe("Run Matching Algorithm Test", () => {
-    it("Matching Algorithm runs correctly when there are less openings than there are requests", () => {
-      const matchingResult = runMatchingAlgorithm(inputRequests, inputOpenings);
-      const expectedMatching = [
-        [8, 2],
-        [6, 4],
-        [3, 3],
-        [4, 1],
-        [9, 5],
-      ];
-      expect(matchingResult).toEqual(expectedMatching);
-    });
-
-    it("Matching Algorithm runs correctly when there are more openings than there are requests", () => {
-      const matchingResult = runMatchingAlgorithm(inputRequests, inputOpenings);
-    });
-
-    it("Matching Algorithm runs correctly when there are the same number of openings as the number of requests", () => {
-      const matchingResult = runMatchingAlgorithm(inputRequests, inputOpenings);
-    });
-  });
-};
+import { runMatchingAlgorithm } from "../../matching-algorithm/index.js";
 
 const inputRequests = [
   {
@@ -100,7 +76,7 @@ const inputOpeningsLess = [
   },
   {
     _id: 5,
-    compnay: "OpenAI",
+    company: "OpenAI",
   },
   {
     _id: 6,
@@ -127,7 +103,7 @@ const inputOpeningsMore = [
   },
   {
     _id: 5,
-    compnay: "Amazon",
+    company: "Amazon",
   },
   {
     _id: 6,
@@ -151,7 +127,7 @@ const inputOpeningsMore = [
   },
   {
     _id: 11,
-    compnay: "Twitter",
+    company: "Twitter",
   },
   {
     _id: 12,
@@ -178,7 +154,7 @@ const inputOpeningsSame = [
   },
   {
     _id: 5,
-    compnay: "LinkedIn",
+    company: "LinkedIn",
   },
   {
     _id: 6,
@@ -190,10 +166,66 @@ const inputOpeningsSame = [
   },
   {
     _id: 8,
-    compnay: "Meta",
+    company: "Meta",
   },
   {
     _id: 9,
     company: "OpenAI",
   },
 ];
+
+export default runMatchingAlgorithmTest = () => {
+  describe("Run Matching Algorithm Test", () => {
+    it("Matching Algorithm runs correctly when there are less openings than there are requests", () => {
+      const matchingResult = runMatchingAlgorithm(
+        inputRequests,
+        inputOpeningsLess,
+      );
+      const expectedMatching = [
+        [8, 2],
+        [6, 4],
+        [3, 3],
+        [4, 1],
+        [9, 5],
+      ];
+      expect(matchingResult).toEqual(expectedMatching);
+    });
+
+    it("Matching Algorithm runs correctly when there are more openings than there are requests", () => {
+      const matchingResult = runMatchingAlgorithm(
+        inputRequests,
+        inputOpeningsMore,
+      );
+      const expectedMatching = [
+        [8, 2],
+        [6, 4],
+        [3, 3],
+        [2, 8],
+        [5, 10],
+        [4, 1],
+        [7, 5],
+        [1, 6],
+      ];
+      expect(matchingResult).toEqual(expectedMatching);
+    });
+
+    it("Matching Algorithm runs correctly when there are the same number of openings as the number of requests", () => {
+      const matchingResult = runMatchingAlgorithm(
+        inputRequests,
+        inputOpeningsSame,
+      );
+      const expectedMatching = [
+        [8, 2],
+        [6, 6],
+        [3, 3],
+        [2, 8],
+        [5, 5],
+        [4, 1],
+        [7, 7],
+        [9, 9],
+        [1, 4],
+      ];
+      expect(matchingResult).toEqual(expectedMatching);
+    });
+  });
+};

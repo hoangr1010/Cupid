@@ -16,10 +16,13 @@ describe("GENERAL TEST", () => {
     console.log("Closed mock database");
   });
 
-  describe("ENDPOINT TESTING", () => {
-    // UserTest();
-    // RequestTest();
-    // OpeningTest();
+  // describe("ENDPOINT TESTING", () => {
+  //   UserTest();
+  //   RequestTest();
+  //   OpeningTest();
+  // });
+
+  describe("Alogrithm Testing", () => {
     MatchingTest();
   });
 });

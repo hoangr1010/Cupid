@@ -54,6 +54,8 @@ Output:
 export const runMatchingAlgorithm = (requestList, openingList) => {
   const requests = JSON.parse(JSON.stringify(requestList));
   const openings = JSON.parse(JSON.stringify(openingList));
+  // console.log(requests);
+  // console.log(openings);
 
   // Sort Requests according to scale
   requests.sort((a, b) => b.scale - a.scale);
@@ -72,8 +74,9 @@ export const runMatchingAlgorithm = (requestList, openingList) => {
   const matchList = [];
   const pointers = new Map();
   const matchedUser = new Set();
+  const matchedRequest = new Set();
   for (const request of requests) {
-    if (matchedUser.has(request.user)) {
+    if (matchedUser.has(request.candidate_id)) {
       continue;
     }
 
@@ -86,8 +89,9 @@ export const runMatchingAlgorithm = (requestList, openingList) => {
 
     const p = pointers.get(request.company);
     const availableList = availableOpenings.get(request.company);
-    if (p < availableList.length) {
-      matchedUser.add(request.user);
+    if (availableList && p < availableList.length) {
+      matchedUser.add(request.candidate_id);
+      matchedRequest.add(request._id);
       matchList.push([request._id, availableList[p]._id]);
       pointers.set(request.company, p + 1);
     }
@@ -96,9 +100,21 @@ export const runMatchingAlgorithm = (requestList, openingList) => {
   // 2nd Iteration: match requests with highest scales to openings based on company
   // Implement n-pointers to match requests with highest scales to openings based on company
   for (const request of requests) {
+    if (matchedRequest.has(request._id)) {
+      continue;
+    }
+
+    if (!pointers.has(request.company)) {
+      pointers.set(request.company, 0);
+    }
+
+    if (!availableOpenings.has(request.company)) {
+      availableOpenings.set(request.company, []);
+    }
+
     const p = pointers.get(request.company);
     const availableList = availableOpenings.get(request.company);
-    if (p < availableList.length) {
+    if (availableList && p < availableList.length) {
       matchList.push([request._id, availableList[p]._id]);
       pointers.set(request.company, p + 1);
     }
