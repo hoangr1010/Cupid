@@ -147,7 +147,7 @@ const algorithmFunction = async () => {
     const [requests, openings] = inp;
 
     // update request scale
-    await scaleCalculate(requests);
+    // await scaleCalculate(requests);
 
     // run matching algorithm
     const matchList = runMatchingAlgorithm(requests, openings);
@@ -159,6 +159,6 @@ const algorithmFunction = async () => {
   mongoose.connection.close();
 };
 
-algorithmFunction(); // this only call when use command
+// algorithmFunction(); // this only call when use command
 
 export default algorithmFunction;

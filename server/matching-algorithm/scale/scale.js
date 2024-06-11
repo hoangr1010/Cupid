@@ -10,14 +10,14 @@ export const scaleCalculate = async (requests) => {
     scale += millisecondsDiff(request.createdAt);
     scale -= priorityScale(request.priority);
 
-    // const compatibility = await compatibilityScale(request);
-    // scale += compatibility;
+    const compatibility = await compatibilityScale(request);
+    scale += compatibility;
 
     await Request.findByIdAndUpdate(
       request._id,
       {
         scale,
-        // compatibility: compatibility / 3600000,
+        compatibility: compatibility / 3600000,
       },
       { new: true },
     );
