@@ -1,7 +1,5 @@
-import { request } from "express";
 import Request from "../models/Request.js";
 import { getBatchPeriod } from "../utils/date.js";
-import redisClient from "../utils/connectRedis.js";
 
 export const getOneRequest = async (req, res) => {
   try {

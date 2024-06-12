@@ -15,7 +15,6 @@ const UserRouter = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
 UserRouter.post("/create", createUser);
-UserRouter.put("/resume", checkUserId, verifyToken, updateResume);
 
 UserRouter.post(
   "/upload",
