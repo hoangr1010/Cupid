@@ -16,14 +16,16 @@ import { loadFileRequestToS3, delFileS3 } from "../middleware/fileHandle.js";
 const requestRouter = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
-requestRouter.get("/", checkUserId, verifyToken, getAllRequests);
+requestRouter.use(checkUserId, verifyToken);
+
+requestRouter.get("/", getAllRequests);
 requestRouter.get("/getAllExistingRequests", getAllExistingRequests);
 
 requestRouter.get("/:request_id", getOneRequest);
 
-requestRouter.post("/create", checkUserId, verifyToken, createRequest);
+requestRouter.post("/create", createRequest);
 
-requestRouter.put("/priority", checkUserId, verifyToken, changePriority);
+requestRouter.put("/priority", changePriority);
 
 requestRouter.patch(
   "/upload",

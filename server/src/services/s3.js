@@ -32,7 +32,6 @@ export const uploadFileToS3 = async (path, file, fileName, contentType) => {
 
 export const delFileFromS3 = async (path) => {
   try {
-    console.log(path);
     const params = {
       Bucket: `cupid-server-deployment-bucket`,
       Key: path.split(`cupid-server-deployment-bucket/`).pop(),

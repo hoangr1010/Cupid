@@ -102,8 +102,7 @@ export default createRequestTest = () => {
         ...request1,
         priority: i + 1,
       }));
-
-      const requestList = await Request.create(requests);
+      await Request.create(requests);
 
       const response = await request(app)
         .post("/request/create")
