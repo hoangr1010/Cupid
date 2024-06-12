@@ -13,14 +13,16 @@ import { verifyToken } from "../middleware/Auth.js";
 
 const OpeningRouter = express.Router();
 
-OpeningRouter.get("/getAll", checkUserId, verifyToken, getAllOpenings);
-OpeningRouter.get("/verifyPasscode", checkUserId, verifyToken, verifyPasscode);
+OpeningRouter.use(checkUserId, verifyToken);
+
+OpeningRouter.get("/getAll", getAllOpenings);
+OpeningRouter.get("/verifyPasscode", verifyPasscode);
 OpeningRouter.get("/getAllExistingOpenings", getAllExistingOpenings);
-OpeningRouter.get("/:opening_id", verifyToken, getOneOpening);
+OpeningRouter.get("/:opening_id", getOneOpening);
 
-OpeningRouter.post("/create", checkUserId, verifyToken, createOpening);
-OpeningRouter.post("/passcode", checkUserId, verifyToken, processPassCode);
+OpeningRouter.post("/create", createOpening);
+OpeningRouter.post("/passcode", processPassCode);
 
-OpeningRouter.put("/changeStatus", verifyToken, changeStatus);
+OpeningRouter.put("/changeStatus", changeStatus);
 
 export default OpeningRouter;

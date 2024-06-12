@@ -104,23 +104,26 @@ export const changePriority = async (req, res) => {
   try {
     const newRequestsData = req.body.newRequests;
     const newRequests = [];
-    for (const request of newRequestsData) {
-      const { _id, priority, status } = request;
 
-      if (status != "waiting") {
-        // if request is non-waiting, do nothing
-        newRequests.push(request);
-        continue;
-      } else {
-        // change priority of waiting request
-        const updatedRequest = await Request.findByIdAndUpdate(
-          _id,
-          { priority },
-          { new: true },
-        );
-        newRequests.push(updatedRequest);
-      }
-    }
+    await Promise.all(
+      newRequestsData.map(async (request) => {
+        const { _id, priority, status } = request;
+
+        if (status != "waiting") {
+          // if request is non-waiting, do nothing
+          newRequests.push(request);
+          return;
+        } else {
+          // change priority of waiting request
+          const updatedRequest = await Request.findByIdAndUpdate(
+            _id,
+            { priority },
+            { new: true },
+          );
+          newRequests.push(updatedRequest);
+        }
+      }),
+    );
 
     res.status(200).json({
       message: "Priority changed successfully",
