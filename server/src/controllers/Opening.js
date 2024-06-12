@@ -3,6 +3,7 @@ import Request from "../models/Request.js";
 import Passcode from "./../models/Passcode.js";
 import { sendEmail } from "./../services/Sendgrid/sendEmail.js";
 import { generatePasscode } from "./../utils/generatePasscode.js";
+import { getBatchPeriod } from "./../utils/date.js";
 import mongoose from "mongoose";
 
 export const getOneOpening = async (req, res) => {
@@ -52,32 +53,40 @@ export const getAllOpenings = async (req, res) => {
 
 export const createOpening = async (req, res) => {
   try {
-    const { number, company } = req.body;
-    const { userid } = req.headers;
-    const openings = [];
+    const userId = req.get("userid");
+    const { amount, company } = req.body;
+    let [startDate, endDate] = getBatchPeriod();
 
-    if (number < 1 || !number) {
-      throw new Error("Invalid request number");
-    }
-
-    const openingPromises = [];
-    for (let i = 0; i < number; i++) {
-      const openingPromise = Opening.create({
-        referrer_id: userid,
-        company,
-        status: "waiting",
-      });
-      openingPromises.push(openingPromise);
-    }
-
-    const createdOpenings = await Promise.all(openingPromises);
-    openings.push(...createdOpenings);
-
-    res.status(201).json({
-      message: "Opening created successfully",
-      data: openings,
+    // Check if referrer have opening object for this term
+    const existingOpening = await Opening.findOne({
+      referrer_id: userId,
+      createdAt: { $gte: startDate, $lte: endDate },
     });
+
+    let responseOpening;
+    // if user already have opening
+    if (existingOpening) {
+      // check if the company they request match with the opening
+      if (existingOpening.company == company) {
+        // if matched, add up the original amount of the opening
+        existingOpening.original_amount += amount;
+        await existingOpening.save();
+
+        responseOpening = existingOpening;
+      } else {
+        throw Error("Not matched company");
+      }
+    } else {
+      // if not exist, create new opening for referrer this term
+      responseOpening = await Opening.create({
+        referrer_id: userId,
+        original_amount: amount,
+        company,
+      });
+    }
+    res.status(200).json(responseOpening);
   } catch (error) {
+    console.log(error);
     res.status(400).json({
       message: "Error creating opening",
       error: error.message,
