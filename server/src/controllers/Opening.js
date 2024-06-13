@@ -29,19 +29,36 @@ export const getOneOpening = async (req, res) => {
 
 export const getAllOpenings = async (req, res) => {
   try {
-    const user_id = req.get("userid");
-    const openings = await Opening.find({
-      referrer_id: user_id,
-    }).populate({
-      path: "request_id",
-      populate: {
-        path: "candidate_id",
-      },
+    const userId = req.get("userid");
+
+    let [startDate, endDate] = getBatchPeriod();
+
+    // Check if referrer have opening object for this term
+    const existingOpening = await Opening.findOne({
+      referrer_id: userId,
+      createdAt: { $gte: startDate, $lte: endDate },
     });
+
+    if (!existingOpening) {
+      throw new Error("Couldn't find opening");
+    }
+
+    const requestIdList = existingOpening.request_id_list;
+
+    const requestPromises = requestIdList.map(async (requestId) => {
+      const request = await Request.findById(requestId).populate(
+        "candidate_id",
+        "_id first_name last_name",
+      );
+
+      return request;
+    });
+
+    const requests = await Promise.all(requestPromises);
 
     res.status(200).json({
       message: "Openings gotten successfully",
-      data: openings,
+      data: { ...existingOpening.toObject(), requests },
     });
   } catch (error) {
     res.status(400).json({
