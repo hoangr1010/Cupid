@@ -6,7 +6,7 @@ import {
   verifyPasscode,
 } from "../../api/opening";
 import { useSelector, useDispatch } from "react-redux";
-import { pushOpeningList } from "../../state";
+import { pushOpeningList, changeAmount } from "../../state";
 import { toast } from "sonner";
 import { CompanyDropDown } from "./../../components/CompanyDropDown";
 import { VerificationBox } from "./VerificationBox";
@@ -64,10 +64,11 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
 
           // if passcode is correct, create opening
           if (response) {
-            const formData = { company: company.value, number };
+            const formData = { company: company.value, number: parseInt(number) };
             const response = await createOpenings(formData, userId);
+
             if (response) {
-              dispatch(pushOpeningList(response));
+              dispatch(changeAmount(response.original_amount));
               onClose();
             }
           } else {

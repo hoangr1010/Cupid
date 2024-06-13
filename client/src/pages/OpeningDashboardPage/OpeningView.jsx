@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { changeOpeningList } from "../../state";
+import { loadOpening } from "../../state";
 import { getAllOpenings } from "../../api/opening";
 import StatusBadge from "../../components/StatusBadge";
 import OpeningInfoModal from "./OpeningInfoModal";
@@ -11,20 +11,20 @@ const dayjs = require("dayjs");
 const GetAllOpenings = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.user?._id) || null;
-  const openingList = useSelector((state) => state.opening.list);
+  // const openingList = useSelector((state) => state.opening.list);
 
-  const nonWaitingOpeningList = openingList.filter(
-    (opening) => opening.status != "waiting",
-  );
-  const waitingOpeningList = openingList.filter(
-    (opening) => opening.status === "waiting",
-  );
+  // const nonWaitingOpeningList = openingList.filter(
+  //   (opening) => opening.status != "waiting",
+  // );
+  // const waitingOpeningList = openingList.filter(
+  //   (opening) => opening.status === "waiting",
+  // );
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getAllOpenings(userId);
-        dispatch(changeOpeningList(response.data.data));
+        dispatch(loadOpening(response));
       } catch (err) {
         console.error(err);
         toast.error("There exists an error when retrieving opening slots");
@@ -36,7 +36,7 @@ const GetAllOpenings = () => {
 
   return (
     <div className="overflow-x-auto w-full">
-      <h1 className="text-4xl font-bold font-darker mb-3">Opening Slots</h1>
+      {/* <h1 className="text-4xl font-bold font-darker mb-3">Opening Slots</h1>
       <p className="text-grayLight font-bold mb-2">
         Opening Slots: {waitingOpeningList.length}
       </p>
@@ -94,7 +94,7 @@ const GetAllOpenings = () => {
             </Table.Row>
           ))}
         </Table.Body>
-      </Table>
+      </Table> */}
     </div>
   );
 };
