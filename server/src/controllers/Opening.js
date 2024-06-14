@@ -6,27 +6,6 @@ import { generatePasscode } from "./../utils/generatePasscode.js";
 import { getBatchPeriod } from "./../utils/date.js";
 import mongoose from "mongoose";
 
-export const getOneOpening = async (req, res) => {
-  try {
-    const opening_id = req.params.opening_id;
-    const foundOpening = await Opening.find({ _id: opening_id });
-
-    if (foundOpening.length < 1) {
-      throw new Error("Opening not found");
-    }
-
-    res.status(200).json({
-      message: "Opening gotten successfully",
-      data: foundOpening,
-    });
-  } catch (error) {
-    res.status(400).json({
-      message: "Error getting opening",
-      error: error.message,
-    });
-  }
-};
-
 export const getAllOpenings = async (req, res) => {
   try {
     const userId = req.get("userid");

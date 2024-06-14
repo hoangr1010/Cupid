@@ -8,6 +8,7 @@ import {
   getAllExistingRequests,
   updateFile,
   deleteFile,
+  changeStatus
 } from "../controllers/Request.js";
 import { checkUserId } from "../middleware/User.js";
 import { verifyToken } from "../middleware/Auth.js";
@@ -26,6 +27,7 @@ requestRouter.get("/:request_id", getOneRequest);
 requestRouter.post("/create", createRequest);
 
 requestRouter.put("/priority", changePriority);
+requestRouter.put("/changeStatus", changeStatus);
 
 requestRouter.patch(
   "/upload",
