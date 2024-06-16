@@ -14,8 +14,8 @@ connectDB(process.env.DATABASE_CONNECTION_STRING);
 
 const writeSampleData = async (userId) => {
   try {
-    // await Opening.insertMany(userOpening(userId));
-    // await Opening.insertMany(testOpening());
+    await Opening.create(userOpening(userId));
+    await Opening.create(testOpening());
     await Request.insertMany(testRequest());
     await Request.insertMany(userRequest(userId));
     console.log("Sample data created successfully");

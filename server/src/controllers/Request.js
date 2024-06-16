@@ -243,13 +243,15 @@ export const changeStatus = async (req, res) => {
       } else {
         throw new Error("Couldn't find opening id");
       }
-    } else {
+    } else if (newStatus === "referred" || newStatus === "approved") {
       // if new status is non-waiting
       updatedRequest = await Request.findByIdAndUpdate(
         requestId,
         { status: newStatus },
         { new: true, session },
       );
+    } else {
+      throw new Error("Not valid new status")
     }
 
     await session.commitTransaction();
