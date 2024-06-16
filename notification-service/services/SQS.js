@@ -9,10 +9,10 @@ export const sendMessageToQueue = async (msg) => {
     const params = {
       MessageBody: msg,
       QueueUrl: queueUrl,
-      // MessageGroupId: "1",
-      // MessageDeduplicationId: "1",
     };
+    console.log("before sending msg to queue");
     console.log(params);
+
     await sqs.sendMessage(params).promise();
 
   } catch (error) {
