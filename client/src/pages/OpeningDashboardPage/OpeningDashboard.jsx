@@ -1,10 +1,18 @@
-import { useState } from "react";
 import GetAllOpenings from "./OpeningView";
 import CreateOpeningModal from "./CreateOpeningModal";
-import React from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { loadOpening } from "../../state";
+import { getAllOpenings } from "../../api/opening";
+import { toast } from "sonner";
+import OverviewView from "./OverviewView";
 
 const OpeningDashboard = () => {
   const [openCreate, setOpenCreate] = useState(false);
+  
+  const opening = useSelector((state) => state.opening)
+  const matchedRequestList = opening.requestList;
+  const dispatch = useDispatch();
 
   function onCloseCreate() {
     setOpenCreate(false);
@@ -14,6 +22,20 @@ const OpeningDashboard = () => {
     setOpenCreate(true);
   }
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getAllOpenings();
+        dispatch(loadOpening(response));
+      } catch (err) {
+        console.error(err);
+        toast.error("There exists an error when retrieving opening slots");
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
       <CreateOpeningModal openCreate={openCreate} onClose={onCloseCreate} />
@@ -22,18 +44,8 @@ const OpeningDashboard = () => {
           Referral Openings
         </h1>
 
-        <div className="flex-1 flex flex-col items-center gap-12 w-full">
-          {/* Create Opening button */}
-          <button
-            onClick={onOpenCreate}
-            type="button"
-            className="filled-btn p-2"
-          >
-            Create Opening Slots
-          </button>
-
-          <GetAllOpenings />
-        </div>
+        <OverviewView opening={opening}/>
+        <GetAllOpenings matchedRequestList={matchedRequestList} />
       </main>
     </>
   );

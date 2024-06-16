@@ -11,8 +11,14 @@ const tailwindConfig = {
         primaryDark: "#00705E",
         background: "#F8FBF1",
         alt: "#ffffff",
-        grayLight: "#717885",
-        pinkDark: "#E91E63",
+
+        grayLight: "#828282",
+
+        pinkLight: "#F48FB1",
+        pinkDark: "#AD1457",
+
+        purpleLight: "#9FA8DA",
+        purpleDark: "#283593",
       },
       fontFamily: {
         dm: ["DM Sans", "sans-serif"],

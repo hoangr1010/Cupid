@@ -2,10 +2,10 @@ import { Badge } from "flowbite-react";
 
 const StatusBadge = ({ status }) => {
   const badgeColor = {
-    waiting: "warning",
-    matched: "info",
-    approved: "success",
-    referred: "purple",
+    waiting: ["primaryLight", "primaryDark"],
+    matched: ["pinkLight", "pinkDark"],
+    approved: ["pinkLight", "pinkDark"],
+    referred: ["purpleLight", "purpleDark"],
   };
 
   return (
