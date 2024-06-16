@@ -2,7 +2,6 @@ import express from "express";
 import {
   createOpening,
   getAllOpenings,
-  changeStatus,
   processPassCode,
   verifyPasscode,
   getAllExistingOpenings,
@@ -20,7 +19,5 @@ OpeningRouter.get("/getAllExistingOpenings", getAllExistingOpenings);
 
 OpeningRouter.post("/create", createOpening);
 OpeningRouter.post("/passcode", processPassCode);
-
-OpeningRouter.put("/changeStatus", changeStatus);
 
 export default OpeningRouter;

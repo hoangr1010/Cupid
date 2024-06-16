@@ -143,9 +143,19 @@ export const getAllExistingRequests = async (req, res) => {
   try {
     const requests = await Request.find({ status: "waiting" });
 
+    const requestStatistic = {};
+
+    requests.forEach((request) => {
+      if (!requestStatistic[request.company]) {
+        requestStatistic[request.company] = 0;
+      }
+
+      requestStatistic[request.company] += 1;
+    });
+
     res.status(200).json({
       message: "All existing Requests gotten successfully",
-      data: requests,
+      data: requestStatistic,
     });
   } catch (error) {
     res.status(400).json({
@@ -251,7 +261,7 @@ export const changeStatus = async (req, res) => {
         { new: true, session },
       );
     } else {
-      throw new Error("Not valid new status")
+      throw new Error("Not valid new status");
     }
 
     await session.commitTransaction();

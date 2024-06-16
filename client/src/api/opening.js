@@ -29,20 +29,20 @@ export const getAllOpenings = async (userId) => {
 };
 
 export const changeStatus = async (formData) => {
-  try {
-    const body = {
-      openingId: formData.openingId,
-      newStatus: formData.newStatus,
-    };
+  // try {
+  //   const body = {
+  //     openingId: formData.openingId,
+  //     newStatus: formData.newStatus,
+  //   };
 
-    const response = await API.put(`/opening/changeStatus`, body);
-    toast.success("Opening has been updated");
-    return response.data.data;
-  } catch (err) {
-    console.error(err);
-    toast.error("Opening has not been updated");
-    return;
-  }
+  //   const response = await API.put(`/opening/changeStatus`, body);
+  //   toast.success("Opening has been updated");
+  //   return response.data.data;
+  // } catch (err) {
+  //   console.error(err);
+  //   toast.error("Opening has not been updated");
+  //   return;
+  // }
 };
 
 export const processPasscode = async (gmail) => {
@@ -73,16 +73,5 @@ export const getAllExistingOpenings = async () => {
     return response.data.data;
   } catch (err) {
     console.error(err);
-  }
-};
-
-export const getRemainingOpeningsByCompany = async (companyName) => {
-  try {
-    const response = await API.get(
-      `/opening/getRemainingOpenings/${companyName}`,
-    );
-    return response.data.data;
-  } catch (err) {
-    toast.error(err);
   }
 };
