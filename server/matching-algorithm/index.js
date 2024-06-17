@@ -54,6 +54,8 @@ Output:
 export const runMatchingAlgorithm = (requestList, openingList) => {
   const requests = JSON.parse(JSON.stringify(requestList));
   const openings = JSON.parse(JSON.stringify(openingList));
+  // console.log(requests);
+  // console.log(openings);
 
   // Sort Requests according to scale
   requests.sort((a, b) => b.scale - a.scale);
@@ -68,10 +70,16 @@ export const runMatchingAlgorithm = (requestList, openingList) => {
     availableOpenings.get(opening.company).push(opening);
   }
 
-  // Implement n-pointers to match requests with highest scales to openings based on company
+  // 1st Iteration: spread out available openings to as many people as possible
   const matchList = [];
   const pointers = new Map();
+  const matchedUser = new Set();
+  const matchedRequest = new Set();
   for (const request of requests) {
+    if (matchedUser.has(request.candidate_id)) {
+      continue;
+    }
+
     if (!pointers.has(request.company)) {
       pointers.set(request.company, 0);
     }
@@ -81,7 +89,32 @@ export const runMatchingAlgorithm = (requestList, openingList) => {
 
     const p = pointers.get(request.company);
     const availableList = availableOpenings.get(request.company);
-    if (p < availableList.length) {
+    if (availableList && p < availableList.length) {
+      matchedUser.add(request.candidate_id);
+      matchedRequest.add(request._id);
+      matchList.push([request._id, availableList[p]._id]);
+      pointers.set(request.company, p + 1);
+    }
+  }
+
+  // 2nd Iteration: match requests with highest scales to openings based on company
+  // Implement n-pointers to match requests with highest scales to openings based on company
+  for (const request of requests) {
+    if (matchedRequest.has(request._id)) {
+      continue;
+    }
+
+    if (!pointers.has(request.company)) {
+      pointers.set(request.company, 0);
+    }
+
+    if (!availableOpenings.has(request.company)) {
+      availableOpenings.set(request.company, []);
+    }
+
+    const p = pointers.get(request.company);
+    const availableList = availableOpenings.get(request.company);
+    if (availableList && p < availableList.length) {
       matchList.push([request._id, availableList[p]._id]);
       pointers.set(request.company, p + 1);
     }
@@ -130,7 +163,7 @@ const algorithmFunction = async () => {
     const [requests, openings] = inp;
 
     // update request scale
-    await scaleCalculate(requests);
+    // await scaleCalculate(requests);
 
     // run matching algorithm
     const matchList = runMatchingAlgorithm(requests, openings);
