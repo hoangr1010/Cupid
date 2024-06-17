@@ -34,13 +34,16 @@ UserRouter.put("/addEducation", checkUserId, verifyToken, addEducation);
 // TEST
 // UserRouter.post("/test", async (req, res) => {
 //   try {
-//     // make Notification 
-//     const noti = Notification.requestRemindAction("requestRemindAction", "requestId_whatever_bo gi vao cx dc :D");
+//     // make Notification
+//     const noti = await Notification.openingRemindAcion(
+//       "openingRemindAcion",
+//       "666e989c9dd52b874141de11",
+//     );
 //     console.log(noti);
 
 //     // send Notification data to the notification microservice
 //     await sendNoti(noti);
-    
+
 //     res.status(201).json({
 //       message: "success",
 //     });
@@ -50,6 +53,6 @@ UserRouter.put("/addEducation", checkUserId, verifyToken, addEducation);
 //       error: error.message,
 //     });
 //   }
-// })
+// });
 
 export default UserRouter;
