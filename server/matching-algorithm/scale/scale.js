@@ -15,7 +15,10 @@ export const scaleCalculate = async (requests) => {
 
     await Request.findByIdAndUpdate(
       request._id,
-      { scale, compatibility: compatibility / 3600000 },
+      {
+        scale,
+        compatibility: compatibility / 3600000,
+      },
       { new: true },
     );
   }
