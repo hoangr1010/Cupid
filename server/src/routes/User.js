@@ -35,8 +35,8 @@ UserRouter.put("/addEducation", checkUserId, verifyToken, addEducation);
 // UserRouter.post("/test", async (req, res) => {
 //   try {
 //     // make Notification
-//     const noti = await Notification.openingRemindAcion(
-//       "openingRemindAcion",
+//     const noti = await Notification.openingRemindAction(
+//       "openingRemindAction",
 //       "666e989c9dd52b874141de11",
 //     );
 //     console.log(noti);

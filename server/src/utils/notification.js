@@ -40,7 +40,7 @@ export class Notification {
     return new Notification(notiType, recipientId, requestId, "", "");
   }
 
-  static async openingRemindAcion(notiType, openingId) {
+  static async openingRemindAction(notiType, openingId) {
     // fetch data to get recipientId
     const opening = await Opening.findOne({ _id: openingId });
     const recipientId = opening.referrer_id.valueOf();
