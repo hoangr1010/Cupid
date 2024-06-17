@@ -1,12 +1,11 @@
-
 /**
  * class Notification
- * 
+ *
  * Example create a Notification type variable:
- * 
+ *
  *    notification with notiType === matchingDone:
  *      noti = Notification.matchingDone("matchingDone", userId)
- * 
+ *
  */
 export class Notification {
   constructor(notiType, recipientId, requestId, openingId, userPref) {
