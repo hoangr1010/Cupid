@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
-import mongoose from "mongoose";
+import mongoose, { connect } from "mongoose";
 import Request from "../src/models/Request.js";
 import Opening from "../src/models/Opening.js";
 import connectDB from "../src/utils/connectDB.js";
@@ -34,7 +34,11 @@ export const getMatchingInput = async () => {
   }
 
   try {
-    openings = await Opening.find({ request_id: { $exists: false } });
+    openings = await Opening.find({
+      $expr: {
+        $gt: ["$original_amount", { $size: "$request_id_list" }],
+      },
+    });
     // console.log(openings);
   } catch (error) {
     console.log("Error getting all openings");
@@ -81,9 +85,16 @@ export const runMatchingAlgorithm = (requestList, openingList) => {
 
     const p = pointers.get(request.company);
     const availableList = availableOpenings.get(request.company);
+    while (
+      p < availableList.length &&
+      availableList[p].length >= availableList[p].original_amount
+    ) {
+      p += 1;
+    }
+    pointers.set(request.company, p);
+
     if (p < availableList.length) {
       matchList.push([request._id, availableList[p]._id]);
-      pointers.set(request.company, p + 1);
     }
   }
 
@@ -142,6 +153,6 @@ const algorithmFunction = async () => {
   mongoose.connection.close();
 };
 
-// algorithmFunction(); // this only call when use command
+algorithmFunction(); // this only call when use command
 
 export default algorithmFunction;
