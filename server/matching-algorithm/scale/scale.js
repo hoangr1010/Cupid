@@ -31,14 +31,15 @@ const priorityScale = (priority) => {
 };
 
 const compatibilityScale = async (request) => {
-  const jobPostingText = await extractJobPostingText(request.job_posting_url);
+  // const jobPostingText = await extractJobPostingText(request.job_posting_url);
 
-  const resumeText = (
-    await Request.findById(request._id).populate("candidate_id").exec()
-  ).candidate_id.resume.text;
+  // const resumeText = (
+  //   await Request.findById(request._id).populate("candidate_id").exec()
+  // ).candidate_id.resume.text;
 
-  const compatibility = await compatibilityFunction(jobPostingText, resumeText);
+  // const compatibility = await compatibilityFunction(jobPostingText, resumeText);
 
-  const hourMilliSeconds = 3600000;
-  return hourMilliSeconds * compatibility;
+  // const hourMilliSeconds = 3600000;
+  // return hourMilliSeconds * compatibility;
+  return 0;
 };

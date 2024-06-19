@@ -122,7 +122,10 @@ export const applyMatchingChanges = async (matchList) => {
     try {
       await Opening.findOneAndUpdate(
         { _id: pair[1] },
-        { request_id: pair[0], status: "matched" },
+        {
+          $push: { request_id_list: pair[0] },
+        },
+        { new: true },
       );
     } catch (error) {
       console.log("Error updating opening");
