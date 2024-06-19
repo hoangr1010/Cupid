@@ -91,18 +91,20 @@ export const runMatchingAlgorithm = (requestList, openingList) => {
       availableOpenings.set(request.company, []);
     }
 
-    const p = pointers.get(request.company);
+    let p = pointers.get(request.company);
     const availableList = availableOpenings.get(request.company);
 
     while (
       p < availableList.length &&
-      availableList[p].length >= availableList[p].original_amount
+      availableList[p].request_id_list.length >=
+        availableList[p].original_amount
     ) {
       p += 1;
     }
     pointers.set(request.company, p);
 
     if (p < availableList.length) {
+      availableList[p].request_id_list.push(request._id);
       matchList.push([request._id, availableList[p]._id]);
       matchedUser.add(request.candidate_id);
       matchedRequest.add(request._id);
@@ -123,21 +125,21 @@ export const runMatchingAlgorithm = (requestList, openingList) => {
       availableOpenings.set(request.company, []);
     }
 
-    const p = pointers.get(request.company);
+    let p = pointers.get(request.company);
     const availableList = availableOpenings.get(request.company);
 
     while (
       p < availableList.length &&
-      availableList[p].length >= availableList[p].original_amount
+      availableList[p].request_id_list.length >=
+        availableList[p].original_amount
     ) {
       p += 1;
     }
     pointers.set(request.company, p);
 
     if (p < availableList.length) {
+      availableList[p].request_id_list.push(request._id);
       matchList.push([request._id, availableList[p]._id]);
-      matchedUser.add(request.candidate_id);
-      matchedRequest.add(request._id);
     }
   }
 
@@ -199,6 +201,6 @@ const algorithmFunction = async () => {
   mongoose.connection.close();
 };
 
-algorithmFunction(); // this only call when use command
+// algorithmFunction(); // this only call when use command
 
 export default algorithmFunction;
