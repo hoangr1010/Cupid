@@ -31,6 +31,8 @@ const testUserRequest = [
     company: "Microsoft",
     priority: 1,
     status: "waiting",
+    job_posting_url:
+      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
   },
   {
     _id: requestID2,
@@ -39,6 +41,8 @@ const testUserRequest = [
     company: "Microsoft",
     priority: 2,
     status: "matched",
+    job_posting_url:
+      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
   },
   {
     _id: requestID3,
@@ -47,6 +51,8 @@ const testUserRequest = [
     company: "Microsoft",
     priority: 3,
     status: "approved",
+    job_posting_url:
+      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
   },
   {
     _id: requestID4,
@@ -55,12 +61,16 @@ const testUserRequest = [
     company: "Microsoft",
     priority: 4,
     status: "referred",
+    job_posting_url:
+      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
   },
   {
     candidate_id: TEST_USER_ID,
     company: "Microsoft",
     priority: 2,
     status: "waiting",
+    job_posting_url:
+      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
   },
 ];
 
@@ -81,6 +91,8 @@ const requests = [
     company: "Google",
     priority: 1,
     status: "waiting",
+    job_posting_url:
+      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
   },
   {
     _id: requestID7,
@@ -89,6 +101,8 @@ const requests = [
     company: "Google",
     priority: 2,
     status: "matched",
+    job_posting_url:
+      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
   },
   {
     _id: requestID8,
@@ -97,6 +111,8 @@ const requests = [
     company: "Google",
     priority: 3,
     status: "approved",
+    job_posting_url:
+      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
   },
   {
     _id: requestID9,
@@ -105,6 +121,8 @@ const requests = [
     company: "Google",
     priority: 4,
     status: "referred",
+    job_posting_url:
+      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
   },
   {
     _id: requestID10,
@@ -112,6 +130,8 @@ const requests = [
     company: "Google",
     priority: 5,
     status: "waiting",
+    job_posting_url:
+      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
   },
 ];
 
