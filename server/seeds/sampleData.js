@@ -31,6 +31,7 @@ const testUserRequest = [
     company: "Microsoft",
     priority: 1,
     status: "waiting",
+    job_posting_url: 'https://www.example.com/job-posting',
   },
   {
     _id: requestID2,
@@ -39,6 +40,9 @@ const testUserRequest = [
     company: "Microsoft",
     priority: 2,
     status: "matched",
+    job_posting_url: 'https://www.example.com/job-posting',
+    scale: 5,
+    compatibility: 80,
   },
   {
     _id: requestID3,
@@ -46,7 +50,10 @@ const testUserRequest = [
     opening_id: openingID1,
     company: "Microsoft",
     priority: 3,
-    status: "approved",
+    status: "matched",
+    job_posting_url: 'https://www.example.com/job-posting',
+    scale: 5,
+    compatibility: 50,
   },
   {
     _id: requestID4,
@@ -54,13 +61,17 @@ const testUserRequest = [
     opening_id: openingID1,
     company: "Microsoft",
     priority: 4,
-    status: "referred",
+    status: "matched",
+    job_posting_url: 'https://www.example.com/job-posting',
+    scale: 5,
+    compatibility: 20,
   },
   {
     candidate_id: TEST_USER_ID,
     company: "Microsoft",
     priority: 2,
     status: "waiting",
+    job_posting_url: 'https://www.example.com/job-posting',
   },
 ];
 
@@ -81,6 +92,7 @@ const requests = [
     company: "Google",
     priority: 1,
     status: "waiting",
+    job_posting_url: 'https://www.example.com/job-posting',
   },
   {
     _id: requestID7,
@@ -89,6 +101,9 @@ const requests = [
     company: "Google",
     priority: 2,
     status: "matched",
+    job_posting_url: 'https://www.example.com/job-posting',
+    scale: 5,
+    compatibility: 80,
   },
   {
     _id: requestID8,
@@ -97,6 +112,9 @@ const requests = [
     company: "Google",
     priority: 3,
     status: "approved",
+    job_posting_url: 'https://www.example.com/job-posting',
+    scale: 5,
+    compatibility: 55,
   },
   {
     _id: requestID9,
@@ -104,7 +122,10 @@ const requests = [
     opening_id: openingID2,
     company: "Google",
     priority: 4,
-    status: "referred",
+    status: "matched",
+    job_posting_url: 'https://www.example.com/job-posting',
+    scale: 5,
+    compatibility: 20,
   },
   {
     _id: requestID10,
@@ -112,6 +133,7 @@ const requests = [
     company: "Google",
     priority: 5,
     status: "waiting",
+    job_posting_url: 'https://www.example.com/job-posting'
   },
 ];
 

@@ -40,8 +40,12 @@ code {
     @apply text-primaryDark bg-primaryLight hover:bg-green-100 font-bold rounded-md transition-all;
   }
 
+  .outline-btn {
+    @apply border border-primary text-primaryDark rounded-lg font-bold hover:bg-primaryLight hover:text-primary transition-all;
+  }
+
   .sidebar-btn {
-    @apply text-grayLight font-normal hover:bg-primaryLight hover:font-bold hover:text-primary focus:text-primaryDark transition-all;
+    @apply text-grayLight font-normal hover:bg-primaryLight hover:font-bold hover:text-primary focus:text-primaryDark  transition-all;
   }
 
   .secondary-btn {

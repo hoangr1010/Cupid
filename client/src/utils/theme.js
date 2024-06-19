@@ -5,7 +5,8 @@ const colorMap = {
   primary: ["primaryLight", "primaryDark"],
   pink: ["pinkLight", "pinkDark"],
   purple: ["purpleLight", "purpleDark"],
-  gray: ["grayLighter", "black"]
+  gray: ["grayLighter", "black"],
+  yellow: ["yellowLight", "yellowDark"],
 };
 
 export const getHexColor = (color) => {

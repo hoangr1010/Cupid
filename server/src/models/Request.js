@@ -26,7 +26,7 @@ const requestSchema = new Schema(
     },
     job_posting_url: {
       type: String,
-      // required: true,
+      required: true,
     },
     status: {
       type: String,

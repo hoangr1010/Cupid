@@ -87,59 +87,71 @@ const TableView = ({ opening }) => {
           </button>
         </div>
 
-        <Table className="w-fit" hoverable>
-          <Table.Head>
-            <Table.HeadCell>#</Table.HeadCell>
-            <Table.HeadCell>Name</Table.HeadCell>
-            <Table.HeadCell>Status</Table.HeadCell>
-            <Table.HeadCell>Date</Table.HeadCell>
-            <Table.HeadCell>
-              <span className="sr-only">More</span>
-            </Table.HeadCell>
-          </Table.Head>
+        {requestListMap[tableView].length === 0 ? (
+          <div className={`text-center w-96 bg-${buttonBackgroundColor} text-${buttonTextColor} font-bold p-1 rounded-md`}>
+            There are currently no opening in the list
+          </div>
+        ) : (
+          <>
+            <Table className="w-fit" hoverable>
+              <Table.Head>
+                <Table.HeadCell>#</Table.HeadCell>
+                <Table.HeadCell>Name</Table.HeadCell>
+                <Table.HeadCell>Status</Table.HeadCell>
+                <Table.HeadCell>Date</Table.HeadCell>
+                <Table.HeadCell>
+                  <span className="sr-only">More</span>
+                </Table.HeadCell>
+              </Table.Head>
 
-          <Table.Body className="divide-y">
-            {requestListMap[tableView].map((request, index) => (
-              <Table.Row key={index}>
-                <Table.Cell>
-                  <p className="font-bold">{index + 1}</p>
-                </Table.Cell>
-                <Table.Cell>
-                  <div className="flex items-center gap-2">
-                    <p className="font-bold text-black">
-                      {request.candidate_id.first_name}{" "}
-                      {request.candidate_id.last_name}
-                    </p>
-                  </div>
-                </Table.Cell>
-                <Table.Cell>
-                  {
-                    {
-                      referred: (
-                        <p className="text-purpleDark font-bold">Referred</p>
-                      ),
-                      approved: (
-                        <p className="text-pink font-bold">Waiting for Referral</p>
-                      ),
-                    }[request.status]
-                  }
-                </Table.Cell>
-                <Table.Cell>
-                  {dayjs(request.createdAt).format("MMM DD")}
-                </Table.Cell>
-                <Table.Cell>
-                  <OpeningInfoModal
-                    openingId={request._id}
-                    company={request.company}
-                    status={request.status}
-                    date={dayjs(request.createdAt).format("DD MMM YYYY")}
-                    requestId={request._id || null}
-                  />
-                </Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table>
+              <Table.Body className="divide-y">
+                {requestListMap[tableView].map((request, index) => (
+                  <Table.Row key={index}>
+                    <Table.Cell>
+                      <p className="font-bold">{index + 1}</p>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <div className="flex items-center gap-2">
+                        <p className="font-bold text-black">
+                          {request.candidate_id.first_name}{" "}
+                          {request.candidate_id.last_name}
+                        </p>
+                      </div>
+                    </Table.Cell>
+                    <Table.Cell>
+                      {
+                        {
+                          referred: (
+                            <p className="text-purpleDark font-bold">
+                              Referred
+                            </p>
+                          ),
+                          approved: (
+                            <p className="text-pink font-bold">
+                              Waiting for Referral
+                            </p>
+                          ),
+                        }[request.status]
+                      }
+                    </Table.Cell>
+                    <Table.Cell>
+                      {dayjs(request.createdAt).format("MMM DD")}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <OpeningInfoModal
+                        openingId={request._id}
+                        company={request.company}
+                        status={request.status}
+                        date={dayjs(request.createdAt).format("DD MMM YYYY")}
+                        requestId={request._id || null}
+                      />
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          </>
+        )}
       </section>
     </div>
   );

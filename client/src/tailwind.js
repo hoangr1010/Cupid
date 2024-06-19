@@ -21,6 +21,9 @@ const tailwindConfig = {
 
         purpleLight: "#9FA8DA",
         purpleDark: "#283593",
+
+        yellowLight: "#FFF59D",
+        yellowDark: "#F9A825"
       },
       fontFamily: {
         dm: ["DM Sans", "sans-serif"],
@@ -40,6 +43,7 @@ const tailwindConfig = {
     "border-pinkLight",
     "border-purpleLight",
     "border-grayLighter",
+    "text-yellowDark"
   ],
 };
 

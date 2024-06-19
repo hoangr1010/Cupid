@@ -6,6 +6,7 @@ import { loadOpening } from "../../state";
 import { getAllOpenings } from "../../api/opening";
 import { toast } from "sonner";
 import OverviewView from "./OverviewView";
+import CandidateView from "./CandidateView";
 
 const OpeningDashboard = () => {
   const [openCreate, setOpenCreate] = useState(false);
@@ -47,7 +48,8 @@ const OpeningDashboard = () => {
         </h1>
 
         <OverviewView opening={opening} />
-        <TableView matchedRequestList={matchedRequestList} opening={opening} />
+        <TableView opening={opening} />
+        <CandidateView opening={opening}/>
       </main>
     </>
   );
