@@ -1,4 +1,4 @@
-import GetAllOpenings from "./OpeningView";
+import TableView from "./TableView";
 import CreateOpeningModal from "./CreateOpeningModal";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,10 +9,12 @@ import OverviewView from "./OverviewView";
 
 const OpeningDashboard = () => {
   const [openCreate, setOpenCreate] = useState(false);
-  
-  const opening = useSelector((state) => state.opening)
+
+  const opening = useSelector((state) => state.opening);
   const matchedRequestList = opening.requestList;
   const dispatch = useDispatch();
+
+  console.log(opening);
 
   function onCloseCreate() {
     setOpenCreate(false);
@@ -38,14 +40,14 @@ const OpeningDashboard = () => {
 
   return (
     <>
-      <CreateOpeningModal openCreate={openCreate} onClose={onCloseCreate} />
-      <main className="w-full h-full gap-12 overflow-auto">
-        <h1 className="text-5xl font-bold font-darker mb-8 text-primaryDark">
+      {/* <CreateOpeningModal openCreate={openCreate} onClose={onCloseCreate} /> */}
+      <main className="w-full h-full gap-4 overflow-auto flex flex-col">
+        <h1 className="text-5xl font-bold font-darker text-primaryDark">
           Referral Openings
         </h1>
 
-        <OverviewView opening={opening}/>
-        <GetAllOpenings matchedRequestList={matchedRequestList} />
+        <OverviewView opening={opening} />
+        <TableView matchedRequestList={matchedRequestList} opening={opening} />
       </main>
     </>
   );

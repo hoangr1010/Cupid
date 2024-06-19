@@ -12,9 +12,11 @@ const tailwindConfig = {
         background: "#F8FBF1",
         alt: "#ffffff",
 
+        grayLighter: "#E0E0E0",
         grayLight: "#828282",
 
         pinkLight: "#F48FB1",
+        pink: "#E91E63",
         pinkDark: "#AD1457",
 
         purpleLight: "#9FA8DA",
@@ -28,6 +30,17 @@ const tailwindConfig = {
     },
   },
   plugins: [require("flowbite/plugin")],
+  safelist: [
+    "bg-pinkLight",
+    "text-pinkDark",
+    "bg-purpleLight",
+    "text-purpleDark",
+    "bg-grayLighter",
+    "text-black",
+    "border-pinkLight",
+    "border-purpleLight",
+    "border-grayLighter",
+  ],
 };
 
 export default tailwindConfig;

@@ -37,7 +37,7 @@ code {
   }
 
   .filled-btn {
-    @apply text-white bg-primary hover:text-primaryDark hover:bg-primaryLight font-bold rounded-md text-sm transition-all;
+    @apply text-primaryDark bg-primaryLight hover:bg-green-100 font-bold rounded-md transition-all;
   }
 
   .sidebar-btn {
@@ -45,7 +45,7 @@ code {
   }
 
   .secondary-btn {
-    @apply border hover:bg-gray-100 hover:text-black transition-all;
+    @apply hover:bg-gray-100 hover:text-black transition-all;
   }
 
   .failure-btn {
@@ -57,7 +57,7 @@ code {
   }
 
   .btn-padding {
-    @apply py-1 px-2;
+    @apply py-[6px] px-3;
   }
 }
 

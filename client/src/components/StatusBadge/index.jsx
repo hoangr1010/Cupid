@@ -1,18 +1,13 @@
-import { Badge } from "flowbite-react";
+import { getColorPairHex } from "./../../utils/theme.js"
 
-const StatusBadge = ({ status }) => {
-  const badgeColor = {
-    waiting: ["primaryLight", "primaryDark"],
-    matched: ["pinkLight", "pinkDark"],
-    approved: ["pinkLight", "pinkDark"],
-    referred: ["purpleLight", "purpleDark"],
-  };
+const StatusBadge = ({ color, text }) => {
+  const [backgroundColorHex, textColorHex] = getColorPairHex(color);
 
   return (
-    <div>
-      <Badge className="p-1" color={badgeColor[status]} size="sm">
-        <p className="text-xs">{status}</p>
-      </Badge>
+    <div style={{ backgroundColor: backgroundColorHex }} className="w-fit h-fit py-2 px-[10px] rounded-[10px]">
+      <p style={{ color: textColorHex }} className="font-bold">
+        {text}
+      </p>
     </div>
   );
 };

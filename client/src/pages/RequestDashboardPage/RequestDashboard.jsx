@@ -130,7 +130,7 @@ const RequestDashboard = () => {
                         </Table.Cell>
                         <Table.Cell>
                           <div className="w-fit">
-                            <StatusBadge status={request.status} />
+                            {/* <StatusBadge status={request.status} /> */}
                           </div>
                         </Table.Cell>
                         <Table.Cell>
