@@ -49,7 +49,7 @@ const OpeningDashboard = () => {
 
         <OverviewView opening={opening} />
         <TableView opening={opening} />
-        <CandidateView opening={opening}/>
+        <CandidateView opening={opening} />
       </main>
     </>
   );

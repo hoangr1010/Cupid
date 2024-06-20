@@ -10,10 +10,10 @@ const PercentageChart = ({ percentage }) => {
   } else if (percentage >= 70 && percentage <= 100) {
     color = "primary";
   }
-  const [dark, light] = getColorPairHex(color)
+  const [dark, light] = getColorPairHex(color);
 
   return (
-    <div style={{ position: 'relative', width: '132px', height: '132px' }}>
+    <div style={{ position: "relative", width: "132px", height: "132px" }}>
       <PieChart
         animation
         animationDuration={500}
@@ -31,13 +31,16 @@ const PercentageChart = ({ percentage }) => {
         startAngle={-180}
         viewBoxSize={[100, 100]}
       />
-      <p style={{
-        position: 'absolute',
-        top: '40%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        fontSize: '25px',
-      }} className="font-bold">
+      <p
+        style={{
+          position: "absolute",
+          top: "40%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          fontSize: "25px",
+        }}
+        className="font-bold"
+      >
         {`${percentage}%`}
       </p>
     </div>

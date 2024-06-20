@@ -1,5 +1,5 @@
 import tailwindConfig from "./../tailwind.js";
-import resolveConfig from 'tailwindcss/resolveConfig';
+import resolveConfig from "tailwindcss/resolveConfig";
 
 const colorMap = {
   primary: ["primaryLight", "primaryDark"],
@@ -14,12 +14,11 @@ export const getHexColor = (color) => {
   const colorPalette = fullTailwindConfig.theme.colors;
 
   return colorPalette[color];
-}
+};
 
 export const getColorPair = (color) => {
-  
   return colorMap[color];
-}
+};
 
 export const getColorPairHex = (color) => {
   const [backgroundColor, textColor] = getColorPair(color);
@@ -28,5 +27,4 @@ export const getColorPairHex = (color) => {
   const textColorHex = getHexColor(textColor);
 
   return [backgroundColorHex, textColorHex];
-}
-
+};

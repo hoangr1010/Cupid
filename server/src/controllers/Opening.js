@@ -169,11 +169,11 @@ export const getAllExistingOpenings = async (req, res) => {
         statisticMap[opening.company] = 0;
       }
 
-      const remainingAmount = opening.original_amount - opening.request_id_list.length;
+      const remainingAmount =
+        opening.original_amount - opening.request_id_list.length;
 
       statisticMap[opening.company] += remainingAmount;
-    })
-
+    });
 
     res.status(200).json({
       message: "All Openings gotten successfully",

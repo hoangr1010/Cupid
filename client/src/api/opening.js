@@ -34,7 +34,6 @@ export const changeStatus = async (formData) => {
   //     openingId: formData.openingId,
   //     newStatus: formData.newStatus,
   //   };
-
   //   const response = await API.put(`/opening/changeStatus`, body);
   //   toast.success("Opening has been updated");
   //   return response.data.data;

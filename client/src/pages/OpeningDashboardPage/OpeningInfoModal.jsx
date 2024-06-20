@@ -34,7 +34,7 @@ const OpeningInfoModal = (opening) => {
         className="secondary-btn rounded-md font-bold"
         onClick={() => setOpenModal(true)}
       >
-        <IoMdMore size={20}/>
+        <IoMdMore size={20} />
       </button>
 
       {/* Opening Modal */}

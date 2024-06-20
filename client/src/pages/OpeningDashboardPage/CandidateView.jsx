@@ -25,7 +25,9 @@ const CandidateView = ({ opening }) => {
 
             <div className="flex items-center relative grow">
               <EvaluationText percentage={request.compatibility} />
-              <button className="absolute bottom-0 right-0 outline-btn btn-padding">View Candidate</button>
+              <button className="absolute bottom-0 right-0 outline-btn btn-padding">
+                View Candidate
+              </button>
             </div>
           </section>
         </div>

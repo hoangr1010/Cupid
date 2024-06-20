@@ -64,7 +64,10 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
 
           // if passcode is correct, create opening
           if (response) {
-            const formData = { company: company.value, number: parseInt(number) };
+            const formData = {
+              company: company.value,
+              number: parseInt(number),
+            };
             const response = await createOpenings(formData, userId);
 
             if (response) {
