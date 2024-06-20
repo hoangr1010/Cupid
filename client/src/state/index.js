@@ -79,6 +79,20 @@ const distinctCompanyListSlice = createSlice({
   },
 });
 
+const notificationListInitialState = {
+  list: [],
+};
+
+const notificationListSlice = createSlice({
+  name: "notificationList",
+  initialState: notificationListInitialState,
+  reducers: {
+    updateNotificationList(state, action) {
+      state.list = [...action.payload];
+    },
+  },
+});
+
 const companyStatisticInitialState = {
   map: new Object(),
 };
@@ -102,6 +116,7 @@ const allReducers = {
   opening: openingSlice.reducer,
   distinctCompanyList: distinctCompanyListSlice.reducer,
   companyStatistic: companyStatisticSlice.reducer,
+  notificationList: notificationListSlice.reducer,
 };
 
 export const { updateUser, updateToken, clearAuth } = authSlice.actions;
@@ -110,5 +125,6 @@ export const { changeRequestList, pushRequestList, changeOneRequest } =
 export const { changeOpeningList, pushOpeningList } = openingSlice.actions;
 export const { updateDistinctCompanyList } = distinctCompanyListSlice.actions;
 export const { updateCompanyStatistic } = companyStatisticSlice.actions;
+export const { updateNotificationList } = notificationListSlice.actions;
 
 export default allReducers;
