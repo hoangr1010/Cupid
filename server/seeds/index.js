@@ -34,7 +34,8 @@ const deleteSampleData = async () => {
     console.log("Sample data deleted successfully");
   } catch (error) {
     console.error("Error deleting sample data", error);
-  } finally {
+  } 
+  finally {
     process.exit(0);
   }
 };
@@ -46,7 +47,8 @@ if (!process.argv[2]) {
 }
 
 if (process.argv[2] === "-d") {
-  deleteSampleData();
+  await deleteSampleData();
+  process.exit(0);
 } else if (process.argv[2] === "-w") {
   // Exit if no user id is provided
   if (!process.argv[3]) {
@@ -55,5 +57,8 @@ if (process.argv[2] === "-d") {
   }
   const userId = process.argv[3].trim();
 
-  writeSampleData(userId);
+  await writeSampleData(userId);
+} else {
+  console.log("Please specify an option -d or -w");
+  process.exit(0);
 }

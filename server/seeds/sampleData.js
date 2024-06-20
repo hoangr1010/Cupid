@@ -31,7 +31,8 @@ const testUserRequest = [
     company: "Microsoft",
     priority: 1,
     status: "waiting",
-    job_posting_url: 'https://www.example.com/job-posting',
+    job_posting_url:
+      "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
   },
   {
     _id: requestID2,
@@ -40,7 +41,8 @@ const testUserRequest = [
     company: "Microsoft",
     priority: 2,
     status: "matched",
-    job_posting_url: 'https://www.example.com/job-posting',
+    job_posting_url:
+      "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
     scale: 5,
     compatibility: 80,
   },
@@ -50,8 +52,9 @@ const testUserRequest = [
     opening_id: openingID1,
     company: "Microsoft",
     priority: 3,
-    status: "matched",
-    job_posting_url: 'https://www.example.com/job-posting',
+    status: "approved",
+    job_posting_url:
+      "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
     scale: 5,
     compatibility: 50,
   },
@@ -62,7 +65,8 @@ const testUserRequest = [
     company: "Microsoft",
     priority: 4,
     status: "matched",
-    job_posting_url: 'https://www.example.com/job-posting',
+    job_posting_url:
+      "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
     scale: 5,
     compatibility: 20,
   },
@@ -71,7 +75,8 @@ const testUserRequest = [
     company: "Microsoft",
     priority: 2,
     status: "waiting",
-    job_posting_url: 'https://www.example.com/job-posting',
+    job_posting_url:
+      "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
   },
 ];
 
@@ -92,7 +97,8 @@ const requests = [
     company: "Google",
     priority: 1,
     status: "waiting",
-    job_posting_url: 'https://www.example.com/job-posting',
+    job_posting_url:
+      "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
   },
   {
     _id: requestID7,
@@ -101,7 +107,8 @@ const requests = [
     company: "Google",
     priority: 2,
     status: "matched",
-    job_posting_url: 'https://www.example.com/job-posting',
+    job_posting_url:
+      "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
     scale: 5,
     compatibility: 80,
   },
@@ -112,7 +119,8 @@ const requests = [
     company: "Google",
     priority: 3,
     status: "approved",
-    job_posting_url: 'https://www.example.com/job-posting',
+    job_posting_url:
+      "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
     scale: 5,
     compatibility: 55,
   },
@@ -122,8 +130,9 @@ const requests = [
     opening_id: openingID2,
     company: "Google",
     priority: 4,
-    status: "matched",
-    job_posting_url: 'https://www.example.com/job-posting',
+    status: "referred",
+    job_posting_url:
+      "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
     scale: 5,
     compatibility: 20,
   },
@@ -133,7 +142,8 @@ const requests = [
     company: "Google",
     priority: 5,
     status: "waiting",
-    job_posting_url: 'https://www.example.com/job-posting'
+    job_posting_url:
+      "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
   },
 ];
 

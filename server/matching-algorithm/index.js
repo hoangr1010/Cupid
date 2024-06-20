@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
-import mongoose from "mongoose";
+import mongoose, { connect } from "mongoose";
 import Request from "../src/models/Request.js";
 import Opening from "../src/models/Opening.js";
 import connectDB from "../src/utils/connectDB.js";
@@ -34,7 +34,11 @@ export const getMatchingInput = async () => {
   }
 
   try {
-    openings = await Opening.find({ request_id: { $exists: false } });
+    openings = await Opening.find({
+      $expr: {
+        $gt: ["$original_amount", { $size: "$request_id_list" }],
+      },
+    });
     // console.log(openings);
   } catch (error) {
     console.log("Error getting all openings");
@@ -54,6 +58,8 @@ Output:
 export const runMatchingAlgorithm = (requestList, openingList) => {
   const requests = JSON.parse(JSON.stringify(requestList));
   const openings = JSON.parse(JSON.stringify(openingList));
+  // console.log(requests);
+  // console.log(openings);
 
   // Sort Requests according to scale
   requests.sort((a, b) => b.scale - a.scale);
@@ -68,10 +74,16 @@ export const runMatchingAlgorithm = (requestList, openingList) => {
     availableOpenings.get(opening.company).push(opening);
   }
 
-  // Implement n-pointers to match requests with highest scales to openings based on company
+  // 1st Iteration: spread out available openings to as many people as possible
   const matchList = [];
   const pointers = new Map();
+  const matchedUser = new Set();
+  const matchedRequest = new Set();
   for (const request of requests) {
+    if (matchedUser.has(request.candidate_id)) {
+      continue;
+    }
+
     if (!pointers.has(request.company)) {
       pointers.set(request.company, 0);
     }
@@ -79,11 +91,55 @@ export const runMatchingAlgorithm = (requestList, openingList) => {
       availableOpenings.set(request.company, []);
     }
 
-    const p = pointers.get(request.company);
+    let p = pointers.get(request.company);
     const availableList = availableOpenings.get(request.company);
+
+    while (
+      p < availableList.length &&
+      availableList[p].request_id_list.length >=
+        availableList[p].original_amount
+    ) {
+      p += 1;
+    }
+    pointers.set(request.company, p);
+
     if (p < availableList.length) {
+      availableList[p].request_id_list.push(request._id);
       matchList.push([request._id, availableList[p]._id]);
-      pointers.set(request.company, p + 1);
+      matchedUser.add(request.candidate_id);
+      matchedRequest.add(request._id);
+    }
+  }
+
+  // 2nd Iteration: whoever has better scale gets the referral
+  for (const request of requests) {
+    if (matchedRequest.has(request._id)) {
+      continue;
+    }
+
+    if (!pointers.has(request.company)) {
+      pointers.set(request.company, 0);
+    }
+
+    if (!availableOpenings.has(request.company)) {
+      availableOpenings.set(request.company, []);
+    }
+
+    let p = pointers.get(request.company);
+    const availableList = availableOpenings.get(request.company);
+
+    while (
+      p < availableList.length &&
+      availableList[p].request_id_list.length >=
+        availableList[p].original_amount
+    ) {
+      p += 1;
+    }
+    pointers.set(request.company, p);
+
+    if (p < availableList.length) {
+      availableList[p].request_id_list.push(request._id);
+      matchList.push([request._id, availableList[p]._id]);
     }
   }
 
@@ -111,7 +167,10 @@ export const applyMatchingChanges = async (matchList) => {
     try {
       await Opening.findOneAndUpdate(
         { _id: pair[1] },
-        { request_id: pair[0], status: "matched" },
+        {
+          $push: { request_id_list: pair[0] },
+        },
+        { new: true },
       );
     } catch (error) {
       console.log("Error updating opening");
@@ -142,6 +201,6 @@ const algorithmFunction = async () => {
   mongoose.connection.close();
 };
 
-// algorithmFunction(); // this only call when use command
+algorithmFunction(); // this only call when use command
 
 export default algorithmFunction;
