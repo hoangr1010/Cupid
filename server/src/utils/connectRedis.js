@@ -18,6 +18,4 @@ redisClient.on("error", (err) => {
   console.log("Redis error", err);
 });
 
-await redisClient.connect();
-
 export default redisClient;
