@@ -4,7 +4,6 @@ import Passcode from "./../models/Passcode.js";
 import { sendEmail } from "./../services/Sendgrid/sendEmail.js";
 import { generatePasscode } from "./../utils/generatePasscode.js";
 import { getBatchPeriod } from "./../utils/date.js";
-import mongoose from "mongoose";
 
 export const getAllOpenings = async (req, res) => {
   try {
