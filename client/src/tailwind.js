@@ -11,8 +11,19 @@ const tailwindConfig = {
         primaryDark: "#00705E",
         background: "#F8FBF1",
         alt: "#ffffff",
-        grayLight: "#717885",
-        pinkDark: "#E91E63",
+
+        grayLighter: "#E0E0E0",
+        grayLight: "#828282",
+
+        pinkLight: "#F48FB1",
+        pink: "#E91E63",
+        pinkDark: "#AD1457",
+
+        purpleLight: "#9FA8DA",
+        purpleDark: "#283593",
+
+        yellowLight: "#FFF59D",
+        yellowDark: "#F9A825",
       },
       fontFamily: {
         dm: ["DM Sans", "sans-serif"],
@@ -22,6 +33,18 @@ const tailwindConfig = {
     },
   },
   plugins: [require("flowbite/plugin")],
+  safelist: [
+    "bg-pinkLight",
+    "text-pinkDark",
+    "bg-purpleLight",
+    "text-purpleDark",
+    "bg-grayLighter",
+    "text-black",
+    "border-pinkLight",
+    "border-purpleLight",
+    "border-grayLighter",
+    "text-yellowDark",
+  ],
 };
 
 export default tailwindConfig;

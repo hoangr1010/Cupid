@@ -8,6 +8,7 @@ import Education from "./Education";
 function ProfilePage() {
   const user = useSelector((state) => state.auth.user);
   const resume = user.resume.url;
+  console.log(resume);
   const [file, setFile] = useState("");
   const [newResume, setNewResume] = useState(false);
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ function ProfilePage() {
             <div>
               <div className="h-screen pt-2.5">
                 <iframe
-                  src={`${process.env.REACT_APP_S3_BUCKET_LINK}/${user.resume_url}`}
+                  src={`${process.env.REACT_APP_S3_BUCKET_LINK}/${resume}`}
                   className="w-full h-full"
                 ></iframe>
               </div>

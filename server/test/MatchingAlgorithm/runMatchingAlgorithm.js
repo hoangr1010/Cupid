@@ -61,26 +61,32 @@ const inputOpeningsLess = [
   {
     _id: 1,
     company: "Google",
+    original_amount: 1,
+    request_id_list: [],
   },
   {
     _id: 2,
     company: "Meta",
+    original_amount: 1,
+    request_id_list: [],
   },
   {
     _id: 3,
     company: "Amazon",
+    original_amount: 1,
+    request_id_list: [],
   },
   {
     _id: 4,
     company: "OpenAI",
+    original_amount: 2,
+    request_id_list: [99],
   },
   {
     _id: 5,
     company: "OpenAI",
-  },
-  {
-    _id: 6,
-    company: "OpenAI",
+    original_amount: 1,
+    request_id_list: [],
   },
 ];
 
@@ -88,50 +94,62 @@ const inputOpeningsMore = [
   {
     _id: 1,
     company: "Google",
+    original_amount: 2,
+    request_id_list: [],
   },
   {
     _id: 2,
     company: "Meta",
+    original_amount: 3,
+    request_id_list: [99],
   },
   {
     _id: 3,
     company: "Amazon",
+    original_amount: 2,
+    request_id_list: [],
   },
   {
     _id: 4,
     company: "OpenAI",
+    original_amount: 1,
+    request_id_list: [],
   },
   {
     _id: 5,
-    company: "Amazon",
+    company: "Google",
+    original_amount: 2,
+    request_id_list: [99],
   },
   {
     _id: 6,
-    company: "Google",
+    company: "Meta",
+    original_amount: 1,
+    request_id_list: [],
   },
   {
     _id: 7,
-    company: "Google",
+    company: "Amazon",
+    original_amount: 1,
+    request_id_list: [],
   },
   {
     _id: 8,
-    company: "Meta",
+    company: "LinkedIn",
+    original_amount: 1,
+    request_id_list: [],
   },
   {
     _id: 9,
-    company: "Amazon",
+    company: "Twitter",
+    original_amount: 1,
+    request_id_list: [],
   },
   {
     _id: 10,
-    company: "LinkedIn",
-  },
-  {
-    _id: 11,
-    company: "Twitter",
-  },
-  {
-    _id: 12,
     company: "Tesla",
+    original_amount: 1,
+    request_id_list: [],
   },
 ];
 
@@ -139,42 +157,48 @@ const inputOpeningsSame = [
   {
     _id: 1,
     company: "Google",
+    original_amount: 2,
+    request_id_list: [99],
   },
   {
     _id: 2,
     company: "Meta",
+    original_amount: 1,
+    request_id_list: [],
   },
   {
     _id: 3,
     company: "Amazon",
+    original_amount: 2,
+    request_id_list: [99],
   },
   {
     _id: 4,
-    company: "Google",
+    company: "LinkedIn",
+    original_amount: 1,
+    request_id_list: [],
   },
   {
     _id: 5,
-    company: "LinkedIn",
+    company: "OpenAI",
+    original_amount: 2,
+    request_id_list: [],
   },
   {
     _id: 6,
     company: "OpenAI",
+    original_amount: 1,
+    request_id_list: [],
   },
   {
     _id: 7,
-    company: "Amazon",
-  },
-  {
-    _id: 8,
-    company: "Meta",
-  },
-  {
-    _id: 9,
-    company: "OpenAI",
+    company: "Twitter",
+    original_amount: 2,
+    request_id_list: [],
   },
 ];
 
-export default runMatchingAlgorithmTest = () => {
+const runMatchingAlgorithmTest = () => {
   describe("Run Matching Algorithm Test", () => {
     it("Matching Algorithm runs correctly when there are less openings than there are requests", () => {
       const matchingResult = runMatchingAlgorithm(
@@ -200,11 +224,11 @@ export default runMatchingAlgorithmTest = () => {
         [8, 2],
         [6, 4],
         [3, 3],
-        [2, 8],
-        [5, 10],
+        [2, 2],
+        [5, 8],
         [4, 1],
-        [7, 5],
-        [1, 6],
+        [7, 3],
+        [1, 1],
       ];
       expect(matchingResult).toEqual(expectedMatching);
     });
@@ -216,16 +240,15 @@ export default runMatchingAlgorithmTest = () => {
       );
       const expectedMatching = [
         [8, 2],
-        [6, 6],
+        [6, 5],
         [3, 3],
-        [2, 8],
-        [5, 5],
+        [5, 4],
         [4, 1],
-        [7, 7],
-        [9, 9],
-        [1, 4],
+        [9, 5],
       ];
       expect(matchingResult).toEqual(expectedMatching);
     });
   });
 };
+
+export default runMatchingAlgorithmTest;

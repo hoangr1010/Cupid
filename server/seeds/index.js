@@ -14,8 +14,8 @@ connectDB(process.env.DATABASE_CONNECTION_STRING);
 
 const writeSampleData = async (userId) => {
   try {
-    await Opening.insertMany(userOpening(userId));
-    await Opening.insertMany(testOpening());
+    await Opening.create(userOpening(userId));
+    await Opening.create(testOpening());
     await Request.insertMany(testRequest());
     await Request.insertMany(userRequest(userId));
     console.log("Sample data created successfully");
@@ -46,7 +46,7 @@ if (!process.argv[2]) {
 }
 
 if (process.argv[2] === "-d") {
-  deleteSampleData();
+  await deleteSampleData();
   process.exit(0);
 } else if (process.argv[2] === "-w") {
   // Exit if no user id is provided
@@ -56,7 +56,7 @@ if (process.argv[2] === "-d") {
   }
   const userId = process.argv[3].trim();
 
-  writeSampleData(userId);
+  await writeSampleData(userId);
 } else {
   console.log("Please specify an option -d or -w");
   process.exit(0);

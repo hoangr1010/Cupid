@@ -22,29 +22,29 @@ const StatisticsTable = () => {
 
     let companyCount = {};
 
-    responseOpening.forEach((opening) => {
-      distinctCompanyList.push(opening.company);
+    Object.keys(responseOpening).forEach((company) => {
+      distinctCompanyList.push(company);
 
-      if (!companyCount[opening.company]) {
-        companyCount[opening.company] = {
+      if (!companyCount[company]) {
+        companyCount[company] = {
           remainingRequests: 0,
           remainingOpenings: 0,
         };
       }
 
-      companyCount[opening.company].remainingOpenings += 1;
+      companyCount[company].remainingOpenings += responseOpening[company];
     });
 
-    responseRequest.forEach((request) => {
-      distinctCompanyList.push(request.company);
-      if (!companyCount[request.company]) {
-        companyCount[request.company] = {
+    Object.keys(responseRequest).forEach((company) => {
+      distinctCompanyList.push(company);
+      if (!companyCount[company]) {
+        companyCount[company] = {
           remainingRequests: 0,
           remainingOpenings: 0,
         };
       }
 
-      companyCount[request.company].remainingRequests += 1;
+      companyCount[company].remainingRequests += responseRequest[company];
     });
 
     distinctCompanyList = [...new Set(distinctCompanyList)]; // Remove duplicates

@@ -20,7 +20,7 @@ const passcodeSchema = new mongoose.Schema({
   expireAt: {
     type: Date,
     default: new Date(),
-    expires: 50,
+    expires: 1000,
   },
 });
 

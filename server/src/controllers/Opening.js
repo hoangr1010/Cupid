@@ -3,44 +3,41 @@ import Request from "../models/Request.js";
 import Passcode from "./../models/Passcode.js";
 import { sendEmail } from "./../services/Sendgrid/sendEmail.js";
 import { generatePasscode } from "./../utils/generatePasscode.js";
+import { getBatchPeriod } from "./../utils/date.js";
 import mongoose from "mongoose";
-
-export const getOneOpening = async (req, res) => {
-  try {
-    const opening_id = req.params.opening_id;
-    const foundOpening = await Opening.find({ _id: opening_id });
-
-    if (foundOpening.length < 1) {
-      throw new Error("Opening not found");
-    }
-
-    res.status(200).json({
-      message: "Opening gotten successfully",
-      data: foundOpening,
-    });
-  } catch (error) {
-    res.status(400).json({
-      message: "Error getting opening",
-      error: error.message,
-    });
-  }
-};
 
 export const getAllOpenings = async (req, res) => {
   try {
-    const user_id = req.get("userid");
-    const openings = await Opening.find({
-      referrer_id: user_id,
-    }).populate({
-      path: "request_id",
-      populate: {
-        path: "candidate_id",
-      },
+    const userId = req.get("userid");
+
+    let [startDate, endDate] = getBatchPeriod();
+
+    // Check if referrer have opening object for this term
+    const existingOpening = await Opening.findOne({
+      referrer_id: userId,
+      createdAt: { $gte: startDate, $lte: endDate },
     });
+
+    if (!existingOpening) {
+      throw new Error("Couldn't find opening");
+    }
+
+    const requestIdList = existingOpening.request_id_list;
+
+    const requestPromises = requestIdList.map(async (requestId) => {
+      const request = await Request.findById(requestId).populate(
+        "candidate_id",
+        "_id first_name last_name",
+      );
+
+      return request;
+    });
+
+    const requests = await Promise.all(requestPromises);
 
     res.status(200).json({
       message: "Openings gotten successfully",
-      data: openings,
+      data: { ...existingOpening.toObject(), requests },
     });
   } catch (error) {
     res.status(400).json({
@@ -52,106 +49,44 @@ export const getAllOpenings = async (req, res) => {
 
 export const createOpening = async (req, res) => {
   try {
-    const { number, company } = req.body;
-    const { userid } = req.headers;
-    const openings = [];
+    const userId = req.get("userid");
+    const { amount, company } = req.body;
+    let [startDate, endDate] = getBatchPeriod();
 
-    if (number < 1 || !number) {
-      throw new Error("Invalid request number");
-    }
-
-    const openingPromises = [];
-    for (let i = 0; i < number; i++) {
-      const openingPromise = Opening.create({
-        referrer_id: userid,
-        company,
-        status: "waiting",
-      });
-      openingPromises.push(openingPromise);
-    }
-
-    const createdOpenings = await Promise.all(openingPromises);
-    openings.push(...createdOpenings);
-
-    res.status(201).json({
-      message: "Opening created successfully",
-      data: openings,
+    // Check if referrer have opening object for this term
+    const existingOpening = await Opening.findOne({
+      referrer_id: userId,
+      createdAt: { $gte: startDate, $lte: endDate },
     });
+
+    let responseOpening;
+    // if user already have opening
+    if (existingOpening) {
+      // check if the company they request match with the opening
+      if (existingOpening.company == company) {
+        // if matched, add up the original amount of the opening
+        existingOpening.original_amount += amount;
+        await existingOpening.save();
+
+        responseOpening = existingOpening;
+      } else {
+        throw Error("Not matched company");
+      }
+    } else {
+      // if not exist, create new opening for referrer this term
+      responseOpening = await Opening.create({
+        referrer_id: userId,
+        original_amount: amount,
+        company,
+      });
+    }
+    res.status(200).json(responseOpening);
   } catch (error) {
+    console.log(error);
     res.status(400).json({
       message: "Error creating opening",
       error: error.message,
     });
-  }
-};
-
-export const changeStatus = async (req, res) => {
-  const session = await mongoose.startSession();
-  try {
-    const { openingId, newStatus } = req.body;
-
-    // check if openingId exist
-    const opening = await Opening.findById(openingId);
-    if (!opening) {
-      throw new Error("Opening not found");
-    }
-
-    // if opening having status is non-waiting but no request_id associated with, throw error
-    if (newStatus != "waiting" && !opening.request_id) {
-      throw new Error("not valid opening");
-    }
-
-    session.startTransaction();
-
-    // update status in both opening and request
-    let updatedOpening, updatedRequest;
-    if (newStatus != "waiting") {
-      updatedOpening = await Opening.findByIdAndUpdate(
-        openingId,
-        { status: newStatus },
-        { new: true, session },
-      );
-      updatedRequest = await Request.findByIdAndUpdate(
-        opening.request_id,
-        { status: newStatus },
-        { new: true, session },
-      );
-    } else {
-      // if new status is waiting, delete request_id and opening_id in document
-      updatedOpening = await Opening.findByIdAndUpdate(
-        openingId,
-        { $unset: { request_id: 1 }, status: newStatus },
-        { new: true, session },
-      );
-      updatedRequest = await Request.findByIdAndUpdate(
-        opening.request_id,
-        { $unset: { opening_id: 1 }, status: newStatus },
-        { new: true, session },
-      );
-    }
-
-    if (updatedRequest == null) {
-      throw new Error("Fail to update request");
-    }
-
-    await session.commitTransaction();
-
-    res.status(200).json({
-      message: "Status updated successfully",
-      data: updatedOpening,
-    });
-  } catch (error) {
-    // If an error occurred, abort the transaction
-    if (session.inTransaction()) {
-      await session.abortTransaction();
-    }
-    res.status(400).json({
-      message: "Error updating status",
-      error: error.message,
-    });
-  } finally {
-    // End the session whether or not an error occurred
-    session.endSession();
   }
 };
 
@@ -221,11 +156,28 @@ export const verifyPasscode = async (req, res) => {
 
 export const getAllExistingOpenings = async (req, res) => {
   try {
-    const openings = await Opening.find({ status: "waiting" });
+    let [startDate, endDate] = getBatchPeriod();
+
+    const openingList = await Opening.find({
+      createdAt: { $gte: startDate, $lte: endDate },
+    });
+
+    const statisticMap = {};
+
+    openingList.forEach((opening) => {
+      if (!statisticMap[opening.company]) {
+        statisticMap[opening.company] = 0;
+      }
+
+      const remainingAmount =
+        opening.original_amount - opening.request_id_list.length;
+
+      statisticMap[opening.company] += remainingAmount;
+    });
 
     res.status(200).json({
       message: "All Openings gotten successfully",
-      data: openings,
+      data: statisticMap,
     });
   } catch (error) {
     res.status(400).json({
