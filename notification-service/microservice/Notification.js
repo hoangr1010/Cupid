@@ -8,6 +8,7 @@ export const notificationService = (req, res) => {
       requestId: req.body.requestId,
       openingId: req.body.openingId,
       userPref: req.body.userPref,
+      seen: false,
       retrySend: 0,
     }
   
