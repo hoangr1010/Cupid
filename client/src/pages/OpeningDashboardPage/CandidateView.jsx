@@ -7,8 +7,6 @@ const CandidateView = ({ opening }) => {
     (request) => request.status === "matched",
   );
 
-  console.log(matchedStatusRequestList);
-
   return (
     <div className="flex flex-col gap-6">
       <section>

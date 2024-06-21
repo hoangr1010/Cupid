@@ -14,9 +14,10 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { validateForm } from "./../../utils/opening";
 import { Spinner } from "flowbite-react";
 
-const CreateOpeningModal = ({ openCreate, onClose }) => {
+const CreateOpeningModal = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.user._id) || null;
+  const [openModal, setOpenModal] = useState(false);
 
   // creating opening form state
   const [company, setCompany] = useState(null);
@@ -66,10 +67,9 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
           if (response) {
             const formData = {
               company: company.value,
-              number: parseInt(number),
+              amount: parseInt(number),
             };
-            const response = await createOpenings(formData, userId);
-
+            const response = await createOpenings(formData);
             if (response) {
               dispatch(changeAmount(response.original_amount));
               onClose();
@@ -96,11 +96,21 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
     setGmail("");
   };
 
+  const onClose = () => {
+    setOpenModal(false);
+  };
+
   return (
     <>
+      <button
+        onClick={() => setOpenModal(true)}
+        className="filled-btn btn-padding"
+      >
+        + Create Referral Slots
+      </button>
       <Modal
         size={"md"}
-        show={openCreate}
+        show={openModal}
         onClose={() => {
           onClose();
           resetForm();
@@ -115,9 +125,9 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
             <div className="mb-6">
               <label
                 htmlFor="company"
-                className="block mb-2 text-sm font-medium text-gray-900"
+                className="block text-sm font-bold text-grayLight"
               >
-                Company
+                Your Company
               </label>
               <CompanyDropDown comapny={company} setCompany={setCompany} />
             </div>
@@ -125,7 +135,7 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
             <div className="mb-6">
               <label
                 htmlFor="number"
-                className="block mb-2 text-sm font-medium text-gray-900"
+                className="block text-sm font-bold text-grayLight"
               >
                 Number of Slots
               </label>
@@ -144,14 +154,14 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
             <div className="mb-6">
               <label
                 htmlFor="gmail"
-                className="block mb-2 text-sm font-medium text-gray-900"
+                className="block text-sm font-bold text-grayLight"
               >
-                Company Gmail Adress
+                Company Email
               </label>
               <input
                 type="text"
                 id="gmail"
-                placeholder="...@google.com"
+                placeholder="example.email@apple.com"
                 value={gmail}
                 onChange={(e) => {
                   setGmail(e.target.value);
@@ -162,7 +172,7 @@ const CreateOpeningModal = ({ openCreate, onClose }) => {
             </div>
 
             {formState === "in progress" && (
-              <VerificationBox passcode={passcode} setPasscode={setPasscode} />
+              <VerificationBox passcode={passcode} setPasscode={setPasscode} email={gmail} />
             )}
 
             <div className="flex justify-end">
