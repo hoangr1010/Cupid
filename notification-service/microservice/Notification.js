@@ -1,6 +1,6 @@
 import { sendMessageToQueue } from "../services/SQS.js"
 
-export const NotificationService = (req, res) => {
+export const notificationService = (req, res) => {
   try {
     const msg = {
       notiType: req.body.notiType,
@@ -8,6 +8,7 @@ export const NotificationService = (req, res) => {
       requestId: req.body.requestId,
       openingId: req.body.openingId,
       userPref: req.body.userPref,
+      seen: false,
       retrySend: 0,
     }
   

@@ -1,3 +1,6 @@
+import Request from "../models/Request.js";
+import Opening from "../models/Opening.js";
+
 /**
  * class Notification
  *
@@ -20,18 +23,28 @@ export class Notification {
     return new Notification(notiType, recipientId, "", "", "");
   }
 
-  static refererRequestMoreInfo(notiType, requestId) {
+  static async refererRequestMoreInfo(notiType, requestId) {
     // fetch data to get recipientId
-    return new Notification(notiType, "", requestId, "", "");
+    const request = await Request.findOne({ _id: requestId });
+    const recipientId = request.candidate_id.valueOf();
+    console.log(request.candidate_id.valueOf());
+
+    return new Notification(notiType, recipientId, requestId, "", "");
   }
 
-  static requestRemindAction(notiType, requestId) {
+  static async requestRemindAction(notiType, requestId) {
     // fetch data to get recipientId
-    return new Notification(notiType, "", requestId, "", "");
+    const request = await Request.findOne({ _id: requestId });
+    const recipientId = request.candidate_id.valueOf();
+
+    return new Notification(notiType, recipientId, requestId, "", "");
   }
 
-  static openingRemindAcion(notiType, openingId) {
+  static async openingRemindAction(notiType, openingId) {
     // fetch data to get recipientId
-    return new Notification(notiType, "", "", openingId, "");
+    const opening = await Opening.findOne({ _id: openingId });
+    const recipientId = opening.referrer_id.valueOf();
+
+    return new Notification(notiType, recipientId, "", openingId, "");
   }
 }

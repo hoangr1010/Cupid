@@ -1,10 +1,12 @@
 import express from "express";
 import { sendMessageToQueue } from "../services/SQS.js";
-import { NotificationService } from "../microservice/Notification.js";
+import { notificationService } from "../microservice/Notification.js";
+import { changeSeenField } from "../controllers/Notification.js";
 
 const NotiRouter = express.Router();
 
-NotiRouter.post("/notiServcice", NotificationService)
+NotiRouter.post("/notiServcice", notificationService);
+NotiRouter.patch("seenNoti", changeSeenField);
 
 /************************************************************
  *********************** FOR TEST ***************************

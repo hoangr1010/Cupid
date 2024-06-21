@@ -2,7 +2,8 @@ import AWS from "../utils/AWS.js";
 
 const sqs = new AWS.SQS({ region: 'us-west-1' });
 
-const queueUrl = `https://sqs.us-west-1.amazonaws.com/071752151881/SQSProcessor`;
+// change to the right queue
+const queueUrl = `https://sqs.us-west-1.amazonaws.com/071752151881/testQueue`;
 
 export const sendMessageToQueue = async (msg) => {
   try {
@@ -14,6 +15,8 @@ export const sendMessageToQueue = async (msg) => {
     console.log(params);
 
     await sqs.sendMessage(params).promise();
+
+    console.log("sent msg to queue")
 
   } catch (error) {
     console.log(error);
