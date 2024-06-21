@@ -58,7 +58,7 @@ const openingSlice = createSlice({
   name: "opening",
   initialState: openingInitialState,
   reducers: {
-    loadOpening(state,action) {
+    loadOpening(state, action) {
       state.company = action.payload.company;
       state.originalAmount = action.payload.original_amount;
       state.requestList = action.payload.requests;

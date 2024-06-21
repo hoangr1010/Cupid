@@ -25,9 +25,7 @@ const OverviewView = ({ opening }) => {
       <div className="widget_container w-fit">
         <div className="flex items-center justify-between">
           <h3 className="text-xl font-bold">{company}</h3>
-          <button
-            className="secondary-btn rounded-md font-bold"
-          >
+          <button className="secondary-btn rounded-md font-bold">
             <IoMdMore size={20} />
           </button>
         </div>

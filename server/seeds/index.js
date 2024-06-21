@@ -34,8 +34,7 @@ const deleteSampleData = async () => {
     console.log("Sample data deleted successfully");
   } catch (error) {
     console.error("Error deleting sample data", error);
-  } 
-  finally {
+  } finally {
     process.exit(0);
   }
 };

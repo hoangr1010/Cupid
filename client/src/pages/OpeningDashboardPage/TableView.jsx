@@ -88,7 +88,9 @@ const TableView = ({ opening }) => {
         </div>
 
         {requestListMap[tableView].length === 0 ? (
-          <div className={`text-center w-96 bg-${buttonBackgroundColor} text-${buttonTextColor} font-bold p-1 rounded-md`}>
+          <div
+            className={`text-center w-96 bg-${buttonBackgroundColor} text-${buttonTextColor} font-bold p-1 rounded-md`}
+          >
             There are currently no opening in the list
           </div>
         ) : (
