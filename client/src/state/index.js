@@ -76,7 +76,7 @@ const openingSlice = createSlice({
       state.originalAmount = null;
       state.company = null;
       state.requestList = [];
-    }
+    },
   },
 });
 
@@ -122,8 +122,13 @@ const allReducers = {
 export const { updateUser, updateToken, clearAuth } = authSlice.actions;
 export const { changeRequestList, pushRequestList, changeOneRequest } =
   requestSlice.actions;
-export const { changeOpeningList, pushOpeningList, changeAmount, loadOpening, resetOpening } =
-  openingSlice.actions;
+export const {
+  changeOpeningList,
+  pushOpeningList,
+  changeAmount,
+  loadOpening,
+  resetOpening,
+} = openingSlice.actions;
 export const { updateDistinctCompanyList } = distinctCompanyListSlice.actions;
 export const { updateCompanyStatistic } = companyStatisticSlice.actions;
 
