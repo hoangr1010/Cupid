@@ -2,19 +2,20 @@ import API from "./index";
 import { setUserId } from "./../utils/api.js";
 import { toast } from "sonner";
 
-export const createOpenings = async (formData, userId) => {
+export const createOpenings = async (formData) => {
   try {
     const body = {
-      amount: formData.number,
+      amount: formData.amount,
       company: formData.company,
     };
+
     const response = await API.post(`/opening/create`, body);
     toast.success("New openings have been created");
 
     return response.data;
   } catch (err) {
     console.error(err);
-    toast.error("New openings have not been created");
+    toast.error("Fail to create opening slots. Try again!");
     return;
   }
 };

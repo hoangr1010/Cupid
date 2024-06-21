@@ -1,6 +1,7 @@
 import React from "react";
 import { IoMdMore } from "react-icons/io";
 import StatusBadge from "../../components/StatusBadge";
+import CreateModal from "./CreateModal";
 
 const OverviewView = ({ opening }) => {
   const company = opening.company;
@@ -63,7 +64,7 @@ const OverviewView = ({ opening }) => {
         </section>
 
         <section className="flex w-full justify-end">
-          <button className="filled-btn btn-padding">+ Add Slots</button>
+          <CreateModal />
         </section>
       </div>
     </div>
