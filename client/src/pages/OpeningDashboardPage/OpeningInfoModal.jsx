@@ -3,6 +3,7 @@ import { Modal } from "flowbite-react";
 import { changeStatus } from "../../api/opening";
 import { changeOpeningList } from "../../state";
 import { useSelector, useDispatch } from "react-redux";
+import { IoMdMore } from "react-icons/io";
 
 const OpeningInfoModal = (opening) => {
   const dispatch = useDispatch();
@@ -30,10 +31,10 @@ const OpeningInfoModal = (opening) => {
     <div>
       {/* Button to show up Modal */}
       <button
-        className="secondary-btn btn-padding rounded-md font-bold"
+        className="secondary-btn rounded-md font-bold"
         onClick={() => setOpenModal(true)}
       >
-        Details
+        <IoMdMore size={20} />
       </button>
 
       {/* Opening Modal */}

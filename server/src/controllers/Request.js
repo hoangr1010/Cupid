@@ -1,4 +1,6 @@
 import Request from "../models/Request.js";
+import Opening from "../models/Opening.js";
+import mongoose from "mongoose";
 import { getBatchPeriod } from "../utils/date.js";
 
 export const getOneRequest = async (req, res) => {
@@ -141,9 +143,19 @@ export const getAllExistingRequests = async (req, res) => {
   try {
     const requests = await Request.find({ status: "waiting" });
 
+    const requestStatistic = {};
+
+    requests.forEach((request) => {
+      if (!requestStatistic[request.company]) {
+        requestStatistic[request.company] = 0;
+      }
+
+      requestStatistic[request.company] += 1;
+    });
+
     res.status(200).json({
       message: "All existing Requests gotten successfully",
-      data: requests,
+      data: requestStatistic,
     });
   } catch (error) {
     res.status(400).json({
@@ -198,6 +210,73 @@ export const deleteFile = async (req, res) => {
     console.log(error);
     res.status(400).json({
       message: "Error deleting file",
+      error: error.message,
+    });
+  }
+};
+
+export const changeStatus = async (req, res) => {
+  const { requestId, newStatus } = req.body;
+
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    let updatedRequest;
+
+    // if new status is waiting
+    if (newStatus === "waiting") {
+      // find the request
+      let request = await Request.findById(requestId).session(session);
+
+      const matchedOpeningId = request.opening_id;
+
+      // update status of the request
+      updatedRequest = await Request.findByIdAndUpdate(
+        requestId,
+        { status: newStatus, opening_id: null },
+        { new: true, session },
+      );
+
+      // remove request_id in its opening
+      if (matchedOpeningId) {
+        let opening = await Opening.findById(matchedOpeningId).session(session);
+        if (!opening) {
+          throw new Error("Opening not found");
+        }
+
+        const hehe = await Opening.findByIdAndUpdate(
+          matchedOpeningId,
+          { $pull: { request_id_list: requestId } },
+          { session },
+        );
+      } else {
+        throw new Error("Couldn't find opening id");
+      }
+    } else if (newStatus === "referred" || newStatus === "approved") {
+      // if new status is non-waiting
+      updatedRequest = await Request.findByIdAndUpdate(
+        requestId,
+        { status: newStatus },
+        { new: true, session },
+      );
+    } else {
+      throw new Error("Not valid new status");
+    }
+
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(200).json({
+      message: "Request status updated successfully",
+      data: updatedRequest,
+    });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+
+    res.status(400).json({
+      message: "Error updating request status",
       error: error.message,
     });
   }

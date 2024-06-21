@@ -2,51 +2,47 @@ import API from "./index";
 import { setUserId } from "./../utils/api.js";
 import { toast } from "sonner";
 
-export const createOpenings = async (formData, userId) => {
-  if (userId) {
-    setUserId(userId);
-  }
-
+export const createOpenings = async (formData) => {
   try {
     const body = {
-      number: formData.number,
+      amount: formData.amount,
       company: formData.company,
     };
+
     const response = await API.post(`/opening/create`, body);
     toast.success("New openings have been created");
-    return response.data.data;
+
+    return response.data;
   } catch (err) {
     console.error(err);
-    toast.error("New openings have not been created");
+    toast.error("Fail to create opening slots. Try again!");
     return;
   }
 };
 
-export const getAllOpenings = async (userId) => {
+export const getAllOpenings = async () => {
   try {
     const response = await API.get(`/opening/getAll`);
-    console.log(response);
-    return response;
+    return response.data.data;
   } catch (err) {
     console.error(err);
   }
 };
 
 export const changeStatus = async (formData) => {
-  try {
-    const body = {
-      openingId: formData.openingId,
-      newStatus: formData.newStatus,
-    };
-
-    const response = await API.put(`/opening/changeStatus`, body);
-    toast.success("Opening has been updated");
-    return response.data.data;
-  } catch (err) {
-    console.error(err);
-    toast.error("Opening has not been updated");
-    return;
-  }
+  // try {
+  //   const body = {
+  //     openingId: formData.openingId,
+  //     newStatus: formData.newStatus,
+  //   };
+  //   const response = await API.put(`/opening/changeStatus`, body);
+  //   toast.success("Opening has been updated");
+  //   return response.data.data;
+  // } catch (err) {
+  //   console.error(err);
+  //   toast.error("Opening has not been updated");
+  //   return;
+  // }
 };
 
 export const processPasscode = async (gmail) => {
@@ -77,16 +73,5 @@ export const getAllExistingOpenings = async () => {
     return response.data.data;
   } catch (err) {
     console.error(err);
-  }
-};
-
-export const getRemainingOpeningsByCompany = async (companyName) => {
-  try {
-    const response = await API.get(
-      `/opening/getRemainingOpenings/${companyName}`,
-    );
-    return response.data.data;
-  } catch (err) {
-    toast.error(err);
   }
 };

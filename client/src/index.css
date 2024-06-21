@@ -19,6 +19,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
 }
 
 code {
@@ -36,15 +37,19 @@ code {
   }
 
   .filled-btn {
-    @apply text-white bg-primary hover:text-primaryDark hover:bg-primaryLight font-bold rounded-md text-sm transition-all;
+    @apply text-primaryDark bg-primaryLight hover:bg-green-100 font-bold rounded-md transition-all;
+  }
+
+  .outline-btn {
+    @apply border border-primary text-primaryDark rounded-lg font-bold hover:bg-primaryLight hover:text-primary transition-all;
   }
 
   .sidebar-btn {
-    @apply text-grayLight font-normal hover:bg-primaryLight hover:font-bold hover:text-primary focus:text-primaryDark transition-all;
+    @apply text-grayLight font-normal hover:bg-primaryLight hover:font-bold hover:text-primary focus:text-primaryDark  transition-all;
   }
 
   .secondary-btn {
-    @apply border hover:bg-gray-100 hover:text-black transition-all;
+    @apply hover:bg-gray-100 hover:text-black transition-all;
   }
 
   .failure-btn {
@@ -56,7 +61,7 @@ code {
   }
 
   .btn-padding {
-    @apply py-1 px-2;
+    @apply py-[6px] px-3;
   }
 }
 

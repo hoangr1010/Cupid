@@ -5,12 +5,6 @@ const USER_ID = "dummy";
 
 const openingID1 = new mongoose.Types.ObjectId();
 const openingID2 = new mongoose.Types.ObjectId();
-const openingID3 = new mongoose.Types.ObjectId();
-const openingID4 = new mongoose.Types.ObjectId();
-const openingID5 = new mongoose.Types.ObjectId();
-const openingID7 = new mongoose.Types.ObjectId();
-const openingID8 = new mongoose.Types.ObjectId();
-const openingID9 = new mongoose.Types.ObjectId();
 
 const requestID2 = new mongoose.Types.ObjectId();
 const requestID3 = new mongoose.Types.ObjectId();
@@ -21,90 +15,75 @@ const requestID8 = new mongoose.Types.ObjectId();
 const requestID9 = new mongoose.Types.ObjectId();
 const requestID10 = new mongoose.Types.ObjectId();
 
-const openings = [
-  {
-    _id: openingID1,
-    referrer_id: USER_ID,
-    company: "Google",
-    status: "waiting",
-  },
-  {
-    _id: openingID2,
-    referrer_id: USER_ID,
-    request_id: requestID2,
-    company: "Amazon",
-    status: "matched",
-  },
-  {
-    _id: openingID3,
-    referrer_id: USER_ID,
-    request_id: requestID3,
-    company: "Neflix",
-    status: "approved",
-  },
-  {
-    _id: openingID4,
-    referrer_id: USER_ID,
-    request_id: requestID4,
-    company: "Apple",
-    status: "referred",
-  },
-  {
-    _id: openingID5,
-    referrer_id: USER_ID,
-    company: "Meta",
-    status: "waiting",
-  },
-];
+const opening = {
+  _id: openingID1,
+  referrer_id: USER_ID,
+  request_id_list: [requestID2, requestID3, requestID4],
+  original_amount: 10,
+  company: "Microsoft",
+  // createdAt: "2022-01-01T00:00:00.000Z",
+  // updatedAt: "2022-01-01T00:00:00.000Z",
+};
 
 const testUserRequest = [
   {
     candidate_id: TEST_USER_ID,
-    company: "Google",
+    company: "Microsoft",
     priority: 1,
     status: "waiting",
-    job_posting_url:
-      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
+    job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
   },
   {
     _id: requestID2,
     candidate_id: TEST_USER_ID,
-    opening_id: openingID2,
-    company: "Amazon",
+    opening_id: openingID1,
+    company: "Microsoft",
     priority: 2,
     status: "matched",
-    job_posting_url:
-      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
+    job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
+    scale: 5,
+    compatibility: 80,
   },
   {
     _id: requestID3,
     candidate_id: TEST_USER_ID,
-    opening_id: openingID3,
-    company: "Netflix",
+    opening_id: openingID1,
+    company: "Microsoft",
     priority: 3,
     status: "approved",
-    job_posting_url:
-      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
+    job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
+    scale: 5,
+    compatibility: 50,
   },
   {
     _id: requestID4,
     candidate_id: TEST_USER_ID,
-    opening_id: openingID4,
-    company: "Apple",
+    opening_id: openingID1,
+    company: "Microsoft",
     priority: 4,
-    status: "referred",
-    job_posting_url:
-      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
+    status: "matched",
+    job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
+    scale: 5,
+    compatibility: 20,
   },
   {
     candidate_id: TEST_USER_ID,
-    company: "Meta",
+    company: "Microsoft",
     priority: 2,
     status: "waiting",
-    job_posting_url:
-      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
+    job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
   },
 ];
+
+const testUserOpening = {
+  _id: openingID2,
+  referrer_id: TEST_USER_ID,
+  request_id_list: [requestID7, requestID8, requestID9],
+  original_amount: 10,
+  company: "Google",
+  // createdAt: "2022-01-01T00:00:00.000Z",
+  // updatedAt: "2022-01-01T00:00:00.000Z",
+};
 
 const requests = [
   {
@@ -113,91 +92,53 @@ const requests = [
     company: "Google",
     priority: 1,
     status: "waiting",
-    job_posting_url:
-      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
+    job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
   },
   {
     _id: requestID7,
     candidate_id: USER_ID,
-    opening_id: openingID7,
-    company: "Amazon",
+    opening_id: openingID2,
+    company: "Google",
     priority: 2,
     status: "matched",
-    job_posting_url:
-      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
+    job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
+    scale: 5,
+    compatibility: 80,
   },
   {
     _id: requestID8,
     candidate_id: USER_ID,
-    opening_id: openingID8,
-    company: "Neflix",
+    opening_id: openingID2,
+    company: "Google",
     priority: 3,
     status: "approved",
-    job_posting_url:
-      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
+    job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
+    scale: 5,
+    compatibility: 55,
   },
   {
     _id: requestID9,
     candidate_id: USER_ID,
-    opening_id: openingID9,
-    company: "Apple",
+    opening_id: openingID2,
+    company: "Google",
     priority: 4,
     status: "referred",
-    job_posting_url:
-      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
+    job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
+    scale: 5,
+    compatibility: 20,
   },
   {
     _id: requestID10,
     candidate_id: USER_ID,
-    company: "Meta",
+    company: "Google",
     priority: 5,
     status: "waiting",
-    job_posting_url:
-      "https://www.github.careers/careers-home/jobs/3030?lang=en-us",
-  },
-];
-
-const testUserOpening = [
-  {
-    referrer_id: TEST_USER_ID,
-    company: "Google",
-    status: "waiting",
-  },
-  {
-    _id: openingID7,
-    referrer_id: TEST_USER_ID,
-    request_id: requestID7,
-    company: "Amazon",
-    status: "matched",
-  },
-  {
-    _id: openingID8,
-    referrer_id: TEST_USER_ID,
-    request_id: requestID8,
-    company: "Neflix",
-    status: "approved",
-  },
-  {
-    _id: openingID9,
-    referrer_id: TEST_USER_ID,
-    request_id: requestID9,
-    company: "Apple",
-    status: "referred",
-  },
-  {
-    referrer_id: TEST_USER_ID,
-    company: "Meta",
-    status: "waiting",
+    job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
   },
 ];
 
 export const userOpening = (userId) => {
-  return openings.map((opening) => {
-    return {
-      ...opening,
-      referrer_id: userId,
-    };
-  });
+  return { ...opening, referrer_id: userId };
 };
 
 export const testRequest = () => {

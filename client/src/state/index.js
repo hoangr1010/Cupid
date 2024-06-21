@@ -49,18 +49,28 @@ const requestSlice = createSlice({
 });
 
 const openingInitialState = {
-  list: [],
+  originalAmount: null,
+  company: null,
+  requestList: [],
 };
 
 const openingSlice = createSlice({
   name: "opening",
   initialState: openingInitialState,
   reducers: {
+    loadOpening(state, action) {
+      state.company = action.payload.company;
+      state.originalAmount = action.payload.original_amount;
+      state.requestList = action.payload.requests;
+    },
     changeOpeningList(state, action) {
       state.list = action.payload;
     },
     pushOpeningList(state, action) {
-      state.list = [...state.list, ...action.payload];
+      state.requestList = [...state.list, ...action.payload];
+    },
+    changeAmount(state, action) {
+      state.originalAmount = action.payload;
     },
   },
 });
@@ -122,7 +132,8 @@ const allReducers = {
 export const { updateUser, updateToken, clearAuth } = authSlice.actions;
 export const { changeRequestList, pushRequestList, changeOneRequest } =
   requestSlice.actions;
-export const { changeOpeningList, pushOpeningList } = openingSlice.actions;
+export const { changeOpeningList, pushOpeningList, changeAmount, loadOpening } =
+  openingSlice.actions;
 export const { updateDistinctCompanyList } = distinctCompanyListSlice.actions;
 export const { updateCompanyStatistic } = companyStatisticSlice.actions;
 export const { updateNotificationList } = notificationListSlice.actions;
