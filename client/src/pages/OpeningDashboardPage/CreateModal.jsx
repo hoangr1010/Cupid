@@ -15,11 +15,14 @@ const CreateModal = () => {
 
   const addSlots = async () => {
     if (number === 0) {
-      toast.error("Amount of opening have to be greater 0")
+      toast.error("Amount of opening have to be greater 0");
       return;
     }
-  
-    const response = await createOpenings({ company: openingCompany, amount: number });
+
+    const response = await createOpenings({
+      company: openingCompany,
+      amount: number,
+    });
     if (response) {
       dispatch(changeAmount(response.original_amount));
       reset();
@@ -29,7 +32,7 @@ const CreateModal = () => {
   const reset = () => {
     setOpenModal(false);
     setNumber(0);
-  }
+  };
 
   return (
     <>
@@ -60,7 +63,9 @@ const CreateModal = () => {
             </section>
 
             <section className="flex justify-end">
-              <button onClick={addSlots} className="filled-btn btn-padding">Add slots</button>
+              <button onClick={addSlots} className="filled-btn btn-padding">
+                Add slots
+              </button>
             </section>
           </div>
         </Modal.Body>
