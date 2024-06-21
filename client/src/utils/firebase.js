@@ -15,7 +15,7 @@ const firebaseConfig = {
   storageBucket: "cupid-notification.appspot.com",
   messagingSenderId: "840154266246",
   appId: "1:840154266246:web:066b7564166d1971146f07",
-  measurementId: "G-GQRE39BVTD"
+  measurementId: "G-GQRE39BVTD",
 };
 
 // Initialize Firebase

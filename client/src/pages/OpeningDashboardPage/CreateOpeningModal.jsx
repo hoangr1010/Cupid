@@ -172,7 +172,11 @@ const CreateOpeningModal = () => {
             </div>
 
             {formState === "in progress" && (
-              <VerificationBox passcode={passcode} setPasscode={setPasscode} email={gmail} />
+              <VerificationBox
+                passcode={passcode}
+                setPasscode={setPasscode}
+                email={gmail}
+              />
             )}
 
             <div className="flex justify-end">

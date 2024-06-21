@@ -11,7 +11,10 @@ export const readNotification = async (noti) => {
 
     console.log(body);
 
-    await API.patch(`${process.env.REACT_APP_NOTIFICATION_SERVER_URL}/seenNoti`, body);
+    await API.patch(
+      `${process.env.REACT_APP_NOTIFICATION_SERVER_URL}/seenNoti`,
+      body,
+    );
 
     console.log("done readNoti");
   } catch (error) {
