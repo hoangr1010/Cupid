@@ -1,15 +1,29 @@
-import db from "../utils/connectDB.js"
+import db from "../utils/connectDB.js";
 
 export const changeSeenField = async (req, res) => {
   try {
     // get Notification object
-    // const notiRef = db.collection()
+    const { userId, notificationId } = req.body;
+    console.log(userId, notificationId);
 
-    // change seen field
+    const notiRef = db.collection(userId).doc(notificationId);
 
-    // return new doc
+    const doc = (await notiRef.get()).data();
+    console.log(doc);
 
+    doc.seen = true;
+    console.log(doc);
+
+    await notiRef.set(doc);
+
+    res.status(201).json({
+      message: "Success setting field 'seen' to true",
+    });
   } catch (error) {
-    
+    console.log(error);
+    res.status(400).json({
+      message: "Error setting field 'seen' to true",
+      error: error.message,
+    });
   }
-}
+};
