@@ -25,6 +25,9 @@ export const getAllOpenings = async () => {
     const response = await API.get(`/opening/getAll`);
     return response.data.data;
   } catch (err) {
+    if (err.response.data.error == "Couldn't find opening") {
+      return false;
+    }
     console.error(err);
   }
 };

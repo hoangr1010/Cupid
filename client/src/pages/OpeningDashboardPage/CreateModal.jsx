@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { changeAmount } from "../../state";
 
 const CreateModal = () => {
-  const [openModal, setOpenModal] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
   const [number, setNumber] = useState(0);
 
   const dispatch = useDispatch();
