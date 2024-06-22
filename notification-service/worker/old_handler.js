@@ -6,6 +6,7 @@ AWS.config.update({
 
 export const handler = async (event) => {
   const messages = event["Records"];
+
   const asyncDoAll = [];
   for (let message of messages) {
     const obj = JSON.parse(message.body);
@@ -33,6 +34,8 @@ export const handler = async (event) => {
       .sendEmail(emailParams)
       .promise();
     asyncDoAll.push(sendPromise);
+
+    console.log("Email should have been sent");
   }
 
   Promise.all(asyncDoAll).then((values) => {

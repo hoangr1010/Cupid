@@ -28,7 +28,7 @@ sqs.receiveMessage(queueParams, function (err, data) {
     const asyncDoAll = [];
     for (let message of data.Messages) {
       const obj = JSON.parse(message.Body);
-      var emailParams = {
+      const emailParams = {
         Destination: {
           ToAddresses: ["test@deadapple.simplelogin.com"],
         },

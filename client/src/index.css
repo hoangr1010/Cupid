@@ -73,3 +73,13 @@ input[id="react-select-5-input"],
 input[id="react-select-6-input"] {
   --tw-ring-shadow: none !important;
 }
+
+#\:r2\:
+  > div
+  > div.p-6.flex-1.overflow-auto.pt-0
+  > form
+  > div:nth-child(1)
+  > div
+  > div {
+  border-radius: 6px;
+}

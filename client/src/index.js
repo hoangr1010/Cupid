@@ -33,6 +33,7 @@ const rootReducer = combineReducers({
   opening: allReducer.opening,
   distinctCompanyList: allReducer.distinctCompanyList,
   companyStatistic: allReducer.companyStatistic,
+  notificationList: allReducer.notificationList,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
