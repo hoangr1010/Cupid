@@ -75,7 +75,7 @@ export class Notification {
       openingId,
       "",
       "",
-      email,
+      user.email,
     );
   }
 }
