@@ -41,7 +41,7 @@ code {
   }
 
   .outline-btn {
-    @apply border border-primary text-primaryDark rounded-lg font-bold hover:bg-primaryLight hover:text-primary transition-all;
+    @apply border border-primary text-primaryDark rounded-lg font-bold hover:bg-green-50 hover:text-primary transition-all;
   }
 
   .sidebar-btn {
@@ -72,8 +72,4 @@ input[id="react-select-4-input"],
 input[id="react-select-5-input"],
 input[id="react-select-6-input"] {
   --tw-ring-shadow: none !important;
-}
-
-#\:r2\: > div > div.p-6.flex-1.overflow-auto.pt-0 > form > div:nth-child(1) > div > div {
-  border-radius: 6px;
 }

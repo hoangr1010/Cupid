@@ -20,8 +20,8 @@ const PercentageChart = ({ percentage }) => {
         animationEasing="ease-out"
         center={[50, 50]}
         data={[
-          { value: percentage, color: light },
-          { value: 100 - percentage, color: dark },
+          { value: Math.round(percentage), color: light },
+          { value: 100 - Math.round(percentage), color: dark },
         ]}
         labelPosition={50}
         lengthAngle={180}
@@ -41,7 +41,7 @@ const PercentageChart = ({ percentage }) => {
         }}
         className="font-bold"
       >
-        {`${percentage}%`}
+        {`${Math.round(percentage)}%`}
       </p>
     </div>
   );

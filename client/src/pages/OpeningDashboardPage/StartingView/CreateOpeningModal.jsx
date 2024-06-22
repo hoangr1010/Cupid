@@ -4,14 +4,14 @@ import {
   createOpenings,
   processPasscode,
   verifyPasscode,
-} from "../../api/opening";
+} from "../../../api/opening";
 import { useSelector, useDispatch } from "react-redux";
-import { pushOpeningList, changeAmount } from "../../state";
+import { pushOpeningList, changeAmount } from "../../../state";
 import { toast } from "sonner";
-import { CompanyDropDown } from "./../../components/CompanyDropDown";
+import { CompanyDropDown } from "../../../components/CompanyDropDown";
 import { VerificationBox } from "./VerificationBox";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { validateForm } from "./../../utils/opening";
+import { validateForm } from "../../../utils/opening";
 import { Spinner } from "flowbite-react";
 
 const CreateOpeningModal = () => {
@@ -172,7 +172,11 @@ const CreateOpeningModal = () => {
             </div>
 
             {formState === "in progress" && (
-              <VerificationBox passcode={passcode} setPasscode={setPasscode} email={gmail} />
+              <VerificationBox
+                passcode={passcode}
+                setPasscode={setPasscode}
+                email={gmail}
+              />
             )}
 
             <div className="flex justify-end">
@@ -182,8 +186,10 @@ const CreateOpeningModal = () => {
                     className="fill-primary w-5 h-5"
                     aria-label="Loading"
                   />
+                ) : formState === "start" ? (
+                  "Verify Email"
                 ) : (
-                  <FaArrowRightLong />
+                  "Create Opening"
                 )}
               </button>
             </div>

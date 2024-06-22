@@ -1,12 +1,16 @@
 import { useState } from "react";
-import OpeningInfoModal from "./OpeningInfoModal";
+import OpeningInfoModal from "../OpeningInfoModal";
+import { useSelector } from "react-redux";
 import { Table } from "flowbite-react";
-import { getColorPair } from "../../utils/theme";
+import { getColorPair } from "../../../utils/theme";
+import QuickAction from "./QuickAction";
 const dayjs = require("dayjs");
 
-const TableView = ({ opening }) => {
+const TableView = () => {
+  const matchedRequestList = useSelector((state) => state.opening.requestList);
+  const totalAmount = useSelector((state) => state.opening.originalAmount);
+
   // Set of Request list
-  const matchedRequestList = opening.requestList;
   const ReferredRequestList = matchedRequestList.filter(
     (request) => request.status === "referred",
   );
@@ -25,7 +29,7 @@ const TableView = ({ opening }) => {
   };
 
   // Set amount of requests
-  const waitingAmount = opening.originalAmount - matchedRequestList.length;
+  const waitingAmount = totalAmount - matchedRequestList.length;
 
   // tableView can be: "all", "referred", "approved"
   const [tableView, setTableView] = useState("all");
@@ -41,7 +45,7 @@ const TableView = ({ opening }) => {
   );
 
   return (
-    <div className="w-full flex flex-col gap-6">
+    <div className="flex flex-col gap-6">
       <section>
         <h1 className="text-4xl font-bold font-darker">Referral Slots</h1>
         <p className="text-grayLight font-bold">
@@ -113,12 +117,17 @@ const TableView = ({ opening }) => {
                       <p className="font-bold">{index + 1}</p>
                     </Table.Cell>
                     <Table.Cell>
-                      <div className="flex items-center gap-2">
-                        <p className="font-bold text-black">
-                          {request.candidate_id.first_name}{" "}
-                          {request.candidate_id.last_name}
-                        </p>
-                      </div>
+                      <OpeningInfoModal
+                        request={request}
+                        Trigger={
+                          <div className="flex items-center gap-2 cursor-pointer">
+                            <p className="font-bold text-black">
+                              {request.candidate_id.first_name}{" "}
+                              {request.candidate_id.last_name}
+                            </p>
+                          </div>
+                        }
+                      />
                     </Table.Cell>
                     <Table.Cell>
                       {
@@ -139,15 +148,11 @@ const TableView = ({ opening }) => {
                     <Table.Cell>
                       {dayjs(request.createdAt).format("MMM DD")}
                     </Table.Cell>
-                    <Table.Cell>
-                      <OpeningInfoModal
-                        openingId={request._id}
-                        company={request.company}
-                        status={request.status}
-                        date={dayjs(request.createdAt).format("DD MMM YYYY")}
-                        requestId={request._id || null}
-                      />
-                    </Table.Cell>
+                    {request.status != "referred" && (
+                      <Table.Cell>
+                        <QuickAction request={request} />
+                      </Table.Cell>
+                    )}
                   </Table.Row>
                 ))}
               </Table.Body>

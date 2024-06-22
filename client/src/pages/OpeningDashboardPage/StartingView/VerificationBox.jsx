@@ -1,6 +1,6 @@
 import React from "react";
 import { MdDone } from "react-icons/md";
-import { processPasscode } from "../../api/opening";
+import { processPasscode } from "../../../api/opening";
 import { toast } from "sonner";
 
 export const VerificationBox = ({ setPasscode, email }) => {
@@ -50,7 +50,7 @@ export const VerificationBox = ({ setPasscode, email }) => {
     } else {
       toast.error("Failed to send passcode, try again!");
     }
-  }
+  };
 
   return (
     <>
@@ -66,7 +66,7 @@ export const VerificationBox = ({ setPasscode, email }) => {
             Please enter the 6-digit verification code
           </p>
           <p className="text-grayLight text-xs">
-            that was sent to {" "}
+            that was sent to{" "}
             <span className="text-primary italic">{email}</span>
           </p>
         </div>
@@ -172,8 +172,13 @@ export const VerificationBox = ({ setPasscode, email }) => {
 
           <section className="text-center">
             <p className="text-grayLight text-xs">
-              Didn’t receive a code? {" "}
-              <span onClick={sendEmail} className="text-primary underline cursor-pointer">Resend</span>
+              Didn’t receive a code?{" "}
+              <span
+                onClick={sendEmail}
+                className="text-primary underline cursor-pointer"
+              >
+                Resend
+              </span>
             </p>
           </section>
         </section>

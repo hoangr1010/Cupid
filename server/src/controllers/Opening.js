@@ -24,10 +24,9 @@ export const getAllOpenings = async (req, res) => {
     const requestIdList = existingOpening.request_id_list;
 
     const requestPromises = requestIdList.map(async (requestId) => {
-      const request = await Request.findById(requestId).populate(
-        "candidate_id",
-        "_id first_name last_name",
-      );
+      const request = await Request.findById(requestId)
+        .populate("candidate_id", "_id first_name last_name resume.url")
+        .populate("candidate_id.resume", "url");
 
       return request;
     });

@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from "react";
-import PercentageChart from "./../../components/PercentageChart";
-import EvaluationText from "../../components/EvaluationText";
+import { useSelector } from "react-redux";
+import PercentageChart from "../../../components/PercentageChart";
+import EvaluationText from "../../../components/EvaluationText";
+import OpeningInfoModal from "../OpeningInfoModal";
 
-const CandidateView = ({ opening }) => {
-  const matchedStatusRequestList = opening.requestList.filter(
+const CandidateView = () => {
+  const requestList = useSelector((state) => state.opening.requestList);
+
+  const matchedStatusRequestList = requestList.filter(
     (request) => request.status === "matched",
   );
 
   return (
     <div className="flex flex-col gap-6">
+    
       <section>
         <h2 className="text-4xl font-bold font-darker">Opening Overview</h2>
-        <p className="text-grayLight font-bold">
+        <p className="ttext-grayLight font-bold">
           There are currently {matchedStatusRequestList.length} candidate
         </p>
       </section>
@@ -31,9 +36,14 @@ const CandidateView = ({ opening }) => {
 
               <div className="flex items-center relative grow">
                 <EvaluationText percentage={request.compatibility} />
-                <button className="absolute bottom-0 right-0 outline-btn btn-padding">
-                  View Candidate
-                </button>
+                <OpeningInfoModal
+                  request={request}
+                  Trigger={
+                    <button className="absolute bottom-0 right-0 outline-btn btn-padding">
+                      View Candidate
+                    </button>
+                  }
+                />
               </div>
             </section>
           </div>

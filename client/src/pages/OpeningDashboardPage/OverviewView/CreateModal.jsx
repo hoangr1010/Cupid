@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Modal } from "flowbite-react";
-import NumberInput from "../../components/NumberInput";
-import { createOpenings } from "../../api/opening";
+import NumberInput from "../../../components/NumberInput";
+import { createOpenings } from "../../../api/opening";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "sonner";
-import { changeAmount } from "../../state";
+import { changeAmount } from "../../../state";
 
 const CreateModal = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [number, setNumber] = useState(0);
 
   const dispatch = useDispatch();
@@ -18,7 +19,8 @@ const CreateModal = () => {
       toast.error("Amount of opening have to be greater 0");
       return;
     }
-
+    
+    setIsButtonLoading(true);
     const response = await createOpenings({
       company: openingCompany,
       amount: number,
@@ -27,6 +29,8 @@ const CreateModal = () => {
       dispatch(changeAmount(response.original_amount));
       reset();
     }
+
+    setIsButtonLoading(false);
   };
 
   const reset = () => {
@@ -63,7 +67,7 @@ const CreateModal = () => {
             </section>
 
             <section className="flex justify-end">
-              <button onClick={addSlots} className="filled-btn btn-padding">
+              <button disabled={isButtonLoading} onClick={addSlots} className="filled-btn btn-padding">
                 Add slots
               </button>
             </section>
