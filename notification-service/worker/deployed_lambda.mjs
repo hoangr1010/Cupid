@@ -6,7 +6,8 @@ const sesClient = new SESClient({ region: REGION });
 
 const handler = async (event) => {
   const messages = event.Records;
-  const asyncDoAll = [];
+  const asyncDocEmail = [];
+  const asyncId = [];
   for (const message of messages) {
     const obj = JSON.parse(message.body);
 
@@ -27,20 +28,18 @@ const handler = async (event) => {
       Source: "hiwecupid@gmail.com",
     };
 
-    const docRef = db.collection("notifications").doc();
+    const docRef = db.collection(obj.recipientId.toString()).doc();
     const saveNotification = docRef.set(obj);
-    asyncDoAll.push(saveNotification);
+    asyncDocEmail.push(saveNotification);
 
-    // Get the newly created document ID
     const docId = docRef.id;
-
-    // Update the document with the ID
-    await docRef.update({
+    const addId = docRef.update({
       id: docId,
     });
+    asyncId.push(addId);
 
     const sendEmail = await sesClient.send(new SendEmailCommand(params));
-    asyncDoAll.push(sendEmail);
+    asyncDocEmail.push(sendEmail);
 
     // try {
     //   console.log(obj);
@@ -58,7 +57,11 @@ const handler = async (event) => {
     // }
   }
 
-  Promise.all(asyncDoAll)
+  Promise.all(asyncDocEmail)
+    .then((values) => console.log(values))
+    .catch((err) => console.error(err));
+
+  Promise.all(asyncId)
     .then((values) => console.log(values))
     .catch((err) => console.error(err));
 };
