@@ -52,7 +52,14 @@ export class Notification {
     const recipientId = request.candidate_id.valueOf();
     const user = await User.findOne({ _id: recipientId });
 
-    return new Notification(notiType, recipientId, requestId, "", "", user.email);
+    return new Notification(
+      notiType,
+      recipientId,
+      requestId,
+      "",
+      "",
+      user.email,
+    );
   }
 
   static async openingRemindAction(notiType, openingId) {
@@ -61,6 +68,14 @@ export class Notification {
     const recipientId = opening.referrer_id.valueOf();
     const user = await User.findOne({ _id: recipientId });
 
-    return new Notification(notiType, recipientId, "", openingId, "", "", email);
+    return new Notification(
+      notiType,
+      recipientId,
+      "",
+      openingId,
+      "",
+      "",
+      email,
+    );
   }
 }
