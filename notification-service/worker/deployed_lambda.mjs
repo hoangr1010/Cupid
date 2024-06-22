@@ -6,6 +6,7 @@ const sesClient = new SESClient({ region: REGION });
 
 const handler = async (event) => {
   const messages = event.Records;
+  const asyncDoAll = [];
   for (const message of messages) {
     const obj = JSON.parse(message.body);
 
@@ -26,21 +27,32 @@ const handler = async (event) => {
       Source: "hiwecupid@gmail.com",
     };
 
-    try {
-      const data = await sesClient.send(new SendEmailCommand(params));
-      console.log("Email sent! Message ID:", data.MessageId);
-    } catch (err) {
-      console.error("Error sending email:", err);
-    }
+    const docRef = db.collection("notifications").doc();
+    const saveNotification = docRef.set(obj);
+    asyncDoAll.push(saveNotification);
 
-    try {
-      console.log(obj);
-      const docRef = db.collection("notifications").doc();
-      const saveNotification = await docRef.set(obj);
-    } catch (err) {
-      console.error("Error saving to firestore database");
-    }
+    const sendEmail = await sesClient.send(new SendEmailCommand(params));
+    asyncDoAll.push(sendEmail);
+
+    // try {
+    //   console.log(obj);
+    //   const docRef = db.collection("notifications").doc();
+    //   const saveNotification = await docRef.set(obj);
+    // } catch (err) {
+    //   console.error("Error saving to firestore database");
+    // }
+
+    // try {
+    //   const data = await sesClient.send(new SendEmailCommand(params));
+    //   console.log("Email sent! Message ID:", data.MessageId);
+    // } catch (err) {
+    //   console.error("Error sending email:", err);
+    // }
   }
+
+  Promise.all(asyncDoAll)
+    .then((values) => console.log(values))
+    .catch((err) => console.error(err));
 };
 
 module.exports.handler = handler;
