@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateNotificationList } from "../../state";
 import { onSnapshot, collection } from "firebase/firestore";
 import { Dropdown } from "flowbite-react";
-import { GoDotFill } from "react-icons/go";
+import { GoDotFill, GoHorizontalRule } from "react-icons/go";
 import { readNotification } from "../../api/notification.js";
 
 export const NotificationDropdown = () => {
@@ -89,6 +89,7 @@ export const NotificationDropdown = () => {
           </span>
         )}
       >
+        <h1 className="font-bold flex justify-center text-lg">Notifications</h1>
         <div className="p-1" style={{ overflowY: "scroll", height: "350px" }}>
           {notiList.map((noti) =>
             noti.seen ? (
