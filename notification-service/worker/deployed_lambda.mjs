@@ -31,6 +31,14 @@ const handler = async (event) => {
     const saveNotification = docRef.set(obj);
     asyncDoAll.push(saveNotification);
 
+    // Get the newly created document ID
+    const docId = docRef.id;
+
+    // Update the document with the ID
+    await docRef.update({
+      id: docId,
+    });
+
     const sendEmail = await sesClient.send(new SendEmailCommand(params));
     asyncDoAll.push(sendEmail);
 
