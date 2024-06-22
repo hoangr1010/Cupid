@@ -24,7 +24,7 @@ const Sidebar = () => {
       }
     >
       <div className="flex-1 flex flex-col w-full">
-        <p className="ps-5 p-2 font-righteous text-primary text-4xl">
+        <p className="ps-5 p-2 font-righteous text-primary text-5xl">
           {isExpanded ? "Cupid" : "id"}
         </p>
         <SidebarItem
