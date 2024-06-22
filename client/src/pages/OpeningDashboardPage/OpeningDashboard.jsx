@@ -1,5 +1,5 @@
 import TableView from "./TableView";
-import CreateOpeningModal from "./CreateOpeningModal";
+import CreateOpeningModal from "./StartingView/CreateOpeningModal";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loadOpening, resetOpening } from "../../state";
@@ -12,17 +12,8 @@ const OpeningDashboard = () => {
   const [openCreate, setOpenCreate] = useState(false);
 
   const opening = useSelector((state) => state.opening);
+  const openingOriginalAmount = useSelector((state) => state.opening);
   const dispatch = useDispatch();
-
-  console.log(opening);
-
-  function onCloseCreate() {
-    setOpenCreate(false);
-  }
-
-  function onOpenCreate() {
-    setOpenCreate(true);
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,7 +38,7 @@ const OpeningDashboard = () => {
         <h1 className="text-5xl font-bold font-darker text-primaryDark">
           Referral Openings
         </h1>
-        {opening.originalAmount === null ? (
+        {openingOriginalAmount === null ? (
           <div className="flex flex-col justify-center items-center h-full gap-8">
             <img
               className="w-1/3"
@@ -68,9 +59,11 @@ const OpeningDashboard = () => {
           </div>
         ) : (
           <>
-            <OverviewView opening={opening} />
-            <TableView opening={opening} />
-            <CandidateView opening={opening} />
+            <div className="flex gap-10 lg:flex-row-reverse flex-col justify-end">
+              <OverviewView />
+              <TableView />
+            </div>
+            <CandidateView />
           </>
         )}
       </main>

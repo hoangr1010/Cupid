@@ -41,7 +41,7 @@ code {
   }
 
   .outline-btn {
-    @apply border border-primary text-primaryDark rounded-lg font-bold hover:bg-primaryLight hover:text-primary transition-all;
+    @apply border border-primary text-primaryDark rounded-lg font-bold hover:bg-green-50 hover:text-primary transition-all;
   }
 
   .sidebar-btn {

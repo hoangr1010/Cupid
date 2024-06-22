@@ -32,20 +32,16 @@ export const getAllOpenings = async () => {
   }
 };
 
-export const changeStatus = async (formData) => {
-  // try {
-  //   const body = {
-  //     openingId: formData.openingId,
-  //     newStatus: formData.newStatus,
-  //   };
-  //   const response = await API.put(`/opening/changeStatus`, body);
-  //   toast.success("Opening has been updated");
-  //   return response.data.data;
-  // } catch (err) {
-  //   console.error(err);
-  //   toast.error("Opening has not been updated");
-  //   return;
-  // }
+export const changeStatus = async ({ requestId, newStatus }) => {
+  const formData = { requestId, newStatus };
+  try {
+    const response = await API.put("/request/changeStatus", formData);
+    
+    return response.data.data;
+  } catch (err) {
+    console.error(err);
+    toast.error("Fail to change status. Try again!");  
+  }
 };
 
 export const processPasscode = async (gmail) => {

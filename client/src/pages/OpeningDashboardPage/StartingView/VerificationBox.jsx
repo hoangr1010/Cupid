@@ -1,6 +1,6 @@
 import React from "react";
 import { MdDone } from "react-icons/md";
-import { processPasscode } from "../../api/opening";
+import { processPasscode } from "../../../api/opening";
 import { toast } from "sonner";
 
 export const VerificationBox = ({ setPasscode, email }) => {

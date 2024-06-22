@@ -11,7 +11,6 @@ import { reorderRequests } from "./../../utils/request";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import dayjs from "dayjs";
 import { Spinner } from "flowbite-react";
-import StatusBadge from "../../components/StatusBadge";
 
 const RequestDashboard = () => {
   const user = useSelector((state) => state.auth.user);
@@ -130,7 +129,7 @@ const RequestDashboard = () => {
                         </Table.Cell>
                         <Table.Cell>
                           <div className="w-fit">
-                            {/* <StatusBadge status={request.status} /> */}
+                            {request.status}
                           </div>
                         </Table.Cell>
                         <Table.Cell>
