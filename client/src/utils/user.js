@@ -18,6 +18,6 @@ export const valid_url = (resumeLink) => {
 };
 
 export const getFileNameFromUrl = (url) => {
-  const lastSlashIndex = url.lastIndexOf('/');
+  const lastSlashIndex = url.lastIndexOf("/");
   return url.substring(lastSlashIndex + 1);
-}
+};
