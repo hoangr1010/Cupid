@@ -94,7 +94,7 @@ export const NotificationDropdown = () => {
           {notiList.map((noti) =>
             noti.seen ? (
               <Dropdown.Item className="rounded-md" key={noti.id}>
-                <div>{noti.type}</div>
+                <div>{noti.notiType}</div>
               </Dropdown.Item>
             ) : (
               <Dropdown.Item
@@ -106,7 +106,7 @@ export const NotificationDropdown = () => {
                   // navigate to the notified component
                 }}
               >
-                <div>{noti.type}</div>
+                <div>{noti.notiType}</div>
                 <div>
                   <GoDotFill style={{ color: "red" }} />
                 </div>
