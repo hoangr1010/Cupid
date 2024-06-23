@@ -9,6 +9,7 @@ export const notificationService = (req, res) => {
       requestId: req.body.requestId,
       openingId: req.body.openingId,
       userPref: req.body.userPref,
+      email: req.body.email,
       seen: false,
       createdAt: Date.now(),
       retrySend: 0,
