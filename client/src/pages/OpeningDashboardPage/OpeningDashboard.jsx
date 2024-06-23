@@ -11,8 +11,7 @@ import CandidateView from "./CandidateView";
 const OpeningDashboard = () => {
   const [openCreate, setOpenCreate] = useState(false);
 
-  const opening = useSelector((state) => state.opening);
-  const openingOriginalAmount = useSelector((state) => state.opening);
+  const openingOriginalAmount = useSelector((state) => state.opening.originalAmount);
   const dispatch = useDispatch();
 
   useEffect(() => {
