@@ -28,7 +28,6 @@ const OpeningInfoModal = ({ request, Trigger }) => {
       const requestId = newRequest._id;
       const newStatus = newRequest.status;
       dispatch(changeRequestStatusInOpening({ requestId, newStatus }));
-
     }
     setIsButtonLoading(false);
   };

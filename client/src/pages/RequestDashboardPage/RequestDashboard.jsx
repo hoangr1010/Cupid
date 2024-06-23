@@ -128,9 +128,7 @@ const RequestDashboard = () => {
                           </div>
                         </Table.Cell>
                         <Table.Cell>
-                          <div className="w-fit">
-                            {request.status}
-                          </div>
+                          <div className="w-fit">{request.status}</div>
                         </Table.Cell>
                         <Table.Cell>
                           {dayjs(request.createdAt).format("DD-MM-YYYY")}
