@@ -42,3 +42,96 @@ export const addEducation = async (formData) => {
     return;
   }
 };
+
+export const addExperience = async (formData) => {
+  try {
+    const body = {
+      company: formData.company,
+      location: formData.location,
+      position: formData.position,
+      type: formData.type,
+      start_m: formData.start_m,
+      start_y: formData.start_y,
+      end_m: formData.end_m,
+      end_y: formData.end_y,
+      current: formData.current,
+      description: formData.description,
+    };
+    const response = await API.put(`user/addExperience`, body);
+    toast.success("added experience");
+    return response.data.data;
+  } catch (error) {
+    toast.error("error adding experience: " + error);
+    return;
+  }
+};
+
+export const addProject = async (formData) => {
+  try {
+    const body = {
+      name: formData.name,
+      start_m: formData.start_m,
+      start_y: formData.start_y,
+      end_m: formData.end_m,
+      end_y: formData.end_y,
+      current: formData.current,
+      description: formData.description,
+      link: formData.link,
+    };
+    const response = await API.put(`user/addProject`, body);
+    toast.success("added project");
+    return response.data.data;
+  } catch (error) {
+    toast.error("error adding project: " + error);
+    return;
+  }
+};
+
+export const addPortfolio = async (formData) => {
+  try {
+    const body = {
+      linkedin: formData.linkedin,
+      github: formData.github,
+      website: formData.website,
+    };
+    const response = await API.put(`user/addPortfolio`, body);
+    toast.success("added portfolio");
+    return response.data.data;
+  } catch (error) {
+    toast.error("error adding portfolio: " + error);
+    return;
+  }
+};
+
+export const autoFillResume = async (resumeText) => {
+  try {
+    const body = { resumeText: resumeText };
+    const response = await API.post(`user/autoFillResume`, body);
+    toast.success("Resume json returned");
+    return response.data.data;
+  } catch (error) {
+    toast.error("error uploading file: " + error);
+  }
+};
+
+export const addAll = async (
+  educationData,
+  experienceData,
+  projectData,
+  portfolioData,
+) => {
+  try {
+    const body = {
+      education: educationData,
+      experience: experienceData,
+      project: projectData,
+      portfolio: portfolioData,
+    };
+    const response = await API.put(`user/addAll`, body);
+    toast.success("Add all successfully");
+    console.log(response);
+    return response.data.data;
+  } catch (error) {
+    toast.error("error uploading file: " + error);
+  }
+};
