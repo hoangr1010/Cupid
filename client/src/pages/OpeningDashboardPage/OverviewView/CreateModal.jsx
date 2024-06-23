@@ -19,7 +19,7 @@ const CreateModal = () => {
       toast.error("Amount of opening have to be greater 0");
       return;
     }
-    
+
     setIsButtonLoading(true);
     const response = await createOpenings({
       company: openingCompany,
@@ -67,7 +67,11 @@ const CreateModal = () => {
             </section>
 
             <section className="flex justify-end">
-              <button disabled={isButtonLoading} onClick={addSlots} className="filled-btn btn-padding">
+              <button
+                disabled={isButtonLoading}
+                onClick={addSlots}
+                className="filled-btn btn-padding"
+              >
                 Add slots
               </button>
             </section>

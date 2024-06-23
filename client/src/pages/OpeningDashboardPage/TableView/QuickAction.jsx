@@ -25,7 +25,6 @@ const QuickAction = ({ request }) => {
             <Dropdown.Item>
               <p className="font-bold text-xs">Request Infomation</p>
             </Dropdown.Item>
-
           </>
         )}
       </Dropdown>
