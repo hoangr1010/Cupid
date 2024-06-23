@@ -36,11 +36,11 @@ export const changeStatus = async ({ requestId, newStatus }) => {
   const formData = { requestId, newStatus };
   try {
     const response = await API.put("/request/changeStatus", formData);
-    
+
     return response.data.data;
   } catch (err) {
     console.error(err);
-    toast.error("Fail to change status. Try again!");  
+    toast.error("Fail to change status. Try again!");
   }
 };
 
