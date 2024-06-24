@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Modal } from "flowbite-react";
+import { useParams } from 'react-router-dom';
 import { changeStatus } from "../../api/opening";
 import { changeRequestStatusInOpening } from "../../state";
 import { useDispatch } from "react-redux";
@@ -10,8 +11,17 @@ import { TbExternalLink } from "react-icons/tb";
 import RequestInfoModal from "./RequestInfoModal";
 
 const OpeningInfoModal = ({ request, Trigger }) => {
+  // If requestId is specified in route
+  const { requestId } = useParams();
+  let isOpen = false;
+  if (requestId === request._id) {
+    isOpen = true;
+  }
+
   const dispatch = useDispatch();
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(isOpen);
+
+
   const [isButtonLoading, setIsButtonLoading] = useState(false);
 
   const TriggerElement = React.cloneElement(Trigger, {

@@ -31,28 +31,28 @@ const Sidebar = () => {
           path="/homepage"
           text="Home"
           icon={<FaHome size={iconSize} />}
-          isCurrent={currPage === "/homepage"}
+          isCurrent={currPage.startsWith("/homepage")}
           isExpanded={isExpanded}
         />
         <SidebarItem
           path="/request"
           text="Referral Request"
           icon={<FaHandHolding size={iconSize} />}
-          isCurrent={currPage === "/request"}
+          isCurrent={currPage.startsWith("/request")}
           isExpanded={isExpanded}
         />
         <SidebarItem
           path="/opening"
           text="Referral Opening"
           icon={<FaHandHoldingMedical size={iconSize} />}
-          isCurrent={currPage === "/opening"}
+          isCurrent={currPage.startsWith("/opening")}
           isExpanded={isExpanded}
         />
         <SidebarItem
           path="/profile"
           text="Profile"
           icon={<BsFillPersonFill size={iconSize} />}
-          isCurrent={currPage === "/profile"}
+          isCurrent={currPage.startsWith("/profile")}
           isExpanded={isExpanded}
         />
       </div>
