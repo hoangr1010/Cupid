@@ -1,8 +1,8 @@
-import { sendMessageToQueue } from "../services/SQS.js"
+import { sendMessageToQueue } from "../services/SQS.js";
 
 export const notificationService = (req, res) => {
   try {
-    console.log(Date.now())
+    console.log(req.body);
     const msg = {
       notiType: req.body.notiType,
       recipientId: req.body.recipientId,
@@ -13,16 +13,15 @@ export const notificationService = (req, res) => {
       seen: false,
       createdAt: Date.now(),
       retrySend: 0,
-    }
-  
+    };
+
     console.log(msg);
-  
+
     sendMessageToQueue(JSON.stringify(msg));
 
     res.status(201).json({
-      message: "Message pushed to queue"
+      message: "Message pushed to queue",
     });
-
   } catch (error) {
     console.log(error);
     res.status(400).json({
@@ -30,4 +29,4 @@ export const notificationService = (req, res) => {
       error: error.message,
     });
   }
-}
+};

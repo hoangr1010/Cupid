@@ -8,34 +8,36 @@ import { onSnapshot, collection } from "firebase/firestore";
 import { Dropdown } from "flowbite-react";
 import { GoDotFill, GoHorizontalRule } from "react-icons/go";
 import { readNotification } from "../../api/notification.js";
+// import { notiMessage } from "../../utils/notiMessage.js";
+import { Message } from "./message.jsx";
 
 export const NotificationDropdown = () => {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const [notiList, setNotiList] = useState([]);
 
-  console.log(notiList);
+  // console.log(notiList);
 
   // After implementing the push data in backend, change "a" into user._id
   // so the function get all notification of a user.
   useEffect(() => {
     onSnapshot(collection(db, user._id), async (snapshot) => {
-      console.log(
-        snapshot.docs.map((doc) => {
-          console.log("create at: " + doc);
-        }),
-      );
+      // console.log(
+      //   snapshot.docs.map((doc) => {
+      //     console.log("create at: " + doc);
+      //   }),
+      // );
 
       var l = [];
       snapshot.docs.map((doc) => {
         l.push(doc.data());
       });
 
-      console.log(l);
+      // console.log(l);
 
       l = l.sort((a, b) => b.createdAt - a.createdAt);
 
-      console.log(l);
+      // console.log(l);
 
       await dispatch(updateNotificationList(l));
 
@@ -50,6 +52,7 @@ export const NotificationDropdown = () => {
     //   })
     // })
   }, []);
+
   return (
     <>
       <Dropdown
@@ -89,31 +92,40 @@ export const NotificationDropdown = () => {
           </span>
         )}
       >
-        <h1 className="font-bold flex justify-center text-lg">Notifications</h1>
-        <div className="p-1" style={{ overflowY: "scroll", height: "350px" }}>
-          {notiList.map((noti) =>
-            noti.seen ? (
-              <Dropdown.Item className="rounded-md" key={noti.id}>
-                <div>{noti.notiType}</div>
-              </Dropdown.Item>
-            ) : (
+        <h1 className="font-bold flex justify-center text-lg p-2">
+          Notifications
+        </h1>
+        <div className="h-0.5 w-90 bg-primary mx-3"></div>
+        {notiList.length ? (
+          <div className="p-1" style={{ overflowY: "scroll", height: "350px" }}>
+            {notiList.map((noti) => (
               <Dropdown.Item
                 key={noti.id}
                 className="rounded-md flex justify-between"
                 onClick={() => {
-                  readNotification(noti);
+                  if (noti.seen === false) {
+                    readNotification(noti);
+                  }
 
                   // navigate to the notified component
                 }}
               >
-                <div>{noti.notiType}</div>
-                <div>
-                  <GoDotFill style={{ color: "red" }} />
-                </div>
+                {Message(noti)}
+                {noti.seen ? (
+                  <></>
+                ) : (
+                  <div>
+                    <GoDotFill style={{ color: "red" }} />
+                  </div>
+                )}
               </Dropdown.Item>
-            ),
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex justify-center text-sm">
+            You have no notification
+          </div>
+        )}
       </Dropdown>
     </>
   );
