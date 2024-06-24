@@ -175,7 +175,7 @@ export const updateFile = async (req, res) => {
     const request = await Request.findByIdAndUpdate(
       requestId,
       { $push: { request_files: filePath } },
-      { new: true, select: '_id status' }
+      { new: true, select: "_id status" },
     );
 
     res.status(200).json({
