@@ -4,6 +4,10 @@ import { Avatar } from "flowbite-react";
 import { sendResume } from "../../api/user";
 import { useDispatch } from "react-redux";
 import Education from "./Education";
+import Experience from "./Experience";
+import Portfolio from "./Portfolio";
+import Project from "./Project";
+import AutoFill from "./AutoFill";
 
 function ProfilePage() {
   const user = useSelector((state) => state.auth.user);
@@ -113,7 +117,11 @@ function ProfilePage() {
           )}
         </div>
         <br></br>
+        <AutoFill />
         <Education />
+        <Experience />
+        <Project />
+        <Portfolio />
       </div>
     </main>
   );
