@@ -64,10 +64,14 @@ export const Message = (noti) => {
   }
   return (
     <div>
-      <div className="font-semibold text-sm flex justify-start text-start">{msg}</div>
-      <div className="font-light text-xs flex justify-start">{time} {time_unit} ago</div>
+      <div className="font-semibold text-sm flex justify-start text-start">
+        {msg}
+      </div>
+      <div className="font-light text-xs flex justify-start">
+        {time} {time_unit} ago
+      </div>
     </div>
-  )
+  );
 };
 
 // export default message;
