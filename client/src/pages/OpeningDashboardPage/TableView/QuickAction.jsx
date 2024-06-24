@@ -4,15 +4,15 @@ import { IoMdMore } from "react-icons/io";
 import { Dropdown } from "flowbite-react";
 import { changeRequestStatusInOpening } from "../../../state";
 import { changeStatus } from "../../../api/opening";
+import RequestInfoModal from "../RequestInfoModal";
 
 const QuickAction = ({ request }) => {
   const dispatch = useDispatch();
   const status = request.status;
-  const requestId = request._id
+  const requestId = request._id;
   const [isButtonLoading, setIsButtonLoading] = useState(false);
 
   const changeRequestStatus = async (newStatus) => {
-
     if (isButtonLoading) {
       return;
     }
@@ -30,30 +30,22 @@ const QuickAction = ({ request }) => {
   };
 
   return (
-    <div>
-      <Dropdown
-        className="rounded-lg"
-        label={
-          <button className="secondary-btn rounded-md font-bold">
-            <IoMdMore size={20} />
+    <div className="flex gap-1">
+      <button
+        onClick={() => changeRequestStatus("referred")}
+        disabled={isButtonLoading}
+        className="text-xs font-bold filled-btn btn-padding"
+      >
+        Refer
+      </button>
+      <RequestInfoModal
+        request={request}
+        Trigger={
+          <button className="font-bold text-xs outline-btn btn-padding">
+            Request Info
           </button>
         }
-        arrowIcon={false}
-        inline
-      >
-        {status === "approved" && (
-          <>
-            <Dropdown.Item onClick={() => {
-              changeRequestStatus("referred");
-            }}>
-              <p className="font-bold text-xs">Refer Candidate</p>
-            </Dropdown.Item>
-            <Dropdown.Item>
-              <p className="font-bold text-xs">Request Infomation</p>
-            </Dropdown.Item>
-          </>
-        )}
-      </Dropdown>
+      />
     </div>
   );
 };

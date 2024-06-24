@@ -79,7 +79,7 @@ const openingSlice = createSlice({
     },
     changeRequestStatusInOpening(state, action) {
       const { requestId, newStatus } = action.payload;
-      console.log(requestId, newStatus);
+
       if (newStatus != "waiting") {
         state.requestList = state.requestList.map((request) =>
           request._id === requestId ? { ...request, status: newStatus } : request,

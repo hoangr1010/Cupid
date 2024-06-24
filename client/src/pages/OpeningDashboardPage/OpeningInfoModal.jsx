@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { Modal } from "flowbite-react";
 import { changeStatus } from "../../api/opening";
 import { changeRequestStatusInOpening } from "../../state";
-import { useSelector, useDispatch } from "react-redux";
-import { IoMdMore } from "react-icons/io";
+import { useDispatch } from "react-redux";
 import PercentageChart from "../../components/PercentageChart";
 import EvaluationText from "../../components/EvaluationText";
 import FileBox from "../../components/FileBox";
 import { TbExternalLink } from "react-icons/tb";
-import { toast } from "sonner";
+import RequestInfoModal from "./RequestInfoModal";
 
 const OpeningInfoModal = ({ request, Trigger }) => {
   const dispatch = useDispatch();
@@ -28,7 +27,6 @@ const OpeningInfoModal = ({ request, Trigger }) => {
       const requestId = newRequest._id;
       const newStatus = newRequest.status;
       dispatch(changeRequestStatusInOpening({ requestId, newStatus }));
-
     }
     setIsButtonLoading(false);
   };
@@ -126,12 +124,17 @@ const OpeningInfoModal = ({ request, Trigger }) => {
               {request.status === "approved" && (
                 <div className="flex flex-wrap gap-2">
                   {/* Request Info button */}
-                  <button
-                    disabled={isButtonLoading}
-                    className="outline-btn h-fit rounded-md btn-padding"
-                  >
-                    <p>Request Information</p>
-                  </button>
+                  <RequestInfoModal
+                    request={request}
+                    Trigger={
+                      <button
+                        disabled={isButtonLoading}
+                        className="outline-btn h-fit rounded-md btn-padding"
+                      >
+                        <p>Request Information</p>
+                      </button>
+                    }
+                  />
 
                   {/* Refer button */}
                   <button

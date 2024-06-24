@@ -14,28 +14,22 @@ export const NotificationDropdown = () => {
   const dispatch = useDispatch();
   const [notiList, setNotiList] = useState([]);
 
-  console.log(notiList);
-
   // After implementing the push data in backend, change "a" into user._id
   // so the function get all notification of a user.
   useEffect(() => {
     onSnapshot(collection(db, user._id), async (snapshot) => {
-      console.log(
-        snapshot.docs.map((doc) => {
-          console.log("create at: " + doc);
-        }),
-      );
+      // console.log(
+      //   snapshot.docs.map((doc) => {
+      //     console.log("create at: " + doc);
+      //   }),
+      // );
 
       var l = [];
       snapshot.docs.map((doc) => {
         l.push(doc.data());
       });
 
-      console.log(l);
-
       l = l.sort((a, b) => b.createdAt - a.createdAt);
-
-      console.log(l);
 
       await dispatch(updateNotificationList(l));
 
