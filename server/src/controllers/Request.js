@@ -283,3 +283,34 @@ export const changeStatus = async (req, res) => {
     });
   }
 };
+
+export const sendRequestInfo = async (req, res) => {
+  const { requestId, messageText } = req.body;
+
+  try {
+    const updatedRequest = await Request.findOneAndUpdate(
+      { _id: requestId },
+      {
+        $set: { "InfoRequest.isActive": true },
+        $push: {
+          "InfoRequest.Conversation": {
+            sender: "referrer",
+            message: messageText,
+          },
+        },
+      },
+      { new: true },
+    );
+
+    // Check if the request exists and was updated
+    if (!updatedRequest) {
+      return res
+        .status(404)
+        .json({ message: "Request not found or not updated" });
+    }
+
+    res.status(200).json(updatedRequest);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

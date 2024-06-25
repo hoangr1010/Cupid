@@ -15,7 +15,7 @@ const CandidateView = () => {
     <div className="flex flex-col gap-6">
       <section>
         <h2 className="text-4xl font-bold font-darker">Opening Overview</h2>
-        <p className="ttext-grayLight font-bold">
+        <p className="text-grayLight font-bold">
           There are currently {matchedStatusRequestList.length} candidate
         </p>
       </section>
@@ -26,9 +26,9 @@ const CandidateView = () => {
             key={request._id}
             className="widget_container w-full flex flex-col gap-3"
           >
-            <h3 className="font-bold text-primaryDark">
+            <p className="font-bold text-primaryDark">
               {request.candidate_id.first_name} {request.candidate_id.last_name}
-            </h3>
+            </p>
 
             <section className="flex gap-6">
               <PercentageChart percentage={request.compatibility} />

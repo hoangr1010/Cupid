@@ -42,6 +42,25 @@ const requestSchema = new Schema(
     compatibility: {
       type: Number,
     },
+    InfoRequest: {
+      isActive: {
+        type: Boolean,
+        default: false,
+      },
+      Conversation: [
+        {
+          sender: {
+            type: String,
+            required: true,
+            enum: ["referrer", "candidate"],
+          },
+          message: {
+            type: String,
+            required: true,
+          },
+        },
+      ],
+    },
   },
   {
     timestamps: true,
