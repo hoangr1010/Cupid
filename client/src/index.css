@@ -40,8 +40,20 @@ code {
     @apply text-primaryDark bg-primaryLight hover:bg-green-100 font-bold rounded-md transition-all;
   }
 
+  .btn-padding {
+    @apply py-[6px] px-3;
+  }
+  
   .outline-btn {
     @apply border border-primary text-primaryDark rounded-lg font-bold hover:bg-green-50 hover:text-primary transition-all;
+  }
+
+  .my-message {
+    @apply bg-primaryLight text-black p-3 text-sm font-bold rounded-lg;
+  }
+
+  .another-message {
+    @apply border rounded-lg p-3 bg-alt w-fit text-sm font-bold;
   }
 
   .sidebar-btn {
@@ -60,9 +72,6 @@ code {
     @apply bg-green-400 hover:bg-green-500 transition-all;
   }
 
-  .btn-padding {
-    @apply py-[6px] px-3;
-  }
 }
 
 /* Custom react select style */
