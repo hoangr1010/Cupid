@@ -287,16 +287,19 @@ export const sendRequestInfo = async (req, res) => {
 
   try {
     const updatedRequest = await Request.findOneAndUpdate(
-      { _id: requestId }, 
+      { _id: requestId },
       {
         $set: { "InfoRequest.isActive": true },
-        $push: { "InfoRequest.Conversation": { sender: "referrer", message: messageText } },
+        $push: {
+          "InfoRequest.Conversation": {
+            sender: "referrer",
+            message: messageText,
+          },
+        },
       },
       { new: true },
     );
 
-
-    console.log(updatedRequest)
     // Check if the request exists and was updated
     if (!updatedRequest) {
       return res

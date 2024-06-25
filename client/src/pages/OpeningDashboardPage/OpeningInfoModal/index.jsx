@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { Modal } from "flowbite-react";
-import { useParams } from 'react-router-dom';
-import { changeStatus } from "../../api/opening";
-import { changeRequestStatusInOpening } from "../../state";
+import { useParams, useNavigate } from "react-router-dom";
+import { changeStatus } from "../../../api/opening";
+import { changeRequestStatusInOpening } from "../../../state";
 import { useDispatch } from "react-redux";
-import PercentageChart from "../../components/PercentageChart";
-import EvaluationText from "../../components/EvaluationText";
-import FileBox from "../../components/FileBox";
+import PercentageChart from "../../../components/PercentageChart";
+import EvaluationText from "../../../components/EvaluationText";
+import FileBox from "../../../components/FileBox";
 import { TbExternalLink } from "react-icons/tb";
-import RequestInfoModal from "./RequestInfoModal";
+import RequestInfoModal from "../RequestInfoModal";
+import ConversationBox from "../../../components/ConversationBox";
 
 const OpeningInfoModal = ({ request, Trigger }) => {
   // If requestId is specified in route
@@ -19,8 +20,8 @@ const OpeningInfoModal = ({ request, Trigger }) => {
   }
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(isOpen);
-
 
   const [isButtonLoading, setIsButtonLoading] = useState(false);
 
@@ -46,6 +47,13 @@ const OpeningInfoModal = ({ request, Trigger }) => {
   const resumeUrl = request.candidate_id.resume.url;
   const jobPostingUrl = request.job_posting_url;
   const requestFiles = request.request_files;
+  const isConversation = request.InfoRequest.Conversation.length > 0;
+  const conversation = request.InfoRequest.Conversation;
+
+  const onModalClose = () => {
+    setOpenModal(false);
+    navigate("/opening");
+  }
 
   return (
     <div>
@@ -53,7 +61,7 @@ const OpeningInfoModal = ({ request, Trigger }) => {
       {TriggerElement}
 
       {/* Opening Modal */}
-      <Modal size="4xl" show={openModal} onClose={() => setOpenModal(false)}>
+      <Modal size="4xl" show={openModal} onClose={onModalClose}>
         <Modal.Header>
           <p className="font-bold text-2xl">Candidate Overview</p>
         </Modal.Header>
@@ -61,46 +69,63 @@ const OpeningInfoModal = ({ request, Trigger }) => {
         <Modal.Body>
           <div className="py-2 px-6 flex flex-col gap-4 w-full">
             <p className="text-primaryDark font-bold">{CandidateFullName}</p>
+            <div>
+              <div className="md:flex md:gap-8">
+                <section className="flex gap-6 w-fit h-fit">
+                  <PercentageChart percentage={request.compatibility} />
 
-            <div className="md:flex md:gap-8">
-              <section className="flex gap-6 w-fit h-fit">
-                <PercentageChart percentage={request.compatibility} />
-
-                <div className="flex items-center relative grow">
-                  <EvaluationText percentage={request.compatibility} />
-                </div>
-              </section>
-
-              <section className="grow flex flex-col gap-1">
-                <section>
-                  <a
-                    href={jobPostingUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex gap-1 items-center hover:text-primaryDark"
-                  >
-                    <p className="font-bold">Job Posting</p>
-                    <TbExternalLink />
-                  </a>
+                  <div className="flex items-center relative grow">
+                    <EvaluationText percentage={request.compatibility} />
+                  </div>
                 </section>
 
-                <section>
-                  <p className="font-bold">Resume</p>
-                  <FileBox fileUrl={resumeUrl} />
-                </section>
-
-                {requestFiles.length > 0 && (
+                <section className="grow flex flex-col gap-1">
                   <section>
-                    <p className="font-bold">Uploaded Files</p>
-                    <div className="flex flex-col gap-1">
-                      {requestFiles.map((fileUrl) => (
-                        <FileBox fileUrl={fileUrl} />
-                      ))}
-                    </div>
+                    <a
+                      href={jobPostingUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex gap-1 items-center hover:text-primaryDark"
+                    >
+                      <p className="font-bold">Job Posting</p>
+                      <TbExternalLink />
+                    </a>
                   </section>
-                )}
-              </section>
+
+                  <div className="mb-3 lg:m-0">
+                    <section>
+                      <p className="font-bold">Resume</p>
+                      <FileBox fileUrl={resumeUrl} />
+                    </section>
+
+                    {requestFiles.length > 0 && (
+                      <section>
+                        <p className="font-bold">Uploaded Files</p>
+                        <div className="flex flex-col gap-1">
+                          {requestFiles.map((fileUrl) => (
+                            <FileBox fileUrl={fileUrl} />
+                          ))}
+                        </div>
+                      </section>
+                    )}
+                  </div>
+                </section>
+              </div>
+              <div className="h-0.5 w-90 bg-primary mx-3"></div>
             </div>
+
+            {isConversation && (
+              <section>
+                <p className="font-bold text-lg">Information Update</p>
+                <ConversationBox
+                  conversation={conversation}
+                  currentRole="referrer"
+                />
+              </section>
+            )}
+            {isConversation && (
+              <div className="h-0.5 w-90 bg-primary mx-3"></div>
+            )}
 
             <section className="flex justify-end">
               {/* If status is matched, ask for deny/approve */}

@@ -48,6 +48,14 @@ code {
     @apply border border-primary text-primaryDark rounded-lg font-bold hover:bg-green-50 hover:text-primary transition-all;
   }
 
+  .my-message {
+    @apply bg-primaryLight text-black p-3 text-sm font-bold rounded-lg;
+  }
+
+  .another-message {
+    @apply border rounded-lg p-3 bg-alt w-fit text-sm font-bold;
+  }
+
   .sidebar-btn {
     @apply text-grayLight font-normal hover:bg-primaryLight hover:font-bold hover:text-primary focus:text-primaryDark  transition-all;
   }

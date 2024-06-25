@@ -74,3 +74,16 @@ export const getAllExistingOpenings = async () => {
     console.error(err);
   }
 };
+
+export const requestInformation = async (requestId, messageText) => {
+  try {
+    const response = await API.put(`/request/sendRequestInfo`, {
+      requestId,
+      messageText,
+    });
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    toast.error("Fail to send request information. Try again!");
+  }
+};

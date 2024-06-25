@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import { Modal, Label } from "flowbite-react";
+import { Modal } from "flowbite-react";
+import { useNavigate } from "react-router-dom";
+import { requestInformation } from "../../api/opening";
+import { toast } from "sonner";
 
 const RequestInfoModal = ({ request, Trigger }) => {
   const [openModal, setOpenModal] = useState(false);
+  const navigate = useNavigate();
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [requestText, setRequestText] = useState("");
 
@@ -15,6 +19,30 @@ const RequestInfoModal = ({ request, Trigger }) => {
     },
   });
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (requestText.length < 5) {
+      toast.error("Please enter a message with at least 5 characters");
+      return;
+    }
+    setIsButtonLoading(true);
+
+    const newRequest = await requestInformation(request._id, requestText);
+
+    if (newRequest) {
+      toast.success("Request sent successfully!");
+      navigate(`/opening/${request._id}`);
+      navigate(0);
+      resetModal();
+    }
+    setIsButtonLoading(false);
+  };
+
+  const resetModal = () => {
+    setRequestText("");
+    setOpenModal(false);
+  };
+
   return (
     <div>
       {/* Button to show up Modal */}
@@ -26,7 +54,7 @@ const RequestInfoModal = ({ request, Trigger }) => {
         </Modal.Header>
 
         <Modal.Body>
-          <form className="flex flex-col gap-4">
+          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <p className="font-bold text-primaryDark">{candidateFullName}</p>
             <section>
               <p className="text-sm font-bold">
@@ -55,7 +83,11 @@ const RequestInfoModal = ({ request, Trigger }) => {
                   <p>Cancel</p>
                 </button>
 
-                <button className="filled-btn h-fit rounded-md btn-padding">
+                <button
+                  disabled={isButtonLoading}
+                  type="submit"
+                  className="filled-btn h-fit rounded-md btn-padding"
+                >
                   <p>Request Information</p>
                 </button>
               </div>

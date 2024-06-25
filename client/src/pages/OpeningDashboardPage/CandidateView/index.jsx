@@ -15,7 +15,7 @@ const CandidateView = () => {
     <div className="flex flex-col gap-6">
       <section>
         <h2 className="text-4xl font-bold font-darker">Opening Overview</h2>
-        <p className="ttext-grayLight font-bold">
+        <p className="text-grayLight font-bold">
           There are currently {matchedStatusRequestList.length} candidate
         </p>
       </section>
