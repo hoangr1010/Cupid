@@ -1,6 +1,6 @@
 import React from "react";
 import { BsFileEarmarkFill } from "react-icons/bs";
-import { getFileNameFromUrl } from "../../utils/user";
+import { getFileNameFromUrl } from "../../utils/user.js";
 
 const FileBox = ({ fileUrl }) => {
   const fileLink = `${process.env.REACT_APP_S3_BUCKET_LINK}/${fileUrl}`;

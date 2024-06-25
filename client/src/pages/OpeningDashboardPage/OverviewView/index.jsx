@@ -4,7 +4,7 @@ import { IoMdMore } from "react-icons/io";
 import StatusBadge from "../../../components/StatusBadge";
 import CreateModal from "./CreateModal";
 
-const OverviewView = () => {  
+const OverviewView = () => {
   const company = useSelector((state) => state.opening.company);
   const totalAmount = useSelector((state) => state.opening.originalAmount);
   const requestList = useSelector((state) => state.opening.requestList);

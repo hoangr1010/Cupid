@@ -175,7 +175,7 @@ export const updateFile = async (req, res) => {
     const request = await Request.findByIdAndUpdate(
       requestId,
       { $push: { request_files: filePath } },
-      { new: true, select: '_id status' }
+      { new: true, select: "_id status" },
     );
 
     res.status(200).json({
@@ -279,5 +279,33 @@ export const changeStatus = async (req, res) => {
       message: "Error updating request status",
       error: error.message,
     });
+  }
+};
+
+export const sendRequestInfo = async (req, res) => {
+  const { requestId, messageText } = req.body;
+
+  try {
+    const updatedRequest = await Request.findOneAndUpdate(
+      { _id: requestId }, 
+      {
+        $set: { "InfoRequest.isActive": true },
+        $push: { "InfoRequest.Conversation": { sender: "referrer", message: messageText } },
+      },
+      { new: true },
+    );
+
+
+    console.log(updatedRequest)
+    // Check if the request exists and was updated
+    if (!updatedRequest) {
+      return res
+        .status(404)
+        .json({ message: "Request not found or not updated" });
+    }
+
+    res.status(200).json(updatedRequest);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };

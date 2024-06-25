@@ -10,38 +10,56 @@ function Education() {
   const user = useSelector((state) => state.auth.user);
   const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
-  const [school, setSchool] = useState("");
-  const [major, setMajor] = useState("");
-  const [degree, setDegree] = useState("");
-  const [gpa, setGPA] = useState(0);
-  const [start, setStart] = useState(0);
-  const [end, setEnd] = useState(0);
+  const [formState, setFormState] = useState({
+    school: "",
+    major: "",
+    degree: "",
+    gpa: 0,
+    start: 0,
+    end: 0,
+  });
   const education = user.education;
 
-  const handleSubmit = async (e) => {
-    // e.preventDefault();
+  const handleChange = (e) => {
+    const { name, value, type } = e.target;
+    console.log(type);
 
-    if (!school || !major || !degree) {
+    let parsedValue = value;
+
+    if (type === "number") {
+      parsedValue = parseInt(value, 10);
+    }
+
+    setFormState({
+      ...formState,
+      [name]: parsedValue,
+    });
+  };
+
+  const handleSubmit = async () => {
+    if (!formState.school || !formState.major || !formState.degree) {
       toast.error("Please fill out all required fields");
       return;
     }
     const newEducation = await addEducation({
-      school: school,
-      major: major,
-      degree: major,
-      gpa: gpa,
-      start_year: start,
-      end_year: end,
+      school: formState.school,
+      major: formState.major,
+      degree: formState.degree,
+      gpa: formState.gpa,
+      start_year: formState.start,
+      end_year: formState.end,
     });
 
     if (newEducation) {
       dispatch(updateUser(newEducation));
-      setSchool("");
-      setMajor("");
-      setDegree("");
-      setGPA(0);
-      setStart(0);
-      setEnd(0);
+      setFormState({
+        school: "",
+        major: "",
+        degree: "",
+        gpa: 0,
+        start_year: 0,
+        end_year: 0,
+      });
       setOpenModal(false);
     }
   };
@@ -61,9 +79,8 @@ function Education() {
               <input
                 type="text"
                 id="school"
-                onChange={(e) => {
-                  setSchool(e.target.value);
-                }}
+                name="school"
+                onChange={handleChange}
                 class="text-field w-full"
                 placeholder="School Name"
                 required
@@ -76,9 +93,8 @@ function Education() {
               <input
                 type="text"
                 id="major"
-                onChange={(e) => {
-                  setMajor(e.target.value);
-                }}
+                name="major"
+                onChange={handleChange}
                 class="text-field w-full"
                 placeholder="Major"
                 required
@@ -91,9 +107,8 @@ function Education() {
               <input
                 type="text"
                 id="degree"
-                onChange={(e) => {
-                  setDegree(e.target.value);
-                }}
+                name="school"
+                onChange={handleChange}
                 class="text-field w-full"
                 placeholder="Degree"
                 required
@@ -106,9 +121,8 @@ function Education() {
               <input
                 type="number"
                 id="gpa"
-                onChange={(e) => {
-                  setGPA(e.target.value);
-                }}
+                name="gpa"
+                onChange={handleChange}
                 class="text-field w-full"
                 placeholder="GPA"
               />
@@ -120,9 +134,8 @@ function Education() {
               <input
                 type="number"
                 id="start"
-                onChange={(e) => {
-                  setStart(e.target.value);
-                }}
+                name="start"
+                onChange={handleChange}
                 class="text-field w-full"
                 placeholder="Start Year"
               />
@@ -134,9 +147,8 @@ function Education() {
               <input
                 type="number"
                 id="end"
-                onChange={(e) => {
-                  setEnd(e.target.value);
-                }}
+                name="end"
+                onChange={handleChange}
                 class="text-field w-full"
                 placeholder="End Year"
               />
@@ -169,13 +181,13 @@ function Education() {
           {education.map((item, index) => (
             <div key={index}>
               <h3>{item.school}</h3>
-              <ul>
+              {/* <ul>
                 <li>Major: {item.major}</li>
                 <li>Degree: {item.degree}</li>
                 <li>GPA: {item.gpa}</li>
                 <li>Start Year: {item.start_year}</li>
                 <li>End Year: {item.end_year}</li>
-              </ul>
+              </ul> */}
             </div>
           ))}
         </>

@@ -6,8 +6,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateNotificationList } from "../../state";
 import { onSnapshot, collection } from "firebase/firestore";
 import { Dropdown } from "flowbite-react";
-import { GoDotFill } from "react-icons/go";
+import { GoDotFill, GoHorizontalRule } from "react-icons/go";
 import { readNotification } from "../../api/notification.js";
+// import { notiMessage } from "../../utils/notiMessage.js";
+import { Message } from "./message.jsx";
 
 export const NotificationDropdown = () => {
   const user = useSelector((state) => state.auth.user);
@@ -31,6 +33,7 @@ export const NotificationDropdown = () => {
 
       l = l.sort((a, b) => b.createdAt - a.createdAt);
 
+      // console.log(l);
       await dispatch(updateNotificationList(l));
 
       setNotiList(l);
@@ -44,6 +47,7 @@ export const NotificationDropdown = () => {
     //   })
     // })
   }, []);
+
   return (
     <>
       <Dropdown
@@ -83,30 +87,40 @@ export const NotificationDropdown = () => {
           </span>
         )}
       >
-        <div className="p-1" style={{ overflowY: "scroll", height: "350px" }}>
-          {notiList.map((noti) =>
-            noti.seen ? (
-              <Dropdown.Item className="rounded-md" key={noti.id}>
-                <div>{noti.type}</div>
-              </Dropdown.Item>
-            ) : (
+        <h1 className="font-bold flex justify-center text-lg p-2">
+          Notifications
+        </h1>
+        <div className="h-0.5 w-90 bg-primary mx-3"></div>
+        {notiList.length ? (
+          <div className="p-1" style={{ overflowY: "scroll", height: "350px" }}>
+            {notiList.map((noti) => (
               <Dropdown.Item
                 key={noti.id}
                 className="rounded-md flex justify-between"
                 onClick={() => {
-                  readNotification(noti);
+                  if (noti.seen === false) {
+                    readNotification(noti);
+                  }
 
                   // navigate to the notified component
                 }}
               >
-                <div>{noti.type}</div>
-                <div>
-                  <GoDotFill style={{ color: "red" }} />
-                </div>
+                {Message(noti)}
+                {noti.seen ? (
+                  <></>
+                ) : (
+                  <div>
+                    <GoDotFill style={{ color: "red" }} />
+                  </div>
+                )}
               </Dropdown.Item>
-            ),
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex justify-center text-sm">
+            You have no notification
+          </div>
+        )}
       </Dropdown>
     </>
   );

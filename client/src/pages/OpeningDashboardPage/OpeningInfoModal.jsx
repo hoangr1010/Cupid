@@ -55,7 +55,7 @@ const OpeningInfoModal = ({ request, Trigger }) => {
       {/* Opening Modal */}
       <Modal size="4xl" show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>
-          <h1 className="font-bold text-2xl">Candidate Overview</h1>
+          <p className="font-bold text-2xl">Candidate Overview</p>
         </Modal.Header>
 
         <Modal.Body>

@@ -82,7 +82,9 @@ const openingSlice = createSlice({
 
       if (newStatus != "waiting") {
         state.requestList = state.requestList.map((request) =>
-          request._id === requestId ? { ...request, status: newStatus } : request,
+          request._id === requestId
+            ? { ...request, status: newStatus }
+            : request,
         );
       } else {
         state.requestList = state.requestList.filter(
@@ -90,7 +92,7 @@ const openingSlice = createSlice({
         );
         state.originalAmount -= 1;
       }
-    }
+    },
   },
 });
 
@@ -151,8 +153,14 @@ const allReducers = {
 export const { updateUser, updateToken, clearAuth } = authSlice.actions;
 export const { changeRequestList, pushRequestList, changeOneRequest } =
   requestSlice.actions;
-export const { changeOpeningList, pushOpeningList, changeAmount, loadOpening, resetOpening, changeRequestStatusInOpening } =
-  openingSlice.actions;
+export const {
+  changeOpeningList,
+  pushOpeningList,
+  changeAmount,
+  loadOpening,
+  resetOpening,
+  changeRequestStatusInOpening,
+} = openingSlice.actions;
 export const { updateDistinctCompanyList } = distinctCompanyListSlice.actions;
 export const { updateCompanyStatistic } = companyStatisticSlice.actions;
 export const { updateNotificationList } = notificationListSlice.actions;

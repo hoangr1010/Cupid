@@ -9,6 +9,7 @@ import {
   updateFile,
   deleteFile,
   changeStatus,
+  sendRequestInfo
 } from "../controllers/Request.js";
 import { checkUserId } from "../middleware/User.js";
 import { verifyToken } from "../middleware/Auth.js";
@@ -28,6 +29,7 @@ requestRouter.post("/create", createRequest);
 
 requestRouter.put("/priority", changePriority);
 requestRouter.put("/changeStatus", changeStatus);
+requestRouter.put("/sendRequestInfo", sendRequestInfo);
 
 requestRouter.patch(
   "/upload",

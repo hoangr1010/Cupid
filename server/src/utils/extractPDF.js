@@ -7,10 +7,17 @@ export const getResumeFromS3 = async (resume_url) => {
   return response.data;
 };
 
+export const cleanText = async (text) => {
+  let cleanedText = text.replace(/\n/g, " ");
+  cleanedText = cleanedText.replace(/[^\x20-\x7E]/g, "");
+  return cleanedText;
+};
+
 export const parsePdfFromBuffer = async (fileBuffer) => {
   try {
     const data = await pdf(fileBuffer);
-    return data.text;
+    const cleanedText = await cleanText(data.text);
+    return cleanedText;
   } catch (error) {
     console.error("Error parsing PDF:", error);
   }
