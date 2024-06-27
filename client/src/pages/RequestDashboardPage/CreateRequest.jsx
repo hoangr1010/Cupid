@@ -62,7 +62,7 @@ const CreateRequest = () => {
     <>
       <button
         type="button"
-        className="filled-btn p-2 w-full"
+        className="filled-btn p-2"
         onClick={() => {
           if (highestPriority < 10) {
             setOpenModal(!openModal);
@@ -71,9 +71,7 @@ const CreateRequest = () => {
           }
         }}
       >
-        {requests.length > 0
-          ? "Create new requests"
-          : "You do not have any request, create your first request"}
+        + New Request
       </button>
 
       {/* Modal for creating request */}
