@@ -9,11 +9,16 @@ import {
   updateFile,
   deleteFile,
   changeStatus,
-  sendRequestInfo
+  sendRequestInfo,
+  updateMultipleFiles
 } from "../controllers/Request.js";
 import { checkUserId } from "../middleware/User.js";
 import { verifyToken } from "../middleware/Auth.js";
-import { loadFileRequestToS3, delFileS3 } from "../middleware/fileHandle.js";
+import {
+  loadFileRequestToS3,
+  delFileS3,
+  multipleFilesToS3,
+} from "../middleware/fileHandle.js";
 
 const requestRouter = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
@@ -38,6 +43,13 @@ requestRouter.patch(
   verifyToken,
   loadFileRequestToS3,
   updateFile,
+);
+
+requestRouter.patch(
+  "/uploadMultiple",
+  upload.array("file", 10),
+  multipleFilesToS3,
+  updateMultipleFiles,
 );
 
 requestRouter.patch("/del", checkUserId, verifyToken, delFileS3, deleteFile);

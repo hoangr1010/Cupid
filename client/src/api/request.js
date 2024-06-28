@@ -2,7 +2,7 @@ import API from ".";
 import { toast } from "sonner";
 import { changeRequestList } from "../state";
 import { validateFileName } from "../utils/request";
-import { changeOneRequest } from "../state";
+import { changeOneRequest, addFilesOneRequest } from "../state";
 import axios, { Axios } from "axios";
 
 export const getAllRequests = async (userId) => {
@@ -42,6 +42,34 @@ export const changeRequestPriority = async (newRequests) => {
     toast.error(err);
   }
 };
+
+export const sendMultipleFiles = async (formData, request, dispatch) => {
+  // console.log(request.request._id)
+  // console.log(formData.entries.length);
+  // for (var [key, val] of formData.entries()) {
+  //   console.log(key, val);
+  // }
+  try {
+
+    const headers = {};
+    headers["requestId"] = request.request._id;
+
+    const response = await API.patch(`/request/uploadMultiple`, formData, {
+      headers: headers,
+    });
+
+    console.log("res: ", response.data.data);
+
+    dispatch(addFilesOneRequest(response.data.data));
+    toast.success("files uploaded");
+    
+  } catch (error) {
+    console.log(error);
+    toast.error(error);
+  }
+
+}
+
 export const sendFile = async (request, name, file, dispatch) => {
   try {
     const formData = new FormData();

@@ -165,6 +165,51 @@ export const getAllExistingRequests = async (req, res) => {
   }
 };
 
+export const updateMultipleFiles = async (req,res) => {
+  console.log("start updateMultiple")
+  try {
+    
+    const requestId = req.get("requestId");
+    const userId = req.get("userId");
+
+    const promises = req.files.map(file => {
+      console.log(file);
+      const path = `${userId}/request/${requestId}/${file.originalname}`
+
+      return Request.findByIdAndUpdate(
+        requestId,
+        { $push: { request_files: path } },
+        { new: true },
+      );
+    });
+
+    console.log(promises);
+
+    const results = await Promise.all(promises);
+
+    console.log(results);
+
+    // const request = await Request.findByIdAndUpdate(
+    //   requestId,
+    //   { $push: { request_files: { $each: path } } },
+    //   { new: true },
+    // );
+
+    // console.log(req);
+
+    res.status(200).json({
+      message: "Uploaded files successfully",
+      data: results,
+    });
+    
+  } catch (error) {
+    res.status(400).json({
+      message: "Error storing file path",
+      error: error.message,
+    });
+  }
+}
+
 export const updateFile = async (req, res) => {
   try {
     const requestId = req.get("requestId");

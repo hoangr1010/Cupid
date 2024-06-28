@@ -85,3 +85,16 @@ export const validateFileName = (request, name) => {
 
   return true;
 };
+
+export const fileValidate = (uploadFiles, currFile) => {
+  console.log(uploadFiles);
+
+  for (let i = 0; i < uploadFiles.length; i++) {
+    if (currFile.name === uploadFiles[i].name) {
+      toast.error("file existed");
+      return false;
+    }
+  }
+
+  return true;
+};

@@ -30,6 +30,32 @@ export const uploadFileToS3 = async (path, file, fileName, contentType) => {
   }
 };
 
+export const uploadMultipleToS3 = async (files, path) => {
+  try {
+    const uploadPromises = files.map((file) => {
+      const params = {
+        Bucket: path,
+        Key: file.originalname,
+        Body: file.buffer,
+        ContentType: "application/pdf",
+      };
+
+      // console.log(params);
+
+      return s3.upload(params).promise();
+    });
+
+    console.log(uploadPromises)
+
+    await Promise.all(uploadPromises);
+
+    console.log("done uploading")
+
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const delFileFromS3 = async (path) => {
   try {
     const params = {
