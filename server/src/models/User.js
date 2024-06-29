@@ -52,13 +52,15 @@ const ExperienceSchema = new Schema({
   },
   end_m: {
     type: String, // Month as a number (1-12)
+    required: true,
   },
   end_y: {
     type: Number, // Year as a number (e.g., 2024)
+    required: true,
   },
   current: {
     type: Boolean,
-    required: true,
+    default: false
   },
   description: {
     type: String,

@@ -33,7 +33,7 @@ code {
   }
 
   .text-field {
-    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-primary focus:border-primary;
+    @apply border border-gray-300 font-medium text-sm rounded-md focus:ring-primary focus:border-primary shadow-sm;
   }
 
   .filled-btn {
@@ -43,7 +43,7 @@ code {
   .btn-padding {
     @apply py-[6px] px-3;
   }
-  
+
   .outline-btn {
     @apply border border-primary text-primaryDark rounded-lg font-bold hover:bg-green-50 hover:text-primary transition-all;
   }
@@ -54,6 +54,10 @@ code {
 
   .another-message {
     @apply border rounded-lg p-3 bg-alt w-fit text-sm font-bold;
+  }
+
+  .danger-text {
+    @apply text-pink hover:bg-pinkLighter transition-all rounded-lg;
   }
 
   .sidebar-btn {
@@ -71,7 +75,6 @@ code {
   .success-btn {
     @apply bg-green-400 hover:bg-green-500 transition-all;
   }
-
 }
 
 /* Custom react select style */

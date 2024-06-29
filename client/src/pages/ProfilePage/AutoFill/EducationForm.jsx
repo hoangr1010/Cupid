@@ -5,30 +5,32 @@ import {
   useImperativeHandle,
   forwardRef,
 } from "react";
-import { addEducation } from "./../../api/user";
+import { addEducation } from "./../../../api/user";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
-import { updateUser } from "./../../state";
+import { updateUser } from "./../../../state";
+import { MdDelete } from "react-icons/md";
+import { parseObject } from "../../../utils/user";
 
 const EducationForm = forwardRef(({ educationData, onDelete }, ref) => {
   const dispatch = useDispatch();
-  const [formState, setFormState] = useState({
+  const initialFormState = {
     school: "",
     major: "",
     degree: "",
     gpa: 0,
     start: 0,
     end: 0,
-  });
+  }
+  const [formState, setFormState] = useState(initialFormState);
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    console.log(type);
 
     let parsedValue = value;
 
     if (type === "number") {
-      parsedValue = parseInt(value, 10);
+      parsedValue = parseFloat(value);
     }
 
     setFormState({
@@ -71,15 +73,43 @@ const EducationForm = forwardRef(({ educationData, onDelete }, ref) => {
   };
 
   useImperativeHandle(ref, () => ({
-    getData: () => formState,
+    getData: () => {
+      if (!formState.school) {
+        toast.error("School in Education is required");
+        return null;
+      }
+      if (!formState.major) {
+        toast.error("Major in Education is required");
+        return null;
+      }
+      if (!formState.degree) {
+        toast.error("Degree in Education is required");
+        return null;
+      }
+
+      return parseObject(initialFormState, formState);
+    },
   }));
+
+  const validate = () => {
+    return !formState.school || !formState.major || !formState.degree;
+  };
 
   return (
     <div className="widget_container">
-      <form onSubmit={handleSubmit} class="grid gap-6 mb-6 md:grid-cols-2">
-        <div>
-          <label for="school" class="block mb-2 text-sm">
-            School Name
+      <div className="w-full flex justify-end">
+        <button
+          className="danger-text text-center p-1"
+          type="button"
+          onClick={onDelete}
+        >
+          <MdDelete size={20} />
+        </button>
+      </div>
+      <form onSubmit={handleSubmit} class="grid gap-2 mb-6 grid-cols-12">
+        <div className="col-span-12">
+          <label for="school" class="text-xs text-grayLight font-medium">
+            School Name<span className="text-pink">*</span>
           </label>
           <input
             type="text"
@@ -92,9 +122,9 @@ const EducationForm = forwardRef(({ educationData, onDelete }, ref) => {
             required
           />
         </div>
-        <div>
-          <label for="major" class="block mb-2 text-sm">
-            Major
+        <div className="col-span-6">
+          <label for="major" class="text-xs text-grayLight font-medium">
+            Major<span className="text-pink">*</span>
           </label>
           <input
             type="text"
@@ -107,9 +137,9 @@ const EducationForm = forwardRef(({ educationData, onDelete }, ref) => {
             required
           />
         </div>
-        <div>
-          <label for="degree" class="block mb-2 text-sm">
-            Degree
+        <div className="col-span-4">
+          <label for="degree" class="text-xs text-grayLight font-medium">
+            Degree<span className="text-pink">*</span>
           </label>
           <input
             type="text"
@@ -122,8 +152,8 @@ const EducationForm = forwardRef(({ educationData, onDelete }, ref) => {
             required
           />
         </div>
-        <div>
-          <label for="gpa" class="block mb-2 text-sm">
+        <div className="col-span-2">
+          <label for="gpa" class="text-xs text-grayLight font-medium">
             GPA
           </label>
           <input
@@ -134,10 +164,11 @@ const EducationForm = forwardRef(({ educationData, onDelete }, ref) => {
             onChange={handleChange}
             class="text-field w-full"
             placeholder="GPA"
+            step="0.1"
           />
         </div>
-        <div>
-          <label for="start" class="block mb-2 text-sm">
+        <div className="col-span-6">
+          <label for="start" class="text-xs text-grayLight font-medium">
             Start Year
           </label>
           <input
@@ -150,8 +181,8 @@ const EducationForm = forwardRef(({ educationData, onDelete }, ref) => {
             placeholder="Start Year"
           />
         </div>
-        <div>
-          <label for="end" class="block mb-2 text-sm">
+        <div className="col-span-6">
+          <label for="end" class="text-xs text-grayLight font-medium">
             End Year
           </label>
           <input
@@ -164,9 +195,6 @@ const EducationForm = forwardRef(({ educationData, onDelete }, ref) => {
             placeholder="End Year"
           />
         </div>
-        <button type="button" onClick={onDelete}>
-          Delete
-        </button>
       </form>
     </div>
   );

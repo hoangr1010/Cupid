@@ -12,7 +12,6 @@ import AutoFill from "./AutoFill";
 function ProfilePage() {
   const user = useSelector((state) => state.auth.user);
   const resume = user.resume.url;
-  console.log(resume);
   const [file, setFile] = useState("");
   const [newResume, setNewResume] = useState(false);
   const dispatch = useDispatch();
