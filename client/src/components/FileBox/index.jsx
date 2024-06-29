@@ -12,7 +12,7 @@ const FileBox = ({ fileUrl }) => {
         href={fileLink}
         className="font-bold hover:text-primary"
         target="_blank"
-        rel="noopener noreferrer"
+        // rel="noopener noreferrer"
       >
         {getFileNameFromUrl(fileUrl)}
       </a>

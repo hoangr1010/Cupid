@@ -43,7 +43,7 @@ code {
   .btn-padding {
     @apply py-[6px] px-3;
   }
-  
+
   .outline-btn {
     @apply border border-primary text-primaryDark rounded-lg font-bold hover:bg-green-50 hover:text-primary transition-all;
   }
@@ -71,7 +71,6 @@ code {
   .success-btn {
     @apply bg-green-400 hover:bg-green-500 transition-all;
   }
-
 }
 
 /* Custom react select style */
