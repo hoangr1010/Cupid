@@ -136,7 +136,7 @@ function Portfolio() {
         </Modal.Footer>
       </Modal>
       {portfolio.length <= 0 ? (
-        <p>Please update your project</p>
+        <p>Please update your links</p>
       ) : (
         <>
           {portfolio.map((item, index) => (

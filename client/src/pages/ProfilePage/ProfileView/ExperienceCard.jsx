@@ -23,7 +23,7 @@ function ExperienceCard({ experience }) {
       </div>
       <div className="flex justify-between text-grayLight">
         <div>
-          {experience.start_m} {experience.start_y} -
+          {experience.start_m} {experience.start_y} -{" "}
           {experience.current
             ? "Present"
             : `${experience.end_m} ${experience.end_y}`}

@@ -95,10 +95,10 @@ export const addPortfolio = async (formData) => {
       website: formData.website,
     };
     const response = await API.put(`user/addPortfolio`, body);
-    toast.success("added portfolio");
+    toast.success("Added portfolio");
     return response.data.data;
   } catch (error) {
-    toast.error("error adding portfolio: " + error);
+    toast.error("Error adding portfolio: " + error.message);
     return;
   }
 };
