@@ -36,6 +36,15 @@ const RequestBox = ({
             activeSteps={activeSteps}
             requestedDate={requestedDate}
           />
+          <button
+            className="secondary-btn px-3 py-1 rounded-sm font-bold"
+            onClick={() => {
+              // setOpenModal(true);
+              // console.log(request);
+            }}
+          >
+            Details
+          </button>
         </div>
 
         {request.InfoRequest.isActive ? (
