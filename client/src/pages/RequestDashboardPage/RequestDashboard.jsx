@@ -4,7 +4,8 @@ import { changeRequestList } from "../../state";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "sonner";
 import CreateRequest from "./CreateRequest";
-import { reorderRequests } from "./../../utils/request";
+import { reorderRequests } from "../../utils/request";
+import { getColorPair } from "../../utils/theme.js";
 
 import dayjs from "dayjs";
 import { Spinner } from "flowbite-react";
@@ -12,33 +13,65 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import RequestBox from "./RequestBox";
 
-const RequestDashboard = ({ user, requestList }) => {
+const RequestDashboard = ({ requestList }) => {
+  const [tableView, setTableView] = useState("waiting");
+  const [isLoadingDrag, setIsLoadingDrag] = useState(false);
   const dispatch = useDispatch();
 
-  const [isLoadingDrag, setIsLoadingDrag] = useState(false);
+  // Group button color
+  const colorMap = {
+    all: "gray",
+    waiting: "gray",
+    active: "gray",
+    past: "gray",
+  };
+  const [buttonBackgroundColor, buttonTextColor] = getColorPair(
+    colorMap[tableView],
+  );
 
   // Sort requests by priority
-  const sortedRequestList = [...requestList].sort(
-    (a, b) => a.priority - b.priority,
-  );
+  const sortedRequestList = [...requestList].sort((a, b) => {
+    return a.priority - b.priority;
+  });
 
   const handleOnDragEnd = async (result) => {
     if (!result.source) return;
-    if (sortedRequestList[result.source.index - 1].status !== "waiting") return;
     if (!result.destination) return;
-    if (sortedRequestList[result.destination.index - 1].status !== "waiting")
-      return;
+
+    const listBeingUsed = sortedRequestList.filter((request) => {
+      if (tableView === "waiting") {
+        return request.status === "waiting";
+      } else if (tableView === "active") {
+        return request.status === "matched" || request.status === "approved";
+      } else if (tableView === "past") {
+        return request.status === "referred";
+      }
+    });
+
+    const draggedItem = listBeingUsed[result.source.index];
+    const draggedOverItem = listBeingUsed[result.destination.index];
+
+    if (draggedItem.status !== "waiting") return;
+    if (draggedOverItem.status !== "waiting") return;
+
+    console.log("Original");
+    console.log(sortedRequestList);
 
     setIsLoadingDrag(true);
+
     const newRequests = reorderRequests(
-      [...(sortedRequestList || [])],
-      result.source.index,
-      result.destination.index,
+      sortedRequestList,
+      draggedItem.priority,
+      draggedOverItem.priority,
     );
+    console.log("Change prioirty after dnd");
+    console.log(newRequests);
 
     if (newRequests) {
       try {
         const newRequestList = await changeRequestPriority(newRequests);
+        console.log("Update prioirty in database");
+        console.log(newRequestList);
 
         if (newRequestList) {
           dispatch(changeRequestList(newRequestList));
@@ -53,32 +86,43 @@ const RequestDashboard = ({ user, requestList }) => {
     setIsLoadingDrag(false);
   };
 
-  useEffect(() => {
-    getRequests();
-  }, []);
-
-  const getRequests = async () => {
-    try {
-      const response = await getAllRequests(user._id);
-      dispatch(changeRequestList(response.data.data));
-    } catch (err) {
-      toast.error(err);
-    }
-  };
-
   return (
     <>
       <div className="flex justify-between items-start self-stretch">
-        <div className="flex">
-          <div className="flex justify-center items-center border w-28 h-10 p-2 rounded-sm bg-alt">
-            All
-          </div>
-          <div className="flex justify-center items-center border w-28 h-10 p-2 rounded-sm bg-alt">
+        <div className="rounded-md mb-3" role="group">
+          <button
+            type="button"
+            onClick={() => setTableView("waiting")}
+            className={
+              tableView == "waiting"
+                ? `btn-padding font-bold border border-${buttonBackgroundColor} rounded-s-lg bg-${buttonBackgroundColor} text-${buttonTextColor}`
+                : `btn-padding font-bold border border-${buttonBackgroundColor} rounded-s-lg hover:bg-gray-100`
+            }
+          >
+            Waiting
+          </button>
+          <button
+            type="button"
+            onClick={() => setTableView("active")}
+            className={
+              tableView == "active"
+                ? `btn-padding font-bold border-t border-b border-${buttonBackgroundColor} bg-${buttonBackgroundColor} text-${buttonTextColor} w-24`
+                : `btn-padding font-bold border-t border-b border-${buttonBackgroundColor} hover:bg-gray-100 w-24`
+            }
+          >
             Active
-          </div>
-          <div className="flex justify-center items-center border w-28 h-10 p-2 rounded-sm bg-alt">
+          </button>
+          <button
+            type="button"
+            onClick={() => setTableView("past")}
+            className={
+              tableView == "past"
+                ? `btn-padding font-bold border border-${buttonBackgroundColor} rounded-e-lg bg-${buttonBackgroundColor} text-${buttonTextColor} w-24`
+                : `btn-padding font-bold border border-${buttonBackgroundColor} rounded-e-lg hover:bg-gray-100 w-24`
+            }
+          >
             Past
-          </div>
+          </button>
         </div>
 
         <CreateRequest />
@@ -102,34 +146,47 @@ const RequestDashboard = ({ user, requestList }) => {
                   isLoadingDrag ? "opacity-50 pointer-events-none" : ""
                 }
               >
-                {sortedRequestList.map((request) => (
-                  <Draggable
-                    key={request._id}
-                    draggableId={request._id}
-                    index={request.priority}
-                  >
-                    {(provided, snapshot) => (
-                      <RequestBox
-                        provided={provided}
-                        key={request._id}
-                        number={request.priority}
-                        company={request.company}
-                        requestedDate={dayjs(request.createdAt).format(
-                          "MMM DD",
-                        )}
-                        activeSteps={
-                          request.status == "waiting"
-                            ? 1
-                            : request.status == "matched"
-                              ? 2
-                              : request.status == "approved"
-                                ? 3
-                                : 4
-                        }
-                      />
-                    )}
-                  </Draggable>
-                ))}
+                {sortedRequestList
+                  .filter((request) => {
+                    if (tableView === "waiting") {
+                      return request.status === "waiting";
+                    } else if (tableView === "active") {
+                      return (
+                        request.status === "matched" ||
+                        request.status === "approved"
+                      );
+                    } else if (tableView === "past") {
+                      return request.status === "referred";
+                    }
+                  })
+                  .map((request, index) => (
+                    <Draggable
+                      key={request._id}
+                      draggableId={request._id}
+                      index={index}
+                    >
+                      {(provided, snapshot) => (
+                        <RequestBox
+                          provided={provided}
+                          key={request._id}
+                          number={request.priority}
+                          company={request.company}
+                          requestedDate={dayjs(request.createdAt).format(
+                            "MMM DD",
+                          )}
+                          activeSteps={
+                            request.status == "waiting"
+                              ? 1
+                              : request.status == "matched"
+                                ? 2
+                                : request.status == "approved"
+                                  ? 3
+                                  : 4
+                          }
+                        />
+                      )}
+                    </Draggable>
+                  ))}
                 {provided.placeholder}
               </div>
             )}
