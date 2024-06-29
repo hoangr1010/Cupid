@@ -14,6 +14,8 @@ const requestID7 = new mongoose.Types.ObjectId();
 const requestID8 = new mongoose.Types.ObjectId();
 const requestID9 = new mongoose.Types.ObjectId();
 const requestID10 = new mongoose.Types.ObjectId();
+const requestID11 = new mongoose.Types.ObjectId();
+const requestID12 = new mongoose.Types.ObjectId();
 
 const opening = {
   _id: openingID1,
@@ -89,7 +91,7 @@ const requests = [
   {
     _id: requestID6,
     candidate_id: USER_ID,
-    company: "Google",
+    company: "OpenAI",
     priority: 1,
     status: "waiting",
     job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
@@ -98,7 +100,7 @@ const requests = [
     _id: requestID7,
     candidate_id: USER_ID,
     opening_id: openingID2,
-    company: "Google",
+    company: "LinkedIn",
     priority: 2,
     status: "matched",
     job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
@@ -109,7 +111,7 @@ const requests = [
     _id: requestID8,
     candidate_id: USER_ID,
     opening_id: openingID2,
-    company: "Google",
+    company: "Microsoft",
     priority: 3,
     status: "approved",
     job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
@@ -130,8 +132,24 @@ const requests = [
   {
     _id: requestID10,
     candidate_id: USER_ID,
-    company: "Google",
+    company: "Amazon",
     priority: 5,
+    status: "waiting",
+    job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
+  },
+  {
+    _id: requestID11,
+    candidate_id: USER_ID,
+    company: "Vanta",
+    priority: 6,
+    status: "waiting",
+    job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
+  },
+  {
+    _id: requestID12,
+    candidate_id: USER_ID,
+    company: "Plantir",
+    priority: 7,
     status: "waiting",
     job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
   },
