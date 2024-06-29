@@ -50,25 +50,20 @@ export const sendMultipleFiles = async (formData, request, dispatch) => {
   //   console.log(key, val);
   // }
   try {
-
     const headers = {};
-    headers["requestId"] = request.request._id;
+    headers["requestId"] = request._id;
 
     const response = await API.patch(`/request/uploadMultiple`, formData, {
       headers: headers,
     });
 
-    console.log("res: ", response.data.data);
-
-    dispatch(addFilesOneRequest(response.data.data));
+    dispatch(changeOneRequest(response.data.data));
     toast.success("files uploaded");
-    
   } catch (error) {
     console.log(error);
     toast.error(error);
   }
-
-}
+};
 
 export const sendFile = async (request, name, file, dispatch) => {
   try {
@@ -128,3 +123,16 @@ export const getRemainingRequestsByCompany = async (companyName) => {
     toast.error(err);
   }
 };
+
+export const replyRequest = async (requestId, messageText) => {
+  try {
+    const response = await API.put(`/request/replyRequest`, {
+      requestId,
+      messageText,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    toast.error("Fail to send reply note to the referrer");
+  }
+}

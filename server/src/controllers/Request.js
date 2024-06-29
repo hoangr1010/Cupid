@@ -2,6 +2,8 @@ import Request from "../models/Request.js";
 import Opening from "../models/Opening.js";
 import mongoose from "mongoose";
 import { getBatchPeriod } from "../utils/date.js";
+import { sendNoti } from "./../services/Notification/notification.js";
+import { Notification } from "../utils/notification.js";
 
 export const getOneRequest = async (req, res) => {
   try {
@@ -165,35 +167,25 @@ export const getAllExistingRequests = async (req, res) => {
   }
 };
 
-export const updateMultipleFiles = async (req,res) => {
-  console.log("start updateMultiple")
+export const updateMultipleFiles = async (req, res) => {
+  console.log("start updateMultiple");
   try {
-    
     const requestId = req.get("requestId");
     const userId = req.get("userId");
+    const file_list = [];
 
-    const promises = req.files.map(file => {
+    req.files.map((file) => {
       console.log(file);
-      const path = `${userId}/request/${requestId}/${file.originalname}`
+      const path = `${userId}/request/${requestId}/${file.originalname}`;
+      file_list.push(path);
 
-      return Request.findByIdAndUpdate(
-        requestId,
-        { $push: { request_files: path } },
-        { new: true },
-      );
     });
 
-    console.log(promises);
-
-    const results = await Promise.all(promises);
-
-    console.log(results);
-
-    // const request = await Request.findByIdAndUpdate(
-    //   requestId,
-    //   { $push: { request_files: { $each: path } } },
-    //   { new: true },
-    // );
+    const results = await Request.findByIdAndUpdate(
+      requestId,
+      { $push: { request_files: file_list } },
+      { new: true },
+    );
 
     // console.log(req);
 
@@ -201,14 +193,13 @@ export const updateMultipleFiles = async (req,res) => {
       message: "Uploaded files successfully",
       data: results,
     });
-    
   } catch (error) {
     res.status(400).json({
       message: "Error storing file path",
       error: error.message,
     });
   }
-}
+};
 
 export const updateFile = async (req, res) => {
   try {
@@ -329,6 +320,44 @@ export const changeStatus = async (req, res) => {
   }
 };
 
+export const replyRequest = async (req, res) => {
+  const { requestId, messageText } = req.body;
+
+  try {
+    const updatedRequest = await Request.findByIdAndUpdate(
+      { _id: requestId },
+      {
+        $set: { "InfoRequest.isActive": false },
+        ...(messageText === ""
+          ? {}
+          : {
+              $push: {
+                "InfoRequest.Conversation": {
+                  sender: "candidate",
+                  message: messageText,
+                },
+              },
+            }),
+      },
+      { new: true },
+    );
+
+    // Check if the request exists and was updated
+    if (!updatedRequest) {
+      return res
+        .status(404)
+        .json({ message: "Request not found or not updated" });
+    }
+
+    // Notification
+
+    res.status(200).json(updatedRequest);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const sendRequestInfo = async (req, res) => {
   const { requestId, messageText } = req.body;
 
@@ -353,6 +382,14 @@ export const sendRequestInfo = async (req, res) => {
         .status(404)
         .json({ message: "Request not found or not updated" });
     }
+
+    // notification
+    const noti = await Notification.refererRequestMoreInfo(
+      "refererRequestMoreInfo",
+      requestId,
+    );
+    console.log(noti);
+    await sendNoti(noti);
 
     res.status(200).json(updatedRequest);
   } catch (err) {

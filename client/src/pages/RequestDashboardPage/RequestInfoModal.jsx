@@ -1,28 +1,52 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Modal } from "flowbite-react";
 import FileRequest from "./FileRequest";
 import { useSelector, useDispatch } from "react-redux";
 import { getFileName } from "../../utils/request";
 import { FileUpload } from "../../components/FileUpload";
-import { delFile, sendMultipleFiles } from "../../api/request";
+import { delFile, sendMultipleFiles, replyRequest } from "../../api/request";
 import { IoClose } from "react-icons/io5";
 import { FaFile } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
-const RequestInfoModal = (request) => {
+const RequestInfoModal = (props) => {
+  const { request } = props;
   const [openModal, setOpenModal] = useState(false);
-  const [file, setFile] = useState("");
+  const [note, setNote] = useState("");
+  const [uploadFiles, setUploadFile] = useState([]);
   const dispatch = useDispatch();
-  const formData = new FormData();
+  // const formData = new FormData();
+  const formData = useRef(new FormData());
+  const navigate = useNavigate();
 
-  const uploadedFiles = useSelector(
-    (state) => state.request.list[request.request.priority - 1].request_files,
-  );
+  const uploadedFiles = request.request_files ?? [];
+
+  const handleSubmit = async () => {
+    setUploadFile([], []);
+    setNote("");
+
+    await sendMultipleFiles(formData.current, request, dispatch);
+    formData.current = new FormData();
+    console.log(note);
+
+    await replyRequest(request._id, note);
+
+    // change to navigate(`/request/${request._id}`); after writing
+    // request component
+    navigate(`/request`);
+    navigate(0);
+    // resetModal();
+    
+  };
 
   return (
     <>
       <button
         className="secondary-btn btn-padding rounded-sm font-bold"
-        onClick={() => setOpenModal(true)}
+        onClick={() => {
+          setOpenModal(true);
+          console.log(request);
+        }}
       >
         Details
       </button>
@@ -34,13 +58,10 @@ const RequestInfoModal = (request) => {
         popup
       >
         <Modal.Header />
-        {/* <Modal.Header>
-          <h1 className="font-bold">Referral Request</h1>
-        </Modal.Header> */}
         <Modal.Body>
           {/* <div className="h-fit"> */}
           <div className="font-bold text-xl flex justify-start mx-3.5">
-            Referral Request header
+            Information Update
           </div>
 
           <div className="h-0.5 w-90 bg-primary m-3.5"></div>
@@ -49,7 +70,11 @@ const RequestInfoModal = (request) => {
             {/* the main stuff, chia lm 2 */}
             <div className="w-1/2 me-4">
               {/* upload file */}
-              <FileUpload formData={formData}></FileUpload>
+              <FileUpload
+                formData={formData.current}
+                uploadFiles={uploadFiles}
+                setUploadFile={setUploadFile}
+              ></FileUpload>
               {/* <FileRequest request={request} /> */}
               <div className="text-lg font-semibold mt-6">Uploaded files</div>
 
@@ -84,18 +109,31 @@ const RequestInfoModal = (request) => {
 
             <div className="w-1/2 ms-4">
               {/* note from referer and your note */}
-              <div className="h-1/2">
-                <div className="text-primaryDark">
-                  The referer sent you a note
+              {request.InfoRequest.isActive ? (
+                <div className="h-fit mb-6">
+                  <div className="text-primaryDark font-medium">
+                    The referer sent you a note
+                  </div>
+                  <div className="rounded-xl w-full h-fit min-h-14 bg-primaryLight px-3 py-1 text-sm">
+                    {
+                      request.InfoRequest.Conversation[
+                        request.InfoRequest.Conversation.length - 1
+                      ].message
+                    }
+                  </div>
                 </div>
-                <div className="rounded-xl w-full h-2/3 bg-primaryLight"></div>
-              </div>
+              ) : (
+                <></>
+              )}
+
               <div>
-                <div>Add a note</div>
+                <div className="font-medium">Add a note</div>
                 <textarea
                   maxLength={250}
                   placeholder="Enter text here... (optional)"
                   className="w-full h-24 border-gray-200 rounded-xl text-sm"
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
                 />
                 <div className="text-xs flex justify-end text-gray-500 font-medium">
                   Max. 250 characters
@@ -107,41 +145,23 @@ const RequestInfoModal = (request) => {
           <div className="flex justify-end">
             <button
               className="py-1.5 px-3 rounded-lg border border-primary font-semibold text-primaryDark hover:text-primary"
-              onClick={() => setOpenModal(false)}
+              onClick={() => {
+                setOpenModal(false);
+                setUploadFile([], []);
+                formData.current = new FormData();
+                setNote("");
+              }}
             >
               Cancel
             </button>
             <button
               className="py-1.5 px-3 mx-3 rounded-lg bg-primaryLight font-semibold text-primaryDark  hover:text-primary"
-              onClick={() => sendMultipleFiles(formData, request, dispatch)}
+              onClick={handleSubmit}
             >
               Send
             </button>
           </div>
-          {/* </div> */}
-
-          {/* <div>Required actions</div> */}
-          {/* <div>Provided files</div> */}
-          {/* <ul>
-            {uploadedFiles.map((file) => (
-              <li key={file}>
-                {getFileName(file)}{" "}
-                <button
-                  className="success-btn text-white h-fit rounded-md btn-padding"
-                  onClick={() => delFile(file, dispatch)}
-                >
-                  delete
-                </button>
-              </li>
-            ))}
-          </ul>
-          <FileRequest request={request} /> */}
         </Modal.Body>
-        {/* <Modal.Footer>
-          <button className="success-btn text-white h-fit rounded-md btn-padding">
-            Done
-          </button>
-        </Modal.Footer> */}
       </Modal>
     </>
   );

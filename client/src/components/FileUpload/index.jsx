@@ -9,21 +9,15 @@ import { FaFile } from "react-icons/fa6";
 
 let nextId = 0;
 
-export const FileUpload = (data) => {
-  const [uploadFiles, setUploadFile] = useState([]);
+export const FileUpload = (props) => {
+  const { formData, uploadFiles, setUploadFile } = props;
   const dispatch = useDispatch();
-  // const formData = new FormData();
 
   const handleChange = (file) => {
-    // data.formData.append('file', file);
-    // setUploadFile([...uploadFiles, { id: nextId++, name: file.name }]);
-    console.log(data.formData);
-    console.log(file);
-    console.log(uploadFiles);
 
     if (fileValidate(uploadFiles, file)) {
       setUploadFile([...uploadFiles, { id: nextId++, name: file.name }]);
-      data.formData.append("file", file);
+      formData.append("file", file);
     }
 
   };

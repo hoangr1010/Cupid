@@ -12,9 +12,6 @@ const FileRequest = (request) => {
 
   return (
     <>
-      <FileUploader>
-        <div className="w-full h-1/2 border-2 border-dashed rounded-xl border-primary"></div>
-      </FileUploader>
       <form>
         <input type="text" onChange={(e) => setName(e.target.value)} />
         <input
