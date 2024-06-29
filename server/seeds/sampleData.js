@@ -112,7 +112,7 @@ const requests = [
     compatibility: 80,
     InfoRequest: {
       isActive: true,
-      Conversation: [],
+      Conversation: [{ sender: "referrer", message: "tao giet may" }],
     },
   },
   {
@@ -142,7 +142,7 @@ const requests = [
     compatibility: 20,
     InfoRequest: {
       isActive: true,
-      Conversation: [],
+      Conversation: [{ sender: "referrer", message: "tao giet may" }],
     },
   },
   {
@@ -166,7 +166,7 @@ const requests = [
     job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
     InfoRequest: {
       isActive: true,
-      Conversation: [],
+      Conversation: [{ sender: "referrer", message: "tao giet may" }],
     },
   },
   {
