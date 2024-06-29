@@ -14,10 +14,10 @@ export const reorderRequests = (
 
   // get object of dragRow and draggedOverRow
   const dragRowObj = requestArray.find(
-    (request) => request.priority === dragPriority.current,
+    (request) => request.priority === dragPriority,
   );
   const draggedOverRowObj = requestArray.find(
-    (request) => request.priority === draggedOverPriority.current,
+    (request) => request.priority === draggedOverPriority,
   );
 
   // if dragRow or draggedOverRow is not in waiting status, return
@@ -31,15 +31,15 @@ export const reorderRequests = (
 
   // remove dragRow from updatedRequestList
   waitingRequests = waitingRequests.filter(
-    (request) => request.priority !== dragPriority.current,
+    (request) => request.priority !== dragPriority,
   );
   const draggedOverRowIndex = waitingRequests.findIndex(
-    (request) => request.priority === draggedOverPriority.current,
+    (request) => request.priority === draggedOverPriority,
   );
 
   // get the left and right side of the draggedOverRow
   let left, right;
-  if (dragPriority.current > draggedOverPriority.current) {
+  if (dragPriority > draggedOverPriority) {
     left = waitingRequests.slice(0, draggedOverRowIndex);
     right = waitingRequests.slice(draggedOverRowIndex);
   } else {
