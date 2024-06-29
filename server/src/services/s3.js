@@ -45,12 +45,11 @@ export const uploadMultipleToS3 = async (files, path) => {
       return s3.upload(params).promise();
     });
 
-    console.log(uploadPromises)
+    console.log(uploadPromises);
 
     await Promise.all(uploadPromises);
 
-    console.log("done uploading")
-
+    console.log("done uploading");
   } catch (error) {
     console.error(error);
   }

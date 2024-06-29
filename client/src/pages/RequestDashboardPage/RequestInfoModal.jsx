@@ -36,7 +36,6 @@ const RequestInfoModal = (props) => {
     navigate(`/request`);
     navigate(0);
     // resetModal();
-    
   };
 
   return (

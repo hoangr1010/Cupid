@@ -135,4 +135,4 @@ export const replyRequest = async (requestId, messageText) => {
     console.error(error);
     toast.error("Fail to send reply note to the referrer");
   }
-}
+};

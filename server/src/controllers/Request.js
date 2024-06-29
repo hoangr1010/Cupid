@@ -178,7 +178,6 @@ export const updateMultipleFiles = async (req, res) => {
       console.log(file);
       const path = `${userId}/request/${requestId}/${file.originalname}`;
       file_list.push(path);
-
     });
 
     const results = await Request.findByIdAndUpdate(

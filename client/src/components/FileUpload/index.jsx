@@ -14,12 +14,10 @@ export const FileUpload = (props) => {
   const dispatch = useDispatch();
 
   const handleChange = (file) => {
-
     if (fileValidate(uploadFiles, file)) {
       setUploadFile([...uploadFiles, { id: nextId++, name: file.name }]);
       formData.append("file", file);
     }
-
   };
 
   return (
