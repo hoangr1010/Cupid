@@ -1,5 +1,6 @@
 import RequestProgressBar from "./RequestProgressBar";
 import RequestInfoModal from "./RequestInfoModal.jsx";
+import RequestCard from "./RequestCard.jsx";
 
 const RequestBox = ({
   // "provided" is a prop that is passed down from the parent component, necessary for drag-and-drop functionality
@@ -36,29 +37,28 @@ const RequestBox = ({
             activeSteps={activeSteps}
             requestedDate={requestedDate}
           />
-          <button
-            className="secondary-btn px-3 py-1 rounded-sm font-bold"
-            onClick={() => {
-              // setOpenModal(true);
-              // console.log(request);
-            }}
-          >
-            Details
-          </button>
+
+          <RequestCard
+            request={request}
+            trigger={
+              <button className="secondary-btn px-3 py-1 rounded-sm font-bold">
+                Details
+              </button>
+            }
+          ></RequestCard>
         </div>
 
         {request.InfoRequest.isActive ? (
           <div className="self-center p-0.5 text-xs text-white font-bold">
-            Referrer requested for extra information.{" "}
-            <button
-              className="secondary-btn px-3 py-1 rounded-sm font-bold"
-              onClick={() => {
-                // setOpenModal(true);
-                // console.log(request);
-              }}
-            >
-              Update Now
-            </button>
+            Referrer requested for extra information.
+            <RequestInfoModal
+              request={request}
+              trigger={
+                <button className="px-2 py-0.5 underline underline-offset-2 rounded-sm font-bold hover:text-rose-50">
+                  Update Now
+                </button>
+              }
+            ></RequestInfoModal>
           </div>
         ) : null}
       </div>

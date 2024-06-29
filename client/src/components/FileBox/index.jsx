@@ -7,10 +7,10 @@ const FileBox = ({ fileUrl }) => {
 
   return (
     <section className="widget_container px-3 py-2 flex gap-3 w-full">
-      <BsFileEarmarkFill className="text-primary" size={40} />
+      <BsFileEarmarkFill className="text-primary" size={30} />
       <a
         href={fileLink}
-        className="font-bold hover:text-primary"
+        className="font-semibold text-sm content-center hover:text-primary"
         target="_blank"
         // rel="noopener noreferrer"
       >

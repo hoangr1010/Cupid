@@ -1,3 +1,4 @@
+import React from "react";
 import { useRef, useState } from "react";
 import { Modal } from "flowbite-react";
 import FileRequest from "./FileRequest";
@@ -10,7 +11,7 @@ import { FaFile } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
 const RequestInfoModal = (props) => {
-  const { request } = props;
+  const { request, trigger } = props;
   const [openModal, setOpenModal] = useState(false);
   const [note, setNote] = useState("");
   const [uploadFiles, setUploadFile] = useState([]);
@@ -20,6 +21,12 @@ const RequestInfoModal = (props) => {
   const navigate = useNavigate();
 
   const uploadedFiles = request.request_files ?? [];
+
+  const TriggerElement = React.cloneElement(trigger, {
+    onClick: () => {
+      setOpenModal(true);
+    },
+  });
 
   const handleSubmit = async () => {
     setUploadFile([], []);
@@ -40,7 +47,8 @@ const RequestInfoModal = (props) => {
 
   return (
     <>
-      <button
+      {TriggerElement}
+      {/* <button
         className="secondary-btn btn-padding rounded-sm font-bold"
         onClick={() => {
           setOpenModal(true);
@@ -48,7 +56,7 @@ const RequestInfoModal = (props) => {
         }}
       >
         Details
-      </button>
+      </button> */}
       <Modal
         dismissible
         size="4xl"
@@ -113,7 +121,7 @@ const RequestInfoModal = (props) => {
                   <div className="text-primaryDark font-medium">
                     The referer sent you a note
                   </div>
-                  <div className="rounded-xl w-full h-fit min-h-14 bg-primaryLight px-3 py-1 text-sm">
+                  <div className="rounded-xl w-full h-fit min-h-36 bg-primaryLight px-3 py-1 text-sm">
                     {
                       request.InfoRequest.Conversation[
                         request.InfoRequest.Conversation.length - 1
