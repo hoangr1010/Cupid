@@ -172,6 +172,7 @@ const RequestDashboard = ({ requestList }) => {
                           key={request._id}
                           number={request.priority}
                           company={request.company}
+                          request={request}
                           requestedDate={dayjs(request.createdAt).format(
                             "MMM DD",
                           )}
