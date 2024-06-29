@@ -1,11 +1,12 @@
 import { React, useState } from "react";
 import { Button, Modal } from "flowbite-react";
-import { addEducation } from "./../../api/user";
+import { addEducation } from "./../../../api/user";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
-import { updateUser } from "./../../state";
+import { updateUser } from "./../../../state";
 import { useSelector } from "react-redux";
-
+import { IoAdd } from "react-icons/io5";
+import EducationCard from "./EducationCard";
 function Education() {
   const user = useSelector((state) => state.auth.user);
   const [openModal, setOpenModal] = useState(false);
@@ -65,9 +66,20 @@ function Education() {
   };
 
   return (
-    <div className="widget_container">
-      <h2 className="font-bold text-lg">Education</h2>
-      <Button onClick={() => setOpenModal(true)}>+</Button>
+    <div className="w-2/3">
+      <div className="flex justify-between items-center text-primaryDark">
+        <div className="text-3xl font-bold">
+          <h2>Education</h2>
+        </div>
+        <div>
+          <button
+            onClick={() => setOpenModal(true)}
+            className="text-3xl font-bold hover:text-primary"
+          >
+            <IoAdd />
+          </button>
+        </div>
+      </div>
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>Add Education</Modal.Header>
         <Modal.Body>
@@ -177,20 +189,13 @@ function Education() {
       {education.length <= 0 ? (
         <p>Please update your education</p>
       ) : (
-        <>
+        <div className="flex flex-col gap-4">
           {education.map((item, index) => (
             <div key={index}>
-              <h3>{item.school}</h3>
-              {/* <ul>
-                <li>Major: {item.major}</li>
-                <li>Degree: {item.degree}</li>
-                <li>GPA: {item.gpa}</li>
-                <li>Start Year: {item.start_year}</li>
-                <li>End Year: {item.end_year}</li>
-              </ul> */}
+              <EducationCard education={item} />
             </div>
           ))}
-        </>
+        </div>
       )}
     </div>
   );

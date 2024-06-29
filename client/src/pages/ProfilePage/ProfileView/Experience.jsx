@@ -1,31 +1,33 @@
 import { React, useState } from "react";
 import { Button, Modal } from "flowbite-react";
-import { addProject } from "./../../api/user";
+import { addExperience } from "./../../../api/user";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
-import { updateUser } from "./../../state";
+import { updateUser } from "./../../../state";
 import { useSelector } from "react-redux";
+import { IoAdd } from "react-icons/io5";
+import ExperienceCard from "./ExperienceCard";
 
-function Project() {
+function Experience() {
   const user = useSelector((state) => state.auth.user);
+  const experience = user.experience;
   const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
-  const project = user.project;
-
   const [formState, setFormState] = useState({
-    name: "",
+    company: "",
+    position: "",
+    location: "",
+    type: "",
     start_m: "",
     start_y: 0,
     end_m: "",
     end_y: 0,
     current: false,
     description: "",
-    link: "",
   });
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    console.log(type);
 
     let parsedValue = value;
 
@@ -40,56 +42,118 @@ function Project() {
   };
 
   const handleSubmit = async () => {
-    if (!formState.name || !formState.description) {
+    if (
+      !formState.company ||
+      !formState.position ||
+      !formState.type ||
+      !formState.start_m ||
+      !formState.start_y
+    ) {
       toast.error("Please fill out all required fields");
       return;
     }
-    const newProject = await addProject({
-      name: formState.name,
+    const newExperience = await addExperience({
+      company: formState.company,
+      location: formState.location,
+      position: formState.position,
+      type: formState.type,
       start_m: formState.start_m,
       start_y: formState.start_y,
       end_m: formState.end_m,
       end_y: formState.end_y,
       current: formState.current,
       description: formState.description,
-      link: formState.link,
     });
 
-    if (newProject) {
-      dispatch(updateUser(newProject));
+    if (newExperience) {
+      dispatch(updateUser(newExperience));
       setFormState({
-        name: "",
+        company: "",
+        position: "",
+        location: "",
+        type: "",
         start_m: "",
         start_y: 0,
         end_m: "",
         end_y: 0,
         current: false,
         description: "",
-        link: "",
       });
-      setOpenModal(false);
     }
   };
 
   return (
-    <div className="widget_container">
-      <h2 className="font-bold text-lg">Project</h2>
-      <Button onClick={() => setOpenModal(true)}>+</Button>
+    <div className="w-2/3">
+      <div className="flex justify-between items-center text-primaryDark">
+        <div className="text-3xl font-bold">
+          <h2>Work Experience</h2>
+        </div>
+        <div>
+          <button
+            onClick={() => setOpenModal(true)}
+            className="text-3xl font-bold hover:text-primary"
+          >
+            <IoAdd />
+          </button>
+        </div>
+      </div>
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
-        <Modal.Header>Add Project</Modal.Header>
+        <Modal.Header>Add Experience</Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit} class="grid gap-6 mb-6 md:grid-cols-2">
             <div>
-              <label for="name" class="block mb-2 text-sm">
-                Name
+              <label for="company" class="block mb-2 text-sm">
+                Company
               </label>
               <input
                 type="text"
-                id="name"
-                name="name"
-                value={formState.name}
+                id="company"
+                name="company"
+                value={formState.company}
                 onChange={handleChange}
-                placeholder="Name"
+                placeholder="Company"
+                required
+              />
+            </div>
+            <div>
+              <label for="position" class="block mb-2 text-sm">
+                Position
+              </label>
+              <input
+                type="text"
+                id="position"
+                name="position"
+                value={formState.position}
+                onChange={handleChange}
+                placeholder="Position"
+                required
+              />
+            </div>
+            <div>
+              <label for="location" class="block mb-2 text-sm">
+                Location
+              </label>
+              <input
+                type="text"
+                id="location"
+                name="location"
+                value={formState.location}
+                onChange={handleChange}
+                placeholder="Location"
+                required
+              />
+            </div>
+            <div>
+              <label for="type" class="block mb-2 text-sm">
+                Type
+              </label>
+              <input
+                type="text"
+                id="type"
+                name="type"
+                value={formState.type}
+                onChange={handleChange}
+                placeholder="Full Time, Internship"
                 required
               />
             </div>
@@ -104,6 +168,7 @@ function Project() {
                 value={formState.start_m}
                 onChange={handleChange}
                 placeholder="Start Month"
+                required
               />
             </div>
             <div>
@@ -117,6 +182,7 @@ function Project() {
                 value={formState.start_y}
                 onChange={handleChange}
                 placeholder="Start Year"
+                required
               />
             </div>
             <div>
@@ -159,6 +225,7 @@ function Project() {
                 onChange={handleChange}
                 class="text-field w-full"
                 placeholder="Current"
+                required
               />
             </div>
             <div>
@@ -173,20 +240,6 @@ function Project() {
                 onChange={handleChange}
                 class="text-field w-full"
                 placeholder="Description"
-                required
-              />
-            </div>
-            <div>
-              <label for="link" class="block mb-2 text-sm">
-                Link
-              </label>
-              <input
-                type="text"
-                id="link"
-                name="link"
-                value={formState.link}
-                onChange={handleChange}
-                placeholder="Link"
               />
             </div>
           </form>
@@ -196,6 +249,7 @@ function Project() {
             className="filled-btn"
             onClick={() => {
               handleSubmit();
+              setOpenModal(false);
             }}
           >
             Save
@@ -209,22 +263,19 @@ function Project() {
           </Button>
         </Modal.Footer>
       </Modal>
-      {project.length <= 0 ? (
+      {experience.length <= 0 ? (
         <p>Please update your project</p>
       ) : (
-        <>
-          {project.map((item, index) => (
+        <div className="flex flex-col gap-4">
+          {experience.map((item, index) => (
             <div key={index}>
-              <h3>{item.name}</h3>
-              {/* <ul>
-                <li>Description: {item.description}</li>
-              </ul> */}
+              <ExperienceCard experience={item} />
             </div>
           ))}
-        </>
+        </div>
       )}
     </div>
   );
 }
 
-export default Project;
+export default Experience;
