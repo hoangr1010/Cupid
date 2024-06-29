@@ -8,11 +8,12 @@ import { toast } from "sonner";
 import OverviewView from "./OverviewView";
 import CandidateView from "./CandidateView";
 
-const OpeningDashboard = () => {
+const OpeningDashboard = ({ requestId }) => {
   const [openCreate, setOpenCreate] = useState(false);
 
-  const opening = useSelector((state) => state.opening);
-  const openingOriginalAmount = useSelector((state) => state.opening);
+  const openingOriginalAmount = useSelector(
+    (state) => state.opening.originalAmount,
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {

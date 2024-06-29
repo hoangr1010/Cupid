@@ -1,55 +1,85 @@
 import { React, useState } from "react";
 import { Button, Modal } from "flowbite-react";
-import { addEducation } from "./../../api/user";
+import { addEducation } from "./../../../api/user";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
-import { updateUser } from "./../../state";
+import { updateUser } from "./../../../state";
 import { useSelector } from "react-redux";
-
+import { IoAdd } from "react-icons/io5";
+import EducationCard from "./EducationCard";
 function Education() {
   const user = useSelector((state) => state.auth.user);
   const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
-  const [school, setSchool] = useState("");
-  const [major, setMajor] = useState("");
-  const [degree, setDegree] = useState("");
-  const [gpa, setGPA] = useState(0);
-  const [start, setStart] = useState(0);
-  const [end, setEnd] = useState(0);
+  const [formState, setFormState] = useState({
+    school: "",
+    major: "",
+    degree: "",
+    gpa: 0,
+    start: 0,
+    end: 0,
+  });
   const education = user.education;
 
-  const handleSubmit = async (e) => {
-    // e.preventDefault();
+  const handleChange = (e) => {
+    const { name, value, type } = e.target;
+    console.log(type);
 
-    if (!school || !major || !degree) {
+    let parsedValue = value;
+
+    if (type === "number") {
+      parsedValue = parseInt(value, 10);
+    }
+
+    setFormState({
+      ...formState,
+      [name]: parsedValue,
+    });
+  };
+
+  const handleSubmit = async () => {
+    if (!formState.school || !formState.major || !formState.degree) {
       toast.error("Please fill out all required fields");
       return;
     }
     const newEducation = await addEducation({
-      school: school,
-      major: major,
-      degree: major,
-      gpa: gpa,
-      start_year: start,
-      end_year: end,
+      school: formState.school,
+      major: formState.major,
+      degree: formState.degree,
+      gpa: formState.gpa,
+      start_year: formState.start,
+      end_year: formState.end,
     });
 
     if (newEducation) {
       dispatch(updateUser(newEducation));
-      setSchool("");
-      setMajor("");
-      setDegree("");
-      setGPA(0);
-      setStart(0);
-      setEnd(0);
+      setFormState({
+        school: "",
+        major: "",
+        degree: "",
+        gpa: 0,
+        start_year: 0,
+        end_year: 0,
+      });
       setOpenModal(false);
     }
   };
 
   return (
-    <div className="widget_container">
-      <h2 className="font-bold text-lg">Education</h2>
-      <Button onClick={() => setOpenModal(true)}>+</Button>
+    <div className="w-2/3">
+      <div className="flex justify-between items-center text-primaryDark">
+        <div className="text-3xl font-bold">
+          <h2>Education</h2>
+        </div>
+        <div>
+          <button
+            onClick={() => setOpenModal(true)}
+            className="text-3xl font-bold hover:text-primary"
+          >
+            <IoAdd />
+          </button>
+        </div>
+      </div>
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>Add Education</Modal.Header>
         <Modal.Body>
@@ -61,9 +91,8 @@ function Education() {
               <input
                 type="text"
                 id="school"
-                onChange={(e) => {
-                  setSchool(e.target.value);
-                }}
+                name="school"
+                onChange={handleChange}
                 class="text-field w-full"
                 placeholder="School Name"
                 required
@@ -76,9 +105,8 @@ function Education() {
               <input
                 type="text"
                 id="major"
-                onChange={(e) => {
-                  setMajor(e.target.value);
-                }}
+                name="major"
+                onChange={handleChange}
                 class="text-field w-full"
                 placeholder="Major"
                 required
@@ -91,9 +119,8 @@ function Education() {
               <input
                 type="text"
                 id="degree"
-                onChange={(e) => {
-                  setDegree(e.target.value);
-                }}
+                name="school"
+                onChange={handleChange}
                 class="text-field w-full"
                 placeholder="Degree"
                 required
@@ -106,9 +133,8 @@ function Education() {
               <input
                 type="number"
                 id="gpa"
-                onChange={(e) => {
-                  setGPA(e.target.value);
-                }}
+                name="gpa"
+                onChange={handleChange}
                 class="text-field w-full"
                 placeholder="GPA"
               />
@@ -120,9 +146,8 @@ function Education() {
               <input
                 type="number"
                 id="start"
-                onChange={(e) => {
-                  setStart(e.target.value);
-                }}
+                name="start"
+                onChange={handleChange}
                 class="text-field w-full"
                 placeholder="Start Year"
               />
@@ -134,9 +159,8 @@ function Education() {
               <input
                 type="number"
                 id="end"
-                onChange={(e) => {
-                  setEnd(e.target.value);
-                }}
+                name="end"
+                onChange={handleChange}
                 class="text-field w-full"
                 placeholder="End Year"
               />
@@ -165,20 +189,13 @@ function Education() {
       {education.length <= 0 ? (
         <p>Please update your education</p>
       ) : (
-        <>
+        <div className="flex flex-col gap-4">
           {education.map((item, index) => (
             <div key={index}>
-              <h3>{item.school}</h3>
-              <ul>
-                <li>Major: {item.major}</li>
-                <li>Degree: {item.degree}</li>
-                <li>GPA: {item.gpa}</li>
-                <li>Start Year: {item.start_year}</li>
-                <li>End Year: {item.end_year}</li>
-              </ul>
+              <EducationCard education={item} />
             </div>
           ))}
-        </>
+        </div>
       )}
     </div>
   );

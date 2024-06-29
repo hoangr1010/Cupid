@@ -5,6 +5,11 @@ import {
   // updateResume,
   uploadResume,
   addEducation,
+  addExperience,
+  addProject,
+  addPortfolio,
+  addAll,
+  autoFillResume,
 } from "../controllers/User.js";
 import { checkUserId, updateResumeText } from "../middleware/User.js";
 import { verifyToken } from "../middleware/Auth.js";
@@ -30,6 +35,11 @@ UserRouter.post(
 );
 
 UserRouter.put("/addEducation", checkUserId, verifyToken, addEducation);
+UserRouter.put("/addExperience", checkUserId, verifyToken, addExperience);
+UserRouter.put("/addProject", checkUserId, verifyToken, addProject);
+UserRouter.put("/addPortfolio", checkUserId, verifyToken, addPortfolio);
+UserRouter.put("/addAll", checkUserId, verifyToken, addAll);
+UserRouter.post("/autoFillResume", checkUserId, verifyToken, autoFillResume);
 
 // TEST
 // UserRouter.post("/test", async (req, res) => {

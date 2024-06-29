@@ -55,11 +55,11 @@ const TableView = () => {
 
       <section>
         {/* BUTTON GROUP */}
-        <div class="rounded-md mb-3" role="group">
+        <div className="rounded-md mb-3" role="group">
           <button
             type="button"
             onClick={() => setTableView("approved")}
-            class={
+            className={
               tableView == "approved"
                 ? `btn-padding font-bold border border-${buttonBackgroundColor} rounded-s-lg bg-${buttonBackgroundColor} text-${buttonTextColor}`
                 : `btn-padding font-bold border border-${buttonBackgroundColor} rounded-s-lg hover:bg-gray-100`
@@ -70,7 +70,7 @@ const TableView = () => {
           <button
             type="button"
             onClick={() => setTableView("referred")}
-            class={
+            className={
               tableView == "referred"
                 ? `btn-padding font-bold border-t border-b border-${buttonBackgroundColor} bg-${buttonBackgroundColor} text-${buttonTextColor} w-24`
                 : `btn-padding font-bold border-t border-b border-${buttonBackgroundColor} hover:bg-gray-100 w-24`
@@ -81,7 +81,7 @@ const TableView = () => {
           <button
             type="button"
             onClick={() => setTableView("all")}
-            class={
+            className={
               tableView == "all"
                 ? `btn-padding font-bold border border-${buttonBackgroundColor} rounded-e-lg bg-${buttonBackgroundColor} text-${buttonTextColor} w-24`
                 : `btn-padding font-bold border border-${buttonBackgroundColor} rounded-e-lg hover:bg-gray-100 w-24`
