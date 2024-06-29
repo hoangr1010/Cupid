@@ -34,8 +34,7 @@ const RequestDashboard = ({ requestList }) => {
   });
 
   const handleOnDragEnd = async (result) => {
-    if (!result.source) return;
-    if (!result.destination) return;
+    if (!result.source || !result.destination) return;
 
     const listBeingUsed = sortedRequestList.filter((request) => {
       if (tableView === "waiting") {
@@ -50,8 +49,13 @@ const RequestDashboard = ({ requestList }) => {
     const draggedItem = listBeingUsed[result.source.index];
     const draggedOverItem = listBeingUsed[result.destination.index];
 
-    if (draggedItem.status !== "waiting") return;
-    if (draggedOverItem.status !== "waiting") return;
+    if (
+      draggedItem.status !== "waiting" ||
+      draggedOverItem.status !== "waiting"
+    ) {
+      toast.error("Cannot change priority of non-waiting requests");
+      return;
+    }
 
     console.log("Original");
     console.log(sortedRequestList);
@@ -141,7 +145,9 @@ const RequestDashboard = ({ requestList }) => {
               <div
                 {...provided.droppableProps}
                 ref={provided.innerRef}
-                className={`flex flex-col gap-2 ${isLoadingDrag ? "opacity-50 pointer-events-none" : ""}`}
+                className={
+                  isLoadingDrag ? "opacity-50 pointer-events-none" : ""
+                }
               >
                 {sortedRequestList
                   .filter((request) => {
