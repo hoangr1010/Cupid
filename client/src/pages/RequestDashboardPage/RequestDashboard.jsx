@@ -20,6 +20,7 @@ const RequestDashboard = ({ requestList }) => {
 
   // Group button color
   const colorMap = {
+    all: "gray",
     waiting: "gray",
     active: "gray",
     past: "gray",
@@ -37,7 +38,9 @@ const RequestDashboard = ({ requestList }) => {
     if (!result.source || !result.destination) return;
 
     const listBeingUsed = sortedRequestList.filter((request) => {
-      if (tableView === "waiting") {
+      if (tableView === "all") {
+        return true;
+      } else if (tableView === "waiting") {
         return request.status === "waiting";
       } else if (tableView === "active") {
         return request.status === "matched" || request.status === "approved";
@@ -95,11 +98,22 @@ const RequestDashboard = ({ requestList }) => {
         <div className="rounded-md mb-3" role="group">
           <button
             type="button"
+            onClick={() => setTableView("all")}
+            className={
+              tableView == "all"
+                ? `btn-padding font-bold border border-${buttonBackgroundColor} rounded-s-lg bg-${buttonBackgroundColor} text-${buttonTextColor}`
+                : `btn-padding font-bold border border-${buttonBackgroundColor} rounded-s-lg hover:bg-gray-100`
+            }
+          >
+            All
+          </button>
+          <button
+            type="button"
             onClick={() => setTableView("waiting")}
             className={
               tableView == "waiting"
-                ? `btn-padding font-bold border border-${buttonBackgroundColor} rounded-s-lg bg-${buttonBackgroundColor} text-${buttonTextColor}`
-                : `btn-padding font-bold border border-${buttonBackgroundColor} rounded-s-lg hover:bg-gray-100`
+                ? `btn-padding font-bold border-t border-b border-${buttonBackgroundColor} bg-${buttonBackgroundColor} text-${buttonTextColor} w-24`
+                : `btn-padding font-bold border-t border-b border-${buttonBackgroundColor} hover:bg-gray-100 w-24`
             }
           >
             Waiting
@@ -149,7 +163,9 @@ const RequestDashboard = ({ requestList }) => {
               >
                 {sortedRequestList
                   .filter((request) => {
-                    if (tableView === "waiting") {
+                    if (tableView === "all") {
+                      return true;
+                    } else if (tableView === "waiting") {
                       return request.status === "waiting";
                     } else if (tableView === "active") {
                       return (
