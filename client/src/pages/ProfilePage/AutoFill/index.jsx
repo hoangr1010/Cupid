@@ -9,12 +9,13 @@ import PortfolioForm from "./PortfolioForm";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../../../state";
 import { FaGraduationCap, FaTools } from "react-icons/fa";
+import { CiBoxList } from "react-icons/ci";
 import HorizontalDivider from "./../../../components/HorizontalDivider";
 import { PiBagSimpleFill } from "react-icons/pi";
 import { Spinner } from "flowbite-react";
 import { toast } from "sonner";
 
-function AutoFill() {
+const AutoFill = () => {
   const user = useSelector((state) => state.auth.user);
   const resumeText = user.resume.text;
   const dispatch = useDispatch();
@@ -135,7 +136,8 @@ function AutoFill() {
 
   return (
     <div>
-      <Button
+      <button
+        className="filled-btn w-full py-2"
         onClick={async () => {
           setOpenModal(true);
           setIsLoading(true);
@@ -144,7 +146,7 @@ function AutoFill() {
         }}
       >
         Auto Fill Your Profile
-      </Button>
+      </button>
       <Modal size="4xl" show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>
           <div className="flex items-center">
@@ -251,21 +253,28 @@ function AutoFill() {
                 </button>
               </section>
 
-              <h2 className="font-bold text-lg">Portfolio</h2>
-              {portfolioData.length > 0 ? (
-                portfolioData.map((port, index) => (
-                  <PortfolioForm
-                    ref={(el) => (portfolioRef.current[index] = el)}
-                    key={index}
-                    portfolioData={port}
-                    onDelete={() => deletePortfolio(index)}
-                  />
-                ))
-              ) : (
-                <p className="font-bold text-center text-2xl text-primaryDark">
-                  Empty
-                </p>
-              )}
+              <section className="flex flex-col gap-3">
+                <div className="flex gap-2 items-center text-primaryDark">
+                  <CiBoxList size={20} />
+                  <h2 className="font-bold text-xl">Portfolio</h2>
+                </div>
+                <HorizontalDivider className="pb-2" type="primary" />
+
+                {portfolioData.length > 0 ? (
+                  portfolioData.map((port, index) => (
+                    <PortfolioForm
+                      ref={(el) => (portfolioRef.current[index] = el)}
+                      key={index}
+                      portfolioData={port}
+                      onDelete={() => deletePortfolio(index)}
+                    />
+                  ))
+                ) : (
+                  <p className="font-bold text-center text-2xl text-primaryDark">
+                    Empty
+                  </p>
+                )}
+              </section>
             </div>
           )}
         </Modal.Body>
@@ -295,7 +304,7 @@ function AutoFill() {
       </Modal>
     </div>
   );
-}
+};
 
 // return null -> form error(includes null), [] -> empty form (includes undefined), [...] -> success form
 const getDataOrReturnNull = (ref) => {
@@ -304,7 +313,7 @@ const getDataOrReturnNull = (ref) => {
   if (mappedData.includes(null)) {
     return null; // form error
   } else if (mappedData.includes(undefined)) {
-    return []; // empty form
+    return mappedData.filter((item) => item !== undefined); // empty form
   } else {
     return mappedData; // success form
   }

@@ -168,13 +168,13 @@ const EducationForm = forwardRef(({ educationData, onDelete }, ref) => {
           />
         </div>
         <div className="col-span-6">
-          <label for="start" class="text-xs text-grayLight font-medium">
+          <label for="start_year" class="text-xs text-grayLight font-medium">
             Start Year
           </label>
           <input
             type="number"
-            id="start"
-            name="start"
+            id="start_year"
+            name="start_year"
             value={formState.start_year}
             onChange={handleChange}
             class="text-field w-full"
@@ -182,13 +182,13 @@ const EducationForm = forwardRef(({ educationData, onDelete }, ref) => {
           />
         </div>
         <div className="col-span-6">
-          <label for="end" class="text-xs text-grayLight font-medium">
+          <label for="end_year" class="text-xs text-grayLight font-medium">
             End Year
           </label>
           <input
             type="number"
-            id="end"
-            name="end"
+            id="end_year"
+            name="end_year"
             value={formState.end_year}
             onChange={handleChange}
             class="text-field w-full"

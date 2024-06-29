@@ -41,8 +41,19 @@ const requestSlice = createSlice({
     changeOneRequest(state, action) {
       const newRequest = action.payload;
       const updateRequestList = state.list.map((oldRequest) =>
-        oldRequest.id === action.payload.id ? newRequest : oldRequest,
+        oldRequest._id === action.payload._id ? newRequest : oldRequest,
       );
+      state.list = updateRequestList;
+    },
+    addFilesOneRequest(state, action) {
+      const newRequestList = action.payload;
+      const updateRequestList = state.list.map((oldRequest) => {
+        const matchingNewRequest = newRequestList.find(
+          (newRequest) => newRequest._id === oldRequest._id,
+        );
+        return matchingNewRequest ? matchingNewRequest : oldRequest;
+      });
+
       state.list = updateRequestList;
     },
   },
@@ -151,8 +162,12 @@ const allReducers = {
 };
 
 export const { updateUser, updateToken, clearAuth } = authSlice.actions;
-export const { changeRequestList, pushRequestList, changeOneRequest } =
-  requestSlice.actions;
+export const {
+  changeRequestList,
+  pushRequestList,
+  changeOneRequest,
+  addFilesOneRequest,
+} = requestSlice.actions;
 export const {
   changeOpeningList,
   pushOpeningList,

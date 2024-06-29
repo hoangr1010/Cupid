@@ -53,7 +53,7 @@ const OpeningInfoModal = ({ request, Trigger }) => {
   const onModalClose = () => {
     setOpenModal(false);
     navigate("/opening");
-  }
+  };
 
   return (
     <div>

@@ -57,7 +57,10 @@ function App() {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/request" element={<RequestDashboardPage />} />
             <Route path="/opening" element={<OpeningDashboardPage />} />
-            <Route path="/opening/:requestId" element={<OpeningDashboardPage />} />
+            <Route
+              path="/opening/:requestId"
+              element={<OpeningDashboardPage />}
+            />
           </Route>
         </Route>
       </Routes>

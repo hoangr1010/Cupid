@@ -131,7 +131,7 @@ const ExperienceForm = forwardRef(({ experienceData, onDelete }, ref) => {
         toast.error("End year in Experience is required");
         return null;
       }
-
+      console.log(parseObject(initialFormValue, formState));
       return parseObject(initialFormValue, formState);
     },
   }));

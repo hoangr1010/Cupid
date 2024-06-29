@@ -29,7 +29,7 @@ code {
 
 @layer components {
   .widget_container {
-    @apply border p-6 rounded-lg bg-alt;
+    @apply border p-6 rounded-2xl bg-alt;
   }
 
   .text-field {
