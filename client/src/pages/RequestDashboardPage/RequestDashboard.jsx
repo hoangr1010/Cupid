@@ -20,7 +20,6 @@ const RequestDashboard = ({ requestList }) => {
 
   // Group button color
   const colorMap = {
-    all: "gray",
     waiting: "gray",
     active: "gray",
     past: "gray",
@@ -142,9 +141,7 @@ const RequestDashboard = ({ requestList }) => {
               <div
                 {...provided.droppableProps}
                 ref={provided.innerRef}
-                className={
-                  isLoadingDrag ? "opacity-50 pointer-events-none" : ""
-                }
+                className={`flex flex-col gap-2 ${isLoadingDrag ? "opacity-50 pointer-events-none" : ""}`}
               >
                 {sortedRequestList
                   .filter((request) => {

@@ -14,17 +14,17 @@ const RequestBox = ({
       ref={provided.innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
-      className="flex w-full gap-4"
+      className="flex w-full gap-2"
     >
-      <div className="w-8 h-auto flex justify-center items-center">
+      <div className="w-8 h-auto flex justify-center items-center font-semibold text-grayLight">
         {number}
       </div>
-      <div className="widget_container flex justify-between items-center w-full gap-24">
+      <div className="border px-6 py-4 rounded-lg bg-alt flex justify-between items-center w-full gap-24">
         <div className="flex items-center gap-4">
           {/* <div className="w-14 h-14 bg-blue-700 flex justify-center items-center">
             Logo
           </div> */}
-          <div className="w-16 flex flex-col justify-center items-start font-bold text-xl">
+          <div className="w-12 flex flex-col justify-center items-start font-bold text-xl">
             <div>{company}</div>
             <div className="hidden">{title}</div>
           </div>
