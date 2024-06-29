@@ -116,15 +116,16 @@ function AutoFill() {
   const addProject = () => setProjectData([...projectData, {}]);
 
   return (
-    <div>
-      <Button
+    <div className="w-full">
+      <button
+        className="w-full flex justify-center items-center filled-btn btn-padding"
         onClick={async () => {
           setOpenModal(true);
           await autoFillForm();
         }}
       >
         Auto Fill Your Profile Page With AI
-      </Button>
+      </button>
       <Modal size="4xl" show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>Auto Fill Your Profile Page With AI</Modal.Header>
         <Modal.Body>
