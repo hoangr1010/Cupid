@@ -17,7 +17,6 @@ const authSlice = createSlice({
     updateToken(state, action) {
       state.token = action.payload;
     },
-
     clearAuth(state, action) {
       state = authInitialState;
     },
@@ -161,7 +160,8 @@ const allReducers = {
   notificationList: notificationListSlice.reducer,
 };
 
-export const { updateUser, updateToken, clearAuth } = authSlice.actions;
+export const { updateUser, updateToken, clearAuth } =
+  authSlice.actions;
 export const {
   changeRequestList,
   pushRequestList,

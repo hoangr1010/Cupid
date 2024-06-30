@@ -6,6 +6,7 @@ import Education from "./ProfileView/Education";
 import Experience from "./ProfileView/Experience";
 import Portfolio from "./ProfileView/Portfolio";
 import Project from "./ProfileView/Project";
+import HorizontalDivider from "../../components/HorizontalDivider";
 
 function ProfilePage() {
   return (
@@ -14,7 +15,7 @@ function ProfilePage() {
       <h1 className="text-5xl font-bold font-darker text-primaryDark">
         My Profile
       </h1>
-      <div className="basis-8/12 flex-grow h-fit pb-16 column">
+      <div className="flex flex-col gap-4">
         <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
           <div className="lg:col-span-1 md:col-span-2 sm:col-span-1">
             <Bio />
