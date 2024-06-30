@@ -10,7 +10,7 @@ const FileBox = ({ fileUrl }) => {
       <BsFileEarmarkFill className="text-primary" size={30} />
       <a
         href={fileLink}
-        className="font-semibold text-sm hover:text-primary"
+        className="font-semibold text-sm content-center hover:text-primary"
         target="_blank"
         // rel="noopener noreferrer"
       >

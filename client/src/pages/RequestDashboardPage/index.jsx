@@ -1,9 +1,27 @@
-import RequestDashboard from "./RequestDashboard";
+import { getAllRequests, changeRequestPriority } from "../../api/request";
+import { useEffect, useRef, useState } from "react";
+import { changeRequestList } from "../../state";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "sonner";
+import RequestDashboard from "./RequestDashboard.jsx";
 
 const RequestDashboardPage = () => {
   const user = useSelector((state) => state.auth.user);
   const requestList = useSelector((state) => state.request.list);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getRequests();
+  }, []);
+
+  const getRequests = async () => {
+    try {
+      const response = await getAllRequests(user._id);
+      dispatch(changeRequestList(response.data.data));
+    } catch (err) {
+      toast.error(err);
+    }
+  };
 
   return (
     <>
@@ -11,11 +29,11 @@ const RequestDashboardPage = () => {
         <h1 className="text-5xl font-bold font-darker text-primaryDark">
           Referral Requests
         </h1>{" "}
-        <div>
+        <div className="text-grayLight">
           You have made {requestList.length}/10 requests. Upgrade for unlimited
           requests.
         </div>
-        <RequestDashboard user={user} requestList={requestList} />
+        <RequestDashboard requestList={requestList} />
       </main>
     </>
   );
