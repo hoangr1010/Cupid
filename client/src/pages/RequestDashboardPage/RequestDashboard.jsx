@@ -1,56 +1,83 @@
-import RequestCard from "./RequestCard";
 import { getAllRequests, changeRequestPriority } from "../../api/request";
-import RequestInfoModal from "./RequestInfoModal";
 import { useEffect, useRef, useState } from "react";
 import { changeRequestList } from "../../state";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "sonner";
-import { Table } from "flowbite-react";
 import CreateRequest from "./CreateRequest";
-import { reorderRequests } from "./../../utils/request";
-import { FaExternalLinkAlt } from "react-icons/fa";
+import { reorderRequests } from "../../utils/request";
+import { getColorPair } from "../../utils/theme.js";
+
 import dayjs from "dayjs";
 import { Spinner } from "flowbite-react";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-const RequestDashboard = () => {
-  const user = useSelector((state) => state.auth.user);
-  const requestList = useSelector((state) => state.request.list);
+import RequestBox from "./RequestBox";
+
+const RequestDashboard = ({ requestList }) => {
+  const [tableView, setTableView] = useState("waiting");
+  const [isLoadingDrag, setIsLoadingDrag] = useState(false);
   const dispatch = useDispatch();
 
-  // save drag and draggedOver priority
-  const dragPriority = useRef(0);
-  const draggedOverPriority = useRef(0);
-  const [isLoadingDrag, setIsLoadingDrag] = useState(false);
-
-  // Sort requests by priority
-  const sortedRequestList = [...requestList].sort(
-    (a, b) => a.priority - b.priority,
+  // Group button color
+  const colorMap = {
+    all: "gray",
+    waiting: "gray",
+    active: "gray",
+    past: "gray",
+  };
+  const [buttonBackgroundColor, buttonTextColor] = getColorPair(
+    colorMap[tableView],
   );
 
-  useEffect(() => {
-    getRequests();
-  }, []);
+  // Sort requests by priority
+  const sortedRequestList = [...requestList].sort((a, b) => {
+    return a.priority - b.priority;
+  });
 
-  const getRequests = async () => {
-    try {
-      const response = await getAllRequests(user._id);
-      dispatch(changeRequestList(response.data.data));
-    } catch (err) {
-      toast.error(err);
+  const handleOnDragEnd = async (result) => {
+    if (!result.source || !result.destination) return;
+
+    const listBeingUsed = sortedRequestList.filter((request) => {
+      if (tableView === "all") {
+        return true;
+      } else if (tableView === "waiting") {
+        return request.status === "waiting";
+      } else if (tableView === "active") {
+        return request.status === "matched" || request.status === "approved";
+      } else if (tableView === "past") {
+        return request.status === "referred";
+      }
+    });
+
+    const draggedItem = listBeingUsed[result.source.index];
+    const draggedOverItem = listBeingUsed[result.destination.index];
+
+    if (
+      draggedItem.status !== "waiting" ||
+      draggedOverItem.status !== "waiting"
+    ) {
+      toast.error("Cannot change priority of non-waiting requests");
+      return;
     }
-  };
 
-  const handleDragEnd = async () => {
+    console.log("Original");
+    console.log(sortedRequestList);
+
     setIsLoadingDrag(true);
+
     const newRequests = reorderRequests(
-      [...(sortedRequestList || [])],
-      dragPriority,
-      draggedOverPriority,
+      sortedRequestList,
+      draggedItem.priority,
+      draggedOverItem.priority,
     );
+    console.log("Change prioirty after dnd");
+    console.log(newRequests);
 
     if (newRequests) {
       try {
         const newRequestList = await changeRequestPriority(newRequests);
+        console.log("Update prioirty in database");
+        console.log(newRequestList);
 
         if (newRequestList) {
           dispatch(changeRequestList(newRequestList));
@@ -61,94 +88,131 @@ const RequestDashboard = () => {
         toast.error(err);
       }
     }
+
     setIsLoadingDrag(false);
   };
 
   return (
     <>
-      <main className="flex-1 flex flex-col gap-12 overflow-auto h-full">
-        <h1 className="text-5xl font-bold font-darker text-primaryDark">
-          Referral Requests
-        </h1>{" "}
-        {sortedRequestList.length > 0 ? (
-          <>
-            <div className="overflow-x-auto h-full">
-              <div>
-                {isLoadingDrag && (
-                  <Spinner
-                    className="fill-primary w-16 h-16 absolute left-1/2 top-1/4 z-10"
-                    aria-label="Loading"
-                  />
-                )}
-                <Table
-                  hoverable
-                  className={
-                    isLoadingDrag ? "opacity-50 pointer-events-none" : ""
-                  }
-                >
-                  <Table.Head>
-                    <Table.HeadCell>Priority</Table.HeadCell>
-                    <Table.HeadCell>Company</Table.HeadCell>
-                    <Table.HeadCell>Status</Table.HeadCell>
-                    <Table.HeadCell>Date</Table.HeadCell>
-                    <Table.HeadCell>Details</Table.HeadCell>
-                    <Table.HeadCell>
-                      <span className="sr-only">More</span>
-                    </Table.HeadCell>
-                  </Table.Head>
+      <div className="flex justify-between items-start self-stretch">
+        <div className="rounded-md mb-3" role="group">
+          <button
+            type="button"
+            onClick={() => setTableView("all")}
+            className={
+              tableView == "all"
+                ? `btn-padding font-bold border border-${buttonBackgroundColor} rounded-s-lg bg-${buttonBackgroundColor} text-${buttonTextColor}`
+                : `btn-padding font-bold border border-${buttonBackgroundColor} rounded-s-lg hover:bg-gray-100`
+            }
+          >
+            All
+          </button>
+          <button
+            type="button"
+            onClick={() => setTableView("waiting")}
+            className={
+              tableView == "waiting"
+                ? `btn-padding font-bold border-t border-b border-${buttonBackgroundColor} bg-${buttonBackgroundColor} text-${buttonTextColor} w-24`
+                : `btn-padding font-bold border-t border-b border-${buttonBackgroundColor} hover:bg-gray-100 w-24`
+            }
+          >
+            Waiting
+          </button>
+          <button
+            type="button"
+            onClick={() => setTableView("active")}
+            className={
+              tableView == "active"
+                ? `btn-padding font-bold border-t border-b border-${buttonBackgroundColor} bg-${buttonBackgroundColor} text-${buttonTextColor} w-24`
+                : `btn-padding font-bold border-t border-b border-${buttonBackgroundColor} hover:bg-gray-100 w-24`
+            }
+          >
+            Active
+          </button>
+          <button
+            type="button"
+            onClick={() => setTableView("past")}
+            className={
+              tableView == "past"
+                ? `btn-padding font-bold border border-${buttonBackgroundColor} rounded-e-lg bg-${buttonBackgroundColor} text-${buttonTextColor} w-24`
+                : `btn-padding font-bold border border-${buttonBackgroundColor} rounded-e-lg hover:bg-gray-100 w-24`
+            }
+          >
+            Past
+          </button>
+        </div>
 
-                  <Table.Body className="divide-y transition-all">
-                    {sortedRequestList.map((request) => (
-                      <Table.Row
-                        key={request._id}
-                        draggable
-                        onDragStart={() => {
-                          dragPriority.current = request.priority;
-                        }}
-                        onDragEnter={() => {
-                          draggedOverPriority.current = request.priority;
-                        }}
-                        onDragEnd={handleDragEnd}
-                        onDragOver={(e) => {
-                          e.preventDefault();
-                        }}
-                        className="bg-white cursor-grab"
-                      >
-                        <Table.Cell>{request.priority}</Table.Cell>
-                        <Table.Cell>
-                          <div className="flex gap-3">
-                            {request.company}
-                            <a
-                              href={request.job_posting_url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <FaExternalLinkAlt />
-                            </a>
-                          </div>
-                        </Table.Cell>
-                        <Table.Cell>
-                          <div className="w-fit">{request.status}</div>
-                        </Table.Cell>
-                        <Table.Cell>
-                          {dayjs(request.createdAt).format("DD-MM-YYYY")}
-                        </Table.Cell>
-                        <Table.Cell>
-                          <RequestInfoModal request={request} />
-                        </Table.Cell>
-                      </Table.Row>
-                    ))}
-                  </Table.Body>
-                </Table>
-              </div>
-              <CreateRequest />
-            </div>
-          </>
-        ) : (
-          <CreateRequest />
+        <CreateRequest />
+      </div>
+
+      <div>
+        {isLoadingDrag && (
+          <Spinner
+            className="fill-primary w-16 h-16 absolute left-1/2 top-1/4 z-10"
+            aria-label="Loading"
+          />
         )}
-      </main>
+
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Droppable droppableId="droppable">
+            {(provided, snapshot) => (
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                className={`flex flex-col gap-2 ${isLoadingDrag ? "opacity-50 pointer-events-none" : ""}`}
+              >
+                {sortedRequestList
+                  .filter((request) => {
+                    if (tableView === "all") {
+                      return true;
+                    } else if (tableView === "waiting") {
+                      return request.status === "waiting";
+                    } else if (tableView === "active") {
+                      return (
+                        request.status === "matched" ||
+                        request.status === "approved"
+                      );
+                    } else if (tableView === "past") {
+                      return request.status === "referred";
+                    }
+                  })
+                  .map((request, index) => (
+                    <Draggable
+                      key={request._id}
+                      draggableId={request._id}
+                      index={index}
+                    >
+                      {(provided, snapshot) => (
+                        <RequestBox
+                          provided={provided}
+                          key={request._id}
+                          number={request.priority}
+                          company={request.company}
+                          request={request}
+                          requestedDate={dayjs(request.createdAt).format(
+                            "MMM DD",
+                          )}
+                          activeSteps={
+                            request.status == "waiting"
+                              ? 1
+                              : request.status == "matched"
+                                ? 2
+                                : request.status == "approved"
+                                  ? 3
+                                  : 4
+                          }
+                        />
+                      )}
+                    </Draggable>
+                  ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
     </>
   );
 };
+
 export default RequestDashboard;

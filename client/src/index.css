@@ -29,19 +29,35 @@ code {
 
 @layer components {
   .widget_container {
-    @apply border p-6 rounded-lg bg-alt;
+    @apply border p-6 rounded-2xl bg-alt;
   }
 
   .text-field {
-    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-primary focus:border-primary;
+    @apply border border-gray-300 font-medium text-sm rounded-md focus:ring-primary focus:border-primary shadow-sm;
   }
 
   .filled-btn {
     @apply text-primaryDark bg-primaryLight hover:bg-green-100 font-bold rounded-md transition-all;
   }
 
+  .btn-padding {
+    @apply py-[6px] px-3;
+  }
+
   .outline-btn {
     @apply border border-primary text-primaryDark rounded-lg font-bold hover:bg-green-50 hover:text-primary transition-all;
+  }
+
+  .my-message {
+    @apply bg-primaryLight text-black p-3 text-sm font-bold rounded-lg;
+  }
+
+  .another-message {
+    @apply border rounded-lg p-3 bg-alt w-fit text-sm font-bold;
+  }
+
+  .danger-text {
+    @apply text-pink hover:bg-pinkLighter transition-all rounded-lg;
   }
 
   .sidebar-btn {
@@ -58,10 +74,6 @@ code {
 
   .success-btn {
     @apply bg-green-400 hover:bg-green-500 transition-all;
-  }
-
-  .btn-padding {
-    @apply py-[6px] px-3;
   }
 }
 

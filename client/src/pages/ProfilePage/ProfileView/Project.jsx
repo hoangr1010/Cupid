@@ -223,7 +223,7 @@ function Project() {
         </Modal.Footer>
       </Modal>
       {project.length <= 0 ? (
-        <p>Please update your project</p>
+        <p className="font-semibold text-sm pl-2">No items added</p>
       ) : (
         <div className="flex flex-col gap-4">
           {project.map((item, index) => (

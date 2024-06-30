@@ -21,3 +21,31 @@ export const getFileNameFromUrl = (url) => {
   const lastSlashIndex = url.lastIndexOf("/");
   return url.substring(lastSlashIndex + 1);
 };
+
+export const parseObject = (template, target) => {
+  const parsedObj = {};
+
+  for (let key in target) {
+    let value = target[key];
+
+    try {
+      switch (typeof template[key]) {
+        case "string":
+          parsedObj[key] = String(value);
+          break;
+        case "number":
+          parsedObj[key] = Number(value);
+          break;
+        case "boolean":
+          parsedObj[key] = Boolean(value);
+          break;
+        default:
+          parsedObj[key] = value;
+      }
+    } catch (e) {
+      parsedObj[key] = value;
+    }
+  }
+
+  return parsedObj;
+};

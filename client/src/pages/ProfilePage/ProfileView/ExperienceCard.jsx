@@ -3,6 +3,11 @@ import { MdModeEditOutline } from "react-icons/md";
 
 function ExperienceCard({ experience }) {
   const descriptionLines = experience.description.split("\n");
+
+  const hasDescription =
+    experience.description && experience.description !== "";
+
+  console.log(descriptionLines);
   const currentCard = () => {
     return (
       <button className="filled-btn btn-padding text-xs">
@@ -23,19 +28,21 @@ function ExperienceCard({ experience }) {
       </div>
       <div className="flex justify-between text-grayLight">
         <div>
-          {experience.start_m} {experience.start_y} -{" "}
+          {experience.start_m}/{experience.start_y} -
           {experience.current
             ? "Present"
-            : `${experience.end_m} ${experience.end_y}`}
+            : `${experience.end_m}/${experience.end_y}`}
         </div>
         <div>{experience.location}</div>
       </div>
       <div className="font-bold">{experience.position}</div>
-      <ul className="list-disc pl-5">
-        {descriptionLines.map((line, index) => (
-          <li key={index}>{line}</li>
-        ))}
-      </ul>
+      {hasDescription && (
+        <ul className="list-disc pl-5">
+          {descriptionLines.map((line, index) => (
+            <li key={index}>{line}</li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

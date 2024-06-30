@@ -62,7 +62,7 @@ const CreateRequest = () => {
     <>
       <button
         type="button"
-        className="filled-btn p-2 w-full"
+        className="filled-btn p-2"
         onClick={() => {
           if (highestPriority < 10) {
             setOpenModal(!openModal);
@@ -71,30 +71,39 @@ const CreateRequest = () => {
           }
         }}
       >
-        {requests.length > 0
-          ? "Create new requests"
-          : "You do not have any request, create your first request"}
+        + New Request
       </button>
 
       {/* Modal for creating request */}
-      <Modal show={openModal} size="xl" onClose={() => setOpenModal(false)}>
+      <Modal show={openModal} size="3xl" onClose={() => setOpenModal(false)}>
         <Modal.Header>
-          <p className="px-3 pt-1 font-bold h-fit">Create Request</p>
+          <p className="px-3 pt-1 font-bold h-fit">New Request</p>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleClick} className="flex flex-col gap-4">
-            <CompanyDropDown
-              company={company}
-              setCompany={setCompany}
-              className="w-full"
-            />
+            <div>
+              <label className="block mb-2 text-base font-bold text-black">
+                Select Company <sup className="text-pink">*</sup>
+              </label>
+              <CompanyDropDown
+                company={company}
+                setCompany={setCompany}
+                className="w-full"
+              />
+            </div>
 
             <div>
               <label
                 htmlFor="jobPosting"
-                className="block mb-2 text-sm font-medium text-gray-900"
+                className="block mb-2 text-base font-bold text-black"
               >
-                Job Posting Url
+                <div>
+                  Job Posting<sup className="text-pink">*</sup>
+                </div>
+
+                <div className="text-grayLight text-xs">
+                  Upload a resume for this job referral
+                </div>
               </label>
               <input
                 type="text"
@@ -118,7 +127,7 @@ const CreateRequest = () => {
               className="filled-btn m-0 px-8 py-2"
               onClick={handleClick}
             >
-              <FaArrowRightLong />
+              Create
             </button>
           </div>
         </Modal.Footer>

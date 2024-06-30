@@ -10,15 +10,19 @@ function EducationCard({ education }) {
           <MdModeEditOutline />
         </div>
       </div>
-      <div className="text-grayLight">
-        {education.start_year} - {education.end_year}
-      </div>
+      {education.start_year && education.end_year && (
+        <div className="text-grayLight">
+          {education.start_year} - {education.end_year}
+        </div>
+      )}
       <div className="font-bold">
         {education.degree} in {education.major}
       </div>
-      <ul className="list-disc pl-5">
-        <li>{education.gpa && `GPA: ${education.gpa}`}</li>
-      </ul>
+      {education.gpa && (
+        <ul className="list-disc pl-5">
+          <li>{`GPA: ${education.gpa}`}</li>
+        </ul>
+      )}
     </div>
   );
 }

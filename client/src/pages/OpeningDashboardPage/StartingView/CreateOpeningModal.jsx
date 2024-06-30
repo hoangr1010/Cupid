@@ -5,18 +5,16 @@ import {
   processPasscode,
   verifyPasscode,
 } from "../../../api/opening";
-import { useSelector, useDispatch } from "react-redux";
-import { pushOpeningList, changeAmount } from "../../../state";
+import { useDispatch } from "react-redux";
+import { loadOpening } from "../../../state";
 import { toast } from "sonner";
 import { CompanyDropDown } from "../../../components/CompanyDropDown";
 import { VerificationBox } from "./VerificationBox";
-import { FaArrowRightLong } from "react-icons/fa6";
 import { validateForm } from "../../../utils/opening";
 import { Spinner } from "flowbite-react";
 
 const CreateOpeningModal = () => {
   const dispatch = useDispatch();
-  const userId = useSelector((state) => state.auth.user._id) || null;
   const [openModal, setOpenModal] = useState(false);
 
   // creating opening form state
@@ -71,7 +69,7 @@ const CreateOpeningModal = () => {
             };
             const response = await createOpenings(formData);
             if (response) {
-              dispatch(changeAmount(response.original_amount));
+              dispatch(loadOpening({ ...response, requests: [] }));
               onClose();
             }
           } else {

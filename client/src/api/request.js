@@ -2,7 +2,7 @@ import API from ".";
 import { toast } from "sonner";
 import { changeRequestList } from "../state";
 import { validateFileName } from "../utils/request";
-import { changeOneRequest } from "../state";
+import { changeOneRequest, addFilesOneRequest } from "../state";
 import axios, { Axios } from "axios";
 
 export const getAllRequests = async (userId) => {
@@ -42,6 +42,29 @@ export const changeRequestPriority = async (newRequests) => {
     toast.error(err);
   }
 };
+
+export const sendMultipleFiles = async (formData, request, dispatch) => {
+  // console.log(request.request._id)
+  // console.log(formData.entries.length);
+  // for (var [key, val] of formData.entries()) {
+  //   console.log(key, val);
+  // }
+  try {
+    const headers = {};
+    headers["requestId"] = request._id;
+
+    const response = await API.patch(`/request/uploadMultiple`, formData, {
+      headers: headers,
+    });
+
+    dispatch(changeOneRequest(response.data.data));
+    toast.success("files uploaded");
+  } catch (error) {
+    console.log(error);
+    toast.error(error);
+  }
+};
+
 export const sendFile = async (request, name, file, dispatch) => {
   try {
     const formData = new FormData();
@@ -98,5 +121,18 @@ export const getRemainingRequestsByCompany = async (companyName) => {
     return response.data.data;
   } catch (err) {
     toast.error(err);
+  }
+};
+
+export const replyRequest = async (requestId, messageText) => {
+  try {
+    const response = await API.put(`/request/replyRequest`, {
+      requestId,
+      messageText,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    toast.error("Fail to send reply note to the referrer");
   }
 };
