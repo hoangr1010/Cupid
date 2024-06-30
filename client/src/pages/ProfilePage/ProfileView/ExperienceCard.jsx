@@ -4,7 +4,8 @@ import { MdModeEditOutline } from "react-icons/md";
 function ExperienceCard({ experience }) {
   const descriptionLines = experience.description.split("\n");
 
-  const hasDescription = experience.description && experience.description !== '';
+  const hasDescription =
+    experience.description && experience.description !== "";
 
   console.log(descriptionLines);
   const currentCard = () => {

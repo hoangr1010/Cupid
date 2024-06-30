@@ -198,13 +198,13 @@ export const addAll = async (req, res) => {
 
     await User.findByIdAndUpdate(
       userId,
-      { 
-        $push: { 
+      {
+        $push: {
           education: { $each: educationData },
           experience: { $each: experienceData },
           project: { $each: projectData },
-          portfolio: { $each: portfolioData }
-        } 
+          portfolio: { $each: portfolioData },
+        },
       },
       { new: true, runValidators: true },
     );

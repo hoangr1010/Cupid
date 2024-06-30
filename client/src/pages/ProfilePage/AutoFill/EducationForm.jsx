@@ -21,7 +21,7 @@ const EducationForm = forwardRef(({ educationData, onDelete }, ref) => {
     gpa: 0,
     start: 0,
     end: 0,
-  }
+  };
   const [formState, setFormState] = useState(initialFormState);
 
   const handleChange = (e) => {

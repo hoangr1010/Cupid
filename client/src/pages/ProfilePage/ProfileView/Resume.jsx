@@ -6,7 +6,6 @@ import FileBox from "../../../components/FileBox";
 import { MdModeEditOutline } from "react-icons/md";
 import AutoFill from "../AutoFill";
 
-
 function Resume() {
   const user = useSelector((state) => state.auth.user);
   const resume = user.resume.url;

@@ -91,7 +91,7 @@ const ProjectForm = forwardRef(({ projectData, onDelete }, ref) => {
         return null;
       }
 
-      return parseObject(initialFormState,formState);
+      return parseObject(initialFormState, formState);
     },
   }));
 
