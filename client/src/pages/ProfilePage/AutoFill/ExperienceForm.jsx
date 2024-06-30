@@ -5,14 +5,16 @@ import {
   forwardRef,
   useImperativeHandle,
 } from "react";
-import { addExperience } from "./../../api/user";
+import { MdDelete } from "react-icons/md";
+import { addExperience } from "./../../../api/user";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
-import { updateUser } from "./../../state";
+import { updateUser } from "./../../../state";
+import { parseObject } from "./../../../utils/user";
 
 const ExperienceForm = forwardRef(({ experienceData, onDelete }, ref) => {
   const dispatch = useDispatch();
-  const [formState, setFormState] = useState({
+  const initialFormValue = {
     company: "",
     position: "",
     location: "",
@@ -23,16 +25,18 @@ const ExperienceForm = forwardRef(({ experienceData, onDelete }, ref) => {
     end_y: 0,
     current: false,
     description: "",
-  });
+  };
+  const [formState, setFormState] = useState(initialFormValue);
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    console.log(type);
 
     let parsedValue = value;
 
     if (type === "number") {
       parsedValue = parseInt(value, 10);
+    } else if (type === "checkbox") {
+      parsedValue = e.target.checked;
     }
 
     setFormState({
@@ -45,20 +49,10 @@ const ExperienceForm = forwardRef(({ experienceData, onDelete }, ref) => {
     if (experienceData) {
       setFormState(experienceData);
     }
-    console.log(experienceData);
-    console.log(formState);
   }, [experienceData]);
 
   const handleSubmit = async () => {
-    console.log(formState);
-    if (
-      !formState.company ||
-      !formState.location ||
-      !formState.position ||
-      !formState.type ||
-      !formState.start_m ||
-      !formState.start_y
-    ) {
+    if (validate()) {
       toast.error("Please fill out all required fields");
       return;
     }
@@ -92,16 +86,71 @@ const ExperienceForm = forwardRef(({ experienceData, onDelete }, ref) => {
     }
   };
 
+  const validate = () => {
+    return (
+      !formState.company ||
+      !formState.location ||
+      !formState.position ||
+      !formState.type ||
+      !formState.start_m ||
+      !formState.start_y
+    );
+  };
+
   useImperativeHandle(ref, () => ({
-    getData: () => formState,
+    getData: () => {
+      if (!formState.company) {
+        toast.error("Company in Experience is required");
+        return null;
+      }
+      if (!formState.location) {
+        toast.error("Location in Experience is required");
+        return null;
+      }
+      if (!formState.position) {
+        toast.error("Position in Experience is required");
+        return null;
+      }
+      if (!formState.type) {
+        toast.error("Type in Experience is required");
+        return null;
+      }
+      if (!formState.start_m) {
+        toast.error("Start month in Experience is required");
+        return null;
+      }
+      if (!formState.start_y) {
+        toast.error("Start year in Experience is required");
+        return null;
+      }
+      if (!formState.end_m) {
+        toast.error("End month in Experience is required");
+        return null;
+      }
+      if (!formState.end_y) {
+        toast.error("End year in Experience is required");
+        return null;
+      }
+      console.log(parseObject(initialFormValue, formState));
+      return parseObject(initialFormValue, formState);
+    },
   }));
 
   return (
     <div className="widget_container">
-      <form onSubmit={handleSubmit} class="grid gap-6 mb-6 md:grid-cols-2">
-        <div>
-          <label for="company" class="block mb-2 text-sm">
-            Company
+      <div className="w-full flex justify-end">
+        <button
+          className="danger-text text-center p-1"
+          type="button"
+          onClick={onDelete}
+        >
+          <MdDelete size={20} />
+        </button>
+      </div>
+      <form onSubmit={handleSubmit} class="grid gap-2 mb-6 grid-cols-12">
+        <div className="col-span-6">
+          <label for="company" class="text-xs text-grayLight font-medium">
+            Company<span className="text-pink">*</span>
           </label>
           <input
             type="text"
@@ -109,13 +158,14 @@ const ExperienceForm = forwardRef(({ experienceData, onDelete }, ref) => {
             name="company"
             value={formState.company}
             onChange={handleChange}
+            class="text-field w-full"
             placeholder="Company"
             required
           />
         </div>
-        <div>
-          <label for="position" class="block mb-2 text-sm">
-            Position
+        <div className="col-span-6">
+          <label for="position" class="text-xs text-grayLight font-medium">
+            Position<span className="text-pink">*</span>
           </label>
           <input
             type="text"
@@ -123,15 +173,17 @@ const ExperienceForm = forwardRef(({ experienceData, onDelete }, ref) => {
             name="position"
             value={formState.position}
             onChange={handleChange}
+            class="text-field w-full"
             placeholder="Position"
             required
           />
         </div>
-        <div>
-          <label for="location" class="block mb-2 text-sm">
-            Location
+        <div className="col-span-6">
+          <label for="location" class="text-xs text-grayLight font-medium">
+            Location<span className="text-pink">*</span>
           </label>
           <input
+            class="text-field w-full"
             type="text"
             id="location"
             name="location"
@@ -141,11 +193,12 @@ const ExperienceForm = forwardRef(({ experienceData, onDelete }, ref) => {
             required
           />
         </div>
-        <div>
-          <label for="type" class="block mb-2 text-sm">
-            Type
+        <div className="col-span-6">
+          <label for="type" class="text-xs text-grayLight font-medium">
+            Type<span className="text-pink">*</span>
           </label>
           <input
+            class="text-field w-full"
             type="text"
             id="type"
             name="type"
@@ -155,11 +208,12 @@ const ExperienceForm = forwardRef(({ experienceData, onDelete }, ref) => {
             required
           />
         </div>
-        <div>
-          <label for="start_m" class="block mb-2 text-sm">
-            Start Month
+        <div className="col-span-4">
+          <label for="start_m" class="text-xs text-grayLight font-medium">
+            Start Month<span className="text-pink">*</span>
           </label>
           <input
+            class="text-field w-full"
             type="text"
             id="start_m"
             name="start_m"
@@ -169,11 +223,12 @@ const ExperienceForm = forwardRef(({ experienceData, onDelete }, ref) => {
             required
           />
         </div>
-        <div>
-          <label for="start_y" class="block mb-2 text-sm">
-            Start Year
+        <div className="col-span-2">
+          <label for="start_y" class="text-xs text-grayLight font-medium">
+            Start Year<span className="text-pink">*</span>
           </label>
           <input
+            class="text-field w-full"
             type="number"
             id="start_y"
             name="start_y"
@@ -183,9 +238,9 @@ const ExperienceForm = forwardRef(({ experienceData, onDelete }, ref) => {
             required
           />
         </div>
-        <div>
-          <label for="end_m" class="block mb-2 text-sm">
-            End Month
+        <div className="col-span-4">
+          <label for="end_m" class="text-xs text-grayLight font-medium">
+            End Month<span className="text-pink">*</span>
           </label>
           <input
             type="text"
@@ -197,9 +252,9 @@ const ExperienceForm = forwardRef(({ experienceData, onDelete }, ref) => {
             placeholder="End Month"
           />
         </div>
-        <div>
-          <label for="end_y" class="block mb-2 text-sm">
-            End Year
+        <div className="col-span-2">
+          <label for="end_y" class="text-xs text-grayLight font-medium">
+            End Year<span className="text-pink">*</span>
           </label>
           <input
             type="number"
@@ -211,26 +266,23 @@ const ExperienceForm = forwardRef(({ experienceData, onDelete }, ref) => {
             placeholder="End Year"
           />
         </div>
-        <div>
-          <label for="current" class="block mb-2 text-sm">
-            Current
-          </label>
+        <div className="flex gap-2 col-span-12 items-center">
           <input
-            type="boolean"
+            type="checkbox"
             id="current"
             name="current"
-            value={formState.current}
+            checked={formState.current}
             onChange={handleChange}
-            class="text-field w-full"
-            placeholder="Current"
+            className="text-field text-primary"
             required
           />
+          <p className="font-bold text-sm">I currently work here</p>
         </div>
-        <div>
-          <label for="description" class="block mb-2 text-sm">
+        <div className="col-span-12">
+          <label for="description" class="text-xs text-grayLight font-medium">
             Description
           </label>
-          <input
+          <textarea
             type="text"
             id="description"
             name="description"
@@ -238,11 +290,9 @@ const ExperienceForm = forwardRef(({ experienceData, onDelete }, ref) => {
             onChange={handleChange}
             class="text-field w-full"
             placeholder="Description"
+            rows={7}
           />
         </div>
-        <button type="button" onClick={onDelete}>
-          Delete
-        </button>
       </form>
     </div>
   );

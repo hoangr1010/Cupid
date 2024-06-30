@@ -136,7 +136,7 @@ function Portfolio() {
         </Modal.Footer>
       </Modal>
       {portfolio.length <= 0 ? (
-        <p>Please update your project</p>
+        <p className="font-semibold text-sm pl-2">No items added</p>
       ) : (
         <>
           {portfolio.map((item, index) => (

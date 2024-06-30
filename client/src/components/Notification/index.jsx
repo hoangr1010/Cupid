@@ -10,6 +10,7 @@ import { GoDotFill, GoHorizontalRule } from "react-icons/go";
 import { readNotification } from "../../api/notification.js";
 // import { notiMessage } from "../../utils/notiMessage.js";
 import { Message } from "./message.jsx";
+import HorizontalDivider from "../HorizontalDivider/index.jsx";
 
 export const NotificationDropdown = () => {
   const user = useSelector((state) => state.auth.user);
@@ -90,7 +91,7 @@ export const NotificationDropdown = () => {
         <h1 className="font-bold flex justify-center text-lg p-2">
           Notifications
         </h1>
-        <div className="h-0.5 w-90 bg-primary mx-3"></div>
+        <HorizontalDivider type="primary" />
         {notiList.length ? (
           <div className="p-1" style={{ overflowY: "scroll", height: "350px" }}>
             {notiList.map((noti) => (

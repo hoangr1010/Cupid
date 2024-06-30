@@ -5,21 +5,23 @@ import {
   useImperativeHandle,
   forwardRef,
 } from "react";
-import { addPortfolio } from "./../../api/user";
+import { MdDelete } from "react-icons/md";
+import { addPortfolio } from "../../../api/user";
 import { useDispatch } from "react-redux";
-import { updateUser } from "./../../state";
+import { updateUser } from "../../../state";
+import { parseObject } from "../../../utils/user";
 
 const PortfolioForm = forwardRef(({ portfolioData, onDelete }, ref) => {
   const dispatch = useDispatch();
-  const [formState, setFormState] = useState({
+  const initialFormState = {
     linkedin: "",
     github: "",
     website: "",
-  });
+  };
+  const [formState, setFormState] = useState(initialFormState);
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    console.log(type);
 
     let parsedValue = value;
 
@@ -57,17 +59,38 @@ const PortfolioForm = forwardRef(({ portfolioData, onDelete }, ref) => {
   };
 
   useImperativeHandle(ref, () => ({
-    getData: () => formState,
+    getData: () => {
+      const parsedObject = parseObject(initialFormState, formState);
+
+      Object.keys(parsedObject).forEach((key) => {
+        if (parsedObject[key] === null) {
+          delete parsedObject[key];
+        }
+      });
+
+      return parsedObject;
+    },
   }));
 
   return (
     <div className="widget_container">
-      <form onSubmit={handleSubmit} class="grid gap-6 mb-6 md:grid-cols-2">
-        <div>
-          <label for="linkedin" class="block mb-2 text-sm">
-            Linkedin
+      <div className="w-full flex justify-end">
+        <button
+          className="danger-text text-center p-1"
+          type="button"
+          onClick={onDelete}
+        >
+          <MdDelete size={20} />
+        </button>
+      </div>
+
+      <form onSubmit={handleSubmit} class="grid gap-2 mb-6 grid-cols-12">
+        <div className="col-span-12">
+          <label for="linkedin" class="text-xs text-grayLight font-medium">
+            LinkedIn URL
           </label>
           <input
+            class="text-field w-full"
             type="text"
             id="linkedin"
             name="linkedin"
@@ -76,11 +99,12 @@ const PortfolioForm = forwardRef(({ portfolioData, onDelete }, ref) => {
             placeholder="Linkedin"
           />
         </div>
-        <div>
-          <label for="github" class="block mb-2 text-sm">
-            GitHub
+        <div className="col-span-12">
+          <label for="github" class="text-xs text-grayLight font-medium">
+            GitHub URL
           </label>
           <input
+            class="text-field w-full"
             type="text"
             id="github"
             name="github"
@@ -89,11 +113,12 @@ const PortfolioForm = forwardRef(({ portfolioData, onDelete }, ref) => {
             placeholder="GitHub"
           />
         </div>
-        <div>
-          <label for="website" class="block mb-2 text-sm">
-            Website
+        <div className="col-span-12">
+          <label for="website" class="text-xs text-grayLight font-medium">
+            Portfolio URL
           </label>
           <input
+            class="text-field w-full"
             type="text"
             id="website"
             name="website"
@@ -102,9 +127,6 @@ const PortfolioForm = forwardRef(({ portfolioData, onDelete }, ref) => {
             placeholder="Website"
           />
         </div>
-        <button type="button" onClick={onDelete}>
-          Delete
-        </button>
       </form>
     </div>
   );

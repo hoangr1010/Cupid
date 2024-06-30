@@ -107,7 +107,6 @@ export const autoFillResume = async (resumeText) => {
   try {
     const body = { resumeText: resumeText };
     const response = await API.post(`user/autoFillResume`, body);
-    toast.success("Resume json returned");
     return response.data.data;
   } catch (error) {
     toast.error("error uploading file: " + error);
@@ -128,8 +127,7 @@ export const addAll = async (
       portfolio: portfolioData,
     };
     const response = await API.put(`user/addAll`, body);
-    toast.success("Add all successfully");
-    console.log(response);
+
     return response.data.data;
   } catch (error) {
     toast.error("error uploading file: " + error);

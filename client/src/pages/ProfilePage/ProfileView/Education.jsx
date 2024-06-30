@@ -187,7 +187,7 @@ function Education() {
         </Modal.Footer>
       </Modal>
       {education.length <= 0 ? (
-        <p>Please update your education</p>
+        <p className="font-semibold text-sm pl-2">No items added</p>
       ) : (
         <div className="flex flex-col gap-4">
           {education.map((item, index) => (

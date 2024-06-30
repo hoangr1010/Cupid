@@ -5,14 +5,16 @@ import {
   useImperativeHandle,
   forwardRef,
 } from "react";
-import { addProject } from "./../../api/user";
+import { addProject } from "../../../api/user";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
-import { updateUser } from "./../../state";
+import { updateUser } from "../../../state";
+import { MdDelete } from "react-icons/md";
+import { parseObject } from "../../../utils/user";
 
 const ProjectForm = forwardRef(({ projectData, onDelete }, ref) => {
   const dispatch = useDispatch();
-  const [formState, setFormState] = useState({
+  const initialFormState = {
     name: "",
     start_m: "",
     start_y: 0,
@@ -21,16 +23,18 @@ const ProjectForm = forwardRef(({ projectData, onDelete }, ref) => {
     current: false,
     description: "",
     link: "",
-  });
+  };
+  const [formState, setFormState] = useState(initialFormState);
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    console.log(type);
 
     let parsedValue = value;
 
     if (type === "number") {
       parsedValue = parseInt(value, 10);
+    } else if (type === "checkbox") {
+      parsedValue = e.target.checked;
     }
 
     setFormState({
@@ -46,7 +50,7 @@ const ProjectForm = forwardRef(({ projectData, onDelete }, ref) => {
   }, [projectData]);
 
   const handleSubmit = async () => {
-    if (!formState.name || !formState.description) {
+    if (validate()) {
       toast.error("Please fill out all required fields");
       return;
     }
@@ -77,17 +81,43 @@ const ProjectForm = forwardRef(({ projectData, onDelete }, ref) => {
   };
 
   useImperativeHandle(ref, () => ({
-    getData: () => formState,
+    getData: () => {
+      if (!formState.name) {
+        toast.error("Project name in Project is required");
+        return null;
+      }
+      if (!formState.description) {
+        toast.error("Project description in Project is required");
+        return null;
+      }
+
+      return parseObject(initialFormState, formState);
+    },
   }));
+
+  const validate = () => {
+    return !formState.name || !formState.description;
+  };
 
   return (
     <div className="widget_container">
-      <form onSubmit={handleSubmit} class="grid gap-6 mb-6 md:grid-cols-2">
-        <div>
-          <label for="name" class="block mb-2 text-sm">
-            Name
+      <div className="w-full flex justify-end">
+        <button
+          className="danger-text text-center p-1"
+          type="button"
+          onClick={onDelete}
+        >
+          <MdDelete size={20} />
+        </button>
+      </div>
+
+      <form onSubmit={handleSubmit} class="grid gap-2 mb-6 grid-cols-12">
+        <div className="col-span-12">
+          <label for="name" class="text-xs text-grayLight font-medium">
+            Name<span className="text-pink">*</span>
           </label>
           <input
+            class="text-field w-full"
             type="text"
             id="name"
             name="name"
@@ -97,12 +127,13 @@ const ProjectForm = forwardRef(({ projectData, onDelete }, ref) => {
             required
           />
         </div>
-        <div>
-          <label for="start_m" class="block mb-2 text-sm">
+        <div className="col-span-4">
+          <label for="start_m" class="text-xs text-grayLight font-medium">
             Start Month
           </label>
           <input
-            type="type"
+            class="text-field w-full"
+            type="text"
             id="start_m"
             name="start_m"
             value={formState.start_m}
@@ -110,11 +141,12 @@ const ProjectForm = forwardRef(({ projectData, onDelete }, ref) => {
             placeholder="Start Month"
           />
         </div>
-        <div>
-          <label for="start_y" class="block mb-2 text-sm">
+        <div className="col-span-2">
+          <label for="start_y" class="text-xs text-grayLight font-medium">
             Start Year
           </label>
           <input
+            class="text-field w-full"
             type="number"
             id="start_y"
             name="start_y"
@@ -123,12 +155,12 @@ const ProjectForm = forwardRef(({ projectData, onDelete }, ref) => {
             placeholder="Start Year"
           />
         </div>
-        <div>
-          <label for="end_m" class="block mb-2 text-sm">
+        <div className="col-span-4">
+          <label for="end_m" class="text-xs text-grayLight font-medium">
             End Month
           </label>
           <input
-            type="type"
+            type="text"
             id="end_m"
             name="end_m"
             onChange={handleChange}
@@ -137,8 +169,8 @@ const ProjectForm = forwardRef(({ projectData, onDelete }, ref) => {
             placeholder="End Month"
           />
         </div>
-        <div>
-          <label for="end_y" class="block mb-2 text-sm">
+        <div className="col-span-2">
+          <label for="end_y" class="text-xs text-grayLight font-medium">
             End Year
           </label>
           <input
@@ -151,25 +183,23 @@ const ProjectForm = forwardRef(({ projectData, onDelete }, ref) => {
             placeholder="End Year"
           />
         </div>
-        <div>
-          <label for="current" class="block mb-2 text-sm">
-            Current
-          </label>
+        <div className="flex gap-2 col-span-12 items-center">
           <input
-            type="boolean"
+            type="checkbox"
             id="current"
             name="current"
-            value={formState.current}
+            checked={formState.current}
             onChange={handleChange}
-            class="text-field w-full"
-            placeholder="Current"
+            className="text-field text-primary"
+            required
           />
+          <p className="font-bold text-sm">I currently work on this</p>
         </div>
-        <div>
-          <label for="description" class="block mb-2 text-sm">
-            Description
+        <div className="col-span-12">
+          <label for="description" class="text-xs text-grayLight font-medium">
+            Description<span className="text-pink">*</span>
           </label>
-          <input
+          <textarea
             type="text"
             id="description"
             name="description"
@@ -177,14 +207,16 @@ const ProjectForm = forwardRef(({ projectData, onDelete }, ref) => {
             onChange={handleChange}
             class="text-field w-full"
             placeholder="Description"
+            rows={7}
             required
           />
         </div>
-        <div>
-          <label for="link" class="block mb-2 text-sm">
+        <div className="col-span-12">
+          <label for="link" class="text-xs text-grayLight font-medium">
             Link
           </label>
           <input
+            class="text-field w-full"
             type="text"
             id="link"
             name="link"
@@ -193,9 +225,6 @@ const ProjectForm = forwardRef(({ projectData, onDelete }, ref) => {
             placeholder="Link"
           />
         </div>
-        <button type="button" onClick={onDelete}>
-          Delete
-        </button>
       </form>
     </div>
   );

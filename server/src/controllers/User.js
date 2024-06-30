@@ -187,38 +187,7 @@ export const addPortfolio = async (req, res) => {
   }
 };
 
-const addEducationSub = async (userId, educationData, options = {}) => {
-  return User.findByIdAndUpdate(
-    userId,
-    { $push: { education: educationData } },
-    { new: true, runValidators: true, session: options.session },
-  );
-};
-
-const addExperienceSub = async (userId, experienceData, options = {}) => {
-  return User.findByIdAndUpdate(
-    userId,
-    { $push: { experience: experienceData } },
-    { new: true, runValidators: true, session: options.session },
-  );
-};
-const addProjectSub = async (userId, projectData, options = {}) => {
-  return User.findByIdAndUpdate(
-    userId,
-    { $push: { project: projectData } },
-    { new: true, runValidators: true, session: options.session },
-  );
-};
-const addPortfolioSub = async (userId, portfolioData, options = {}) => {
-  return User.findByIdAndUpdate(
-    userId,
-    { $push: { portfolio: portfolioData } },
-    { new: true, runValidators: true, session: options.session },
-  );
-};
 export const addAll = async (req, res) => {
-  const session = await mongoose.startSession();
-  session.startTransaction();
   try {
     const userId = req.get("userId");
 
@@ -227,13 +196,18 @@ export const addAll = async (req, res) => {
     const projectData = req.body.project;
     const portfolioData = req.body.portfolio;
 
-    await addEducationSub(userId, educationData, { session });
-    await addExperienceSub(userId, experienceData, { session });
-    await addProjectSub(userId, projectData, { session });
-    await addPortfolioSub(userId, portfolioData, { session });
-
-    await session.commitTransaction();
-    session.endSession();
+    await User.findByIdAndUpdate(
+      userId,
+      {
+        $push: {
+          education: { $each: educationData },
+          experience: { $each: experienceData },
+          project: { $each: projectData },
+          portfolio: { $each: portfolioData },
+        },
+      },
+      { new: true, runValidators: true },
+    );
 
     const user = await User.findById(userId);
 
@@ -242,9 +216,6 @@ export const addAll = async (req, res) => {
       data: user,
     });
   } catch (error) {
-    await session.abortTransaction();
-    session.endSession();
-
     res.status(400).json({
       message: "Error",
       error: error.message,

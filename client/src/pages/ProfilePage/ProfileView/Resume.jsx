@@ -2,9 +2,9 @@ import { React, useState } from "react";
 import { useSelector } from "react-redux";
 import { sendResume } from "../../../api/user";
 import { useDispatch } from "react-redux";
-import AutoFill from "../AutoFill";
 import FileBox from "../../../components/FileBox";
 import { MdModeEditOutline } from "react-icons/md";
+import AutoFill from "../AutoFill";
 
 function Resume() {
   const user = useSelector((state) => state.auth.user);
