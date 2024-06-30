@@ -6,6 +6,8 @@ import Opening from "../src/models/Opening.js";
 import connectDB from "../src/utils/connectDB.js";
 import { scaleCalculate } from "./scale/scale.js";
 import { getBatchPeriod } from "../src/utils/date.js";
+import { Notification } from "../src/utils/notification.js";
+import { sendNoti } from "../src/services/Notification/notification.js";
 
 /* 
 Input: None
@@ -105,7 +107,7 @@ export const runMatchingAlgorithm = (requestList, openingList) => {
 
     if (p < availableList.length) {
       availableList[p].request_id_list.push(request._id);
-      matchList.push([request._id, availableList[p]._id]);
+      matchList.push([request, availableList[p]]);
       matchedUser.add(request.candidate_id);
       matchedRequest.add(request._id);
     }
@@ -139,7 +141,7 @@ export const runMatchingAlgorithm = (requestList, openingList) => {
 
     if (p < availableList.length) {
       availableList[p].request_id_list.push(request._id);
-      matchList.push([request._id, availableList[p]._id]);
+      matchList.push([request, availableList[p]]);
     }
   }
 
@@ -152,6 +154,7 @@ Input:
 Output:
   - None. Apply database changes using the given matchList
 */
+
 export const applyMatchingChanges = async (matchList) => {
   for (const pair of matchList) {
     try {
@@ -176,6 +179,26 @@ export const applyMatchingChanges = async (matchList) => {
       console.log("Error updating opening");
       console.log(error.message);
     }
+
+    try {
+      const requestNoti = await Notification.matchingDone(
+        "matchingDone",
+        pair[0].candidate_id,
+      );
+      console.log(requestNoti);
+
+      const openingNoti = await Notification.matchingDone(
+        "matchingDone",
+        pair[1].referrer_id,
+      );
+      console.log(openingNoti);
+
+      await sendNoti(requestNoti);
+      await sendNoti(openingNoti);
+    } catch (error) {
+      console.log("Error sending post-matching emails");
+      console.log(error.message);
+    }
   }
 };
 
@@ -193,6 +216,7 @@ const algorithmFunction = async () => {
 
     // run matching algorithm
     const matchList = runMatchingAlgorithm(requests, openings);
+    console.log(matchList);
     await applyMatchingChanges(matchList);
     console.log("Matching algorithm ran successfully");
   } catch (err) {
@@ -201,6 +225,6 @@ const algorithmFunction = async () => {
   mongoose.connection.close();
 };
 
-algorithmFunction(); // this only call when use command
+// algorithmFunction(); // this only call when use command
 
 export default algorithmFunction;
