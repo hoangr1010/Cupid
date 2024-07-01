@@ -21,13 +21,16 @@ const RequestDashboard = ({ requestList }) => {
   // Group button color
   const colorMap = {
     all: "gray",
-    waiting: "gray",
-    active: "gray",
-    past: "gray",
+    waiting: "yellow",
+    active: "pink",
+    past: "purple",
   };
   const [buttonBackgroundColor, buttonTextColor] = getColorPair(
     colorMap[tableView],
   );
+
+  console.log(buttonBackgroundColor);
+  console.log(buttonTextColor);
 
   // Sort requests by priority
   const sortedRequestList = [...requestList].sort((a, b) => {
@@ -159,7 +162,7 @@ const RequestDashboard = ({ requestList }) => {
               <div
                 {...provided.droppableProps}
                 ref={provided.innerRef}
-                className={`flex flex-col gap-2 ${isLoadingDrag ? "opacity-50 pointer-events-none" : ""}`}
+                className={`flex flex-col gap-6 ${isLoadingDrag ? "opacity-50 pointer-events-none" : ""}`}
               >
                 {sortedRequestList
                   .filter((request) => {

@@ -22,7 +22,7 @@ const RequestBox = ({
       <div className="w-8 h-auto flex justify-center items-center font-semibold text-grayLight">
         {number}
       </div>
-      <div className="flex flex-col w-full bg-pink rounded-lg">
+      <div className="flex flex-col w-full bg-pinkLighter rounded-lg">
         <div className="border px-6 py-4 rounded-lg bg-alt flex justify-between items-center gap-24">
           <div className="flex items-center gap-4">
             {/* <div className="w-14 h-14 bg-blue-700 flex justify-center items-center">
