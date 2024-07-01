@@ -5,9 +5,9 @@ import { Avatar } from "flowbite-react";
 function Bio() {
   const user = useSelector((state) => state.auth.user);
   return (
-    <div className="widget_container h-full items-center">
-      <Avatar img={user.picture_url} size="xl" />
-      <p className="font-bold text-grayLight text-lg text-center">
+    <div className="h-full items-center justify-center flex gap-2">
+      <Avatar rounded img={user.picture_url} size="lg" />
+      <p className="font-bold text-lg text-center">
         {user.first_name} {user.last_name}
       </p>
     </div>

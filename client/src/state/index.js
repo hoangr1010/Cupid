@@ -17,7 +17,6 @@ const authSlice = createSlice({
     updateToken(state, action) {
       state.token = action.payload;
     },
-
     clearAuth(state, action) {
       state = authInitialState;
     },

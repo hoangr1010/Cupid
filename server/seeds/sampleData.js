@@ -95,6 +95,10 @@ const requests = [
     priority: 1,
     status: "waiting",
     job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
+    InfoRequest: {
+      isActive: false,
+      Conversation: [],
+    },
   },
   {
     _id: requestID7,
@@ -106,6 +110,10 @@ const requests = [
     job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
     scale: 5,
     compatibility: 80,
+    InfoRequest: {
+      isActive: true,
+      Conversation: [{ sender: "referrer", message: "tao giet may" }],
+    },
   },
   {
     _id: requestID8,
@@ -117,6 +125,10 @@ const requests = [
     job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
     scale: 5,
     compatibility: 55,
+    InfoRequest: {
+      isActive: false,
+      Conversation: [],
+    },
   },
   {
     _id: requestID9,
@@ -128,6 +140,10 @@ const requests = [
     job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
     scale: 5,
     compatibility: 20,
+    InfoRequest: {
+      isActive: true,
+      Conversation: [{ sender: "referrer", message: "tao giet may" }],
+    },
   },
   {
     _id: requestID10,
@@ -136,6 +152,10 @@ const requests = [
     priority: 5,
     status: "waiting",
     job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
+    InfoRequest: {
+      isActive: false,
+      Conversation: [],
+    },
   },
   {
     _id: requestID11,
@@ -144,6 +164,10 @@ const requests = [
     priority: 6,
     status: "waiting",
     job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
+    InfoRequest: {
+      isActive: true,
+      Conversation: [{ sender: "referrer", message: "tao giet may" }],
+    },
   },
   {
     _id: requestID12,
@@ -152,6 +176,10 @@ const requests = [
     priority: 7,
     status: "waiting",
     job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
+    InfoRequest: {
+      isActive: false,
+      Conversation: [],
+    },
   },
 ];
 

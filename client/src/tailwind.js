@@ -15,6 +15,7 @@ const tailwindConfig = {
         grayLighter: "#E0E0E0",
         grayLight: "#828282",
 
+        pinkLighter: "#fbc7d9",
         pinkLight: "#F48FB1",
         pink: "#E91E63",
         pinkDark: "#AD1457",

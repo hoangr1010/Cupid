@@ -29,11 +29,11 @@ code {
 
 @layer components {
   .widget_container {
-    @apply border p-6 rounded-lg bg-alt;
+    @apply border p-6 rounded-2xl bg-alt;
   }
 
   .text-field {
-    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-primary focus:border-primary;
+    @apply border border-gray-300 font-medium text-sm rounded-md focus:ring-primary focus:border-primary shadow-sm;
   }
 
   .filled-btn {
@@ -54,6 +54,10 @@ code {
 
   .another-message {
     @apply border rounded-lg p-3 bg-alt w-fit text-sm font-bold;
+  }
+
+  .danger-text {
+    @apply text-pink hover:bg-pinkLighter transition-all rounded-lg;
   }
 
   .sidebar-btn {

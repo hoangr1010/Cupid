@@ -26,15 +26,7 @@ export const sendResume = async (resume, dispatch) => {
 
 export const addEducation = async (formData) => {
   try {
-    const body = {
-      school: formData.school,
-      major: formData.major,
-      degree: formData.major,
-      gpa: formData.gpa,
-      start_year: formData.start_year,
-      end_year: formData.end_year,
-    };
-    const response = await API.put(`user/addEducation`, body);
+    const response = await API.put(`user/addEducation`, formData);
     toast.success("added education");
     return response.data.data;
   } catch (error) {
@@ -95,10 +87,10 @@ export const addPortfolio = async (formData) => {
       website: formData.website,
     };
     const response = await API.put(`user/addPortfolio`, body);
-    toast.success("added portfolio");
+    toast.success("Added portfolio");
     return response.data.data;
   } catch (error) {
-    toast.error("error adding portfolio: " + error);
+    toast.error("Error adding portfolio: " + error.message);
     return;
   }
 };
@@ -107,7 +99,6 @@ export const autoFillResume = async (resumeText) => {
   try {
     const body = { resumeText: resumeText };
     const response = await API.post(`user/autoFillResume`, body);
-    toast.success("Resume json returned");
     return response.data.data;
   } catch (error) {
     toast.error("error uploading file: " + error);
@@ -128,8 +119,7 @@ export const addAll = async (
       portfolio: portfolioData,
     };
     const response = await API.put(`user/addAll`, body);
-    toast.success("Add all successfully");
-    console.log(response);
+
     return response.data.data;
   } catch (error) {
     toast.error("error uploading file: " + error);
