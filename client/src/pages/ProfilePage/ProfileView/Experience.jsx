@@ -1,19 +1,24 @@
 import { React, useState } from "react";
-import { Button, Modal } from "flowbite-react";
+import { Modal } from "flowbite-react";
 import { addExperience } from "./../../../api/user";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import { updateUser } from "./../../../state";
 import { useSelector } from "react-redux";
-import { IoAdd } from "react-icons/io5";
+import { MdAdd } from "react-icons/md";
 import ExperienceCard from "./ExperienceCard";
+import ExperienceForm from "../Forms/ExperienceForm";
+import { PiBagSimpleFill } from "react-icons/pi";
+import { parseObject } from "../../../utils/user";
 
 function Experience() {
   const user = useSelector((state) => state.auth.user);
   const experience = user.experience;
+  const [isSubmitLoading, setIsSubmitLoading] = useState(false);
+
   const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
-  const [formState, setFormState] = useState({
+  const initialFormValue = {
     company: "",
     position: "",
     location: "",
@@ -24,7 +29,8 @@ function Experience() {
     end_y: 0,
     current: false,
     description: "",
-  });
+  };
+  const [formState, setFormState] = useState(initialFormValue);
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
@@ -42,44 +48,48 @@ function Experience() {
   };
 
   const handleSubmit = async () => {
-    if (
-      !formState.company ||
-      !formState.position ||
-      !formState.type ||
-      !formState.start_m ||
-      !formState.start_y
-    ) {
-      toast.error("Please fill out all required fields");
+    if (!formState.company) {
+      toast.error("Company in Experience is required");
       return;
     }
-    const newExperience = await addExperience({
-      company: formState.company,
-      location: formState.location,
-      position: formState.position,
-      type: formState.type,
-      start_m: formState.start_m,
-      start_y: formState.start_y,
-      end_m: formState.end_m,
-      end_y: formState.end_y,
-      current: formState.current,
-      description: formState.description,
-    });
+    if (!formState.location) {
+      toast.error("Location in Experience is required");
+      return;
+    }
+    if (!formState.position) {
+      toast.error("Position in Experience is required");
+      return null;
+    }
+    if (!formState.type) {
+      toast.error("Type in Experience is required");
+      return null;
+    }
+    if (!formState.start_m) {
+      toast.error("Start month in Experience is required");
+      return null;
+    }
+    if (!formState.start_y) {
+      toast.error("Start year in Experience is required");
+      return null;
+    }
+    if (!formState.end_m) {
+      toast.error("End month in Experience is required");
+      return null;
+    }
+    if (!formState.end_y) {
+      toast.error("End year in Experience is required");
+      return null;
+    }
+    setIsSubmitLoading(true);
+    const parseExperienceObject = parseObject(initialFormValue, formState);
+    const newExperience = await addExperience(parseExperienceObject);
 
     if (newExperience) {
       dispatch(updateUser(newExperience));
-      setFormState({
-        company: "",
-        position: "",
-        location: "",
-        type: "",
-        start_m: "",
-        start_y: 0,
-        end_m: "",
-        end_y: 0,
-        current: false,
-        description: "",
-      });
+      setFormState(initialFormValue);
+      setOpenModal(false);
     }
+    setIsSubmitLoading(false);
   };
 
   return (
@@ -88,190 +98,59 @@ function Experience() {
         <div className="text-3xl font-bold">
           <h2>Work Experience</h2>
         </div>
-        <div>
-          <button
-            onClick={() => setOpenModal(true)}
-            className="text-3xl font-bold hover:text-primary"
-          >
-            <IoAdd />
-          </button>
-        </div>
+        <button
+          onClick={() => setOpenModal(true)}
+          className="font-bold hover:text-primary transition-all"
+        >
+          <MdAdd size={25} />
+        </button>
       </div>
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
-        <Modal.Header>Add Experience</Modal.Header>
+        <Modal.Header>
+          <div className="flex gap-2 items-center text-primaryDark">
+            <PiBagSimpleFill size={25} />
+            <h2 className="font-bold text-2xl">Add Experience</h2>
+          </div>
+        </Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleSubmit} class="grid gap-6 mb-6 md:grid-cols-2">
-            <div>
-              <label for="company" class="block mb-2 text-sm">
-                Company
-              </label>
-              <input
-                type="text"
-                id="company"
-                name="company"
-                value={formState.company}
-                onChange={handleChange}
-                placeholder="Company"
-                required
-              />
-            </div>
-            <div>
-              <label for="position" class="block mb-2 text-sm">
-                Position
-              </label>
-              <input
-                type="text"
-                id="position"
-                name="position"
-                value={formState.position}
-                onChange={handleChange}
-                placeholder="Position"
-                required
-              />
-            </div>
-            <div>
-              <label for="location" class="block mb-2 text-sm">
-                Location
-              </label>
-              <input
-                type="text"
-                id="location"
-                name="location"
-                value={formState.location}
-                onChange={handleChange}
-                placeholder="Location"
-                required
-              />
-            </div>
-            <div>
-              <label for="type" class="block mb-2 text-sm">
-                Type
-              </label>
-              <input
-                type="text"
-                id="type"
-                name="type"
-                value={formState.type}
-                onChange={handleChange}
-                placeholder="Full Time, Internship"
-                required
-              />
-            </div>
-            <div>
-              <label for="start_m" class="block mb-2 text-sm">
-                Start Month
-              </label>
-              <input
-                type="text"
-                id="start_m"
-                name="start_m"
-                value={formState.start_m}
-                onChange={handleChange}
-                placeholder="Start Month"
-                required
-              />
-            </div>
-            <div>
-              <label for="start_y" class="block mb-2 text-sm">
-                Start Year
-              </label>
-              <input
-                type="number"
-                id="start_y"
-                name="start_y"
-                value={formState.start_y}
-                onChange={handleChange}
-                placeholder="Start Year"
-                required
-              />
-            </div>
-            <div>
-              <label for="end_m" class="block mb-2 text-sm">
-                End Month
-              </label>
-              <input
-                type="text"
-                id="end_m"
-                name="end_m"
-                onChange={handleChange}
-                value={formState.end_m}
-                class="text-field w-full"
-                placeholder="End Month"
-              />
-            </div>
-            <div>
-              <label for="end_y" class="block mb-2 text-sm">
-                End Year
-              </label>
-              <input
-                type="number"
-                id="end_y"
-                name="end_y"
-                value={formState.end_y}
-                onChange={handleChange}
-                class="text-field w-full"
-                placeholder="End Year"
-              />
-            </div>
-            <div>
-              <label for="current" class="block mb-2 text-sm">
-                Current
-              </label>
-              <input
-                type="boolean"
-                id="current"
-                name="current"
-                value={formState.current}
-                onChange={handleChange}
-                class="text-field w-full"
-                placeholder="Current"
-                required
-              />
-            </div>
-            <div>
-              <label for="description" class="block mb-2 text-sm">
-                Description
-              </label>
-              <input
-                type="text"
-                id="description"
-                name="description"
-                value={formState.description}
-                onChange={handleChange}
-                class="text-field w-full"
-                placeholder="Description"
-              />
-            </div>
-          </form>
+          <ExperienceForm
+            formState={formState}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+          />
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            className="filled-btn"
-            onClick={() => {
-              handleSubmit();
-              setOpenModal(false);
-            }}
-          >
-            Save
-          </Button>
-          <Button
-            className="filled-btn"
-            color="gray"
-            onClick={() => setOpenModal(false)}
-          >
-            Cancel
-          </Button>
+          <section className="w-full flex justify-end gap-2">
+            <button
+              className="outline-btn btn-padding"
+              color="gray"
+              onClick={() => setOpenModal(false)}
+            >
+              Cancel
+            </button>
+            <button
+              disabled={isSubmitLoading}
+              className="filled-btn btn-padding"
+              onClick={() => {
+                handleSubmit();
+              }}
+            >
+              Save
+            </button>
+          </section>
         </Modal.Footer>
       </Modal>
       {experience.length <= 0 ? (
         <p className="font-semibold text-sm pl-2">No items added</p>
       ) : (
         <div className="flex flex-col gap-4">
-          {experience.map((item, index) => (
-            <div key={index}>
-              <ExperienceCard experience={item} />
-            </div>
-          ))}
+          {[...experience]
+            .sort((a, b) => b.end_y - a.end_y)
+            .map((item, index) => (
+              <div key={index}>
+                <ExperienceCard experience={item} />
+              </div>
+            ))}
         </div>
       )}
     </div>

@@ -1,153 +1,11 @@
-import {
-  React,
-  useState,
-  useEffect,
-  forwardRef,
-  useImperativeHandle,
-} from "react";
-import { MdDelete } from "react-icons/md";
-import { addExperience } from "./../../../api/user";
-import { useDispatch } from "react-redux";
-import { toast } from "sonner";
-import { updateUser } from "./../../../state";
-import { parseObject } from "./../../../utils/user";
+import React from "react";
 
-const ExperienceForm = forwardRef(({ experienceData, onDelete }, ref) => {
-  const dispatch = useDispatch();
-  const initialFormValue = {
-    company: "",
-    position: "",
-    location: "",
-    type: "",
-    start_m: "",
-    start_y: 0,
-    end_m: "",
-    end_y: 0,
-    current: false,
-    description: "",
-  };
-  const [formState, setFormState] = useState(initialFormValue);
-
-  const handleChange = (e) => {
-    const { name, value, type } = e.target;
-
-    let parsedValue = value;
-
-    if (type === "number") {
-      parsedValue = parseInt(value, 10);
-    } else if (type === "checkbox") {
-      parsedValue = e.target.checked;
-    }
-
-    setFormState({
-      ...formState,
-      [name]: parsedValue,
-    });
-  };
-
-  useEffect(() => {
-    if (experienceData) {
-      setFormState(experienceData);
-    }
-  }, [experienceData]);
-
-  const handleSubmit = async () => {
-    if (validate()) {
-      toast.error("Please fill out all required fields");
-      return;
-    }
-    const newExperience = await addExperience({
-      company: formState.company,
-      location: formState.location,
-      position: formState.position,
-      type: formState.type,
-      start_m: formState.start_m,
-      start_y: formState.start_y,
-      end_m: formState.end_m,
-      end_y: formState.end_y,
-      current: formState.current,
-      description: formState.description,
-    });
-
-    if (newExperience) {
-      dispatch(updateUser(newExperience));
-      setFormState({
-        company: "",
-        position: "",
-        location: "",
-        type: "",
-        start_m: "",
-        start_y: 0,
-        end_m: "",
-        end_y: 0,
-        current: false,
-        description: "",
-      });
-    }
-  };
-
-  const validate = () => {
-    return (
-      !formState.company ||
-      !formState.location ||
-      !formState.position ||
-      !formState.type ||
-      !formState.start_m ||
-      !formState.start_y
-    );
-  };
-
-  useImperativeHandle(ref, () => ({
-    getData: () => {
-      if (!formState.company) {
-        toast.error("Company in Experience is required");
-        return null;
-      }
-      if (!formState.location) {
-        toast.error("Location in Experience is required");
-        return null;
-      }
-      if (!formState.position) {
-        toast.error("Position in Experience is required");
-        return null;
-      }
-      if (!formState.type) {
-        toast.error("Type in Experience is required");
-        return null;
-      }
-      if (!formState.start_m) {
-        toast.error("Start month in Experience is required");
-        return null;
-      }
-      if (!formState.start_y) {
-        toast.error("Start year in Experience is required");
-        return null;
-      }
-      if (!formState.end_m) {
-        toast.error("End month in Experience is required");
-        return null;
-      }
-      if (!formState.end_y) {
-        toast.error("End year in Experience is required");
-        return null;
-      }
-
-      return parseObject(initialFormValue, formState);
-    },
-  }));
+const ExperienceForm = (props) => {
+  const { formState, handleChange, handleSubmit } = props;
 
   return (
-    <div className="widget_container">
-      <div className="w-full flex justify-end">
-        <button
-          className="danger-text text-center p-1"
-          type="button"
-          onClick={onDelete}
-        >
-          <MdDelete size={20} />
-        </button>
-      </div>
-      <form onSubmit={handleSubmit} class="grid gap-2 mb-6 grid-cols-12">
+    <div>
+      <form onSubmit={handleSubmit} class="grid gap-2 grid-cols-12">
         <div className="col-span-6">
           <label for="company" class="text-xs text-grayLight font-medium">
             Company<span className="text-pink">*</span>
@@ -296,6 +154,6 @@ const ExperienceForm = forwardRef(({ experienceData, onDelete }, ref) => {
       </form>
     </div>
   );
-});
+};
 
 export default ExperienceForm;
