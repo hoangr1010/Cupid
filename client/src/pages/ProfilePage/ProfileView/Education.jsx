@@ -7,18 +7,22 @@ import { updateUser } from "./../../../state";
 import { useSelector } from "react-redux";
 import { IoAdd } from "react-icons/io5";
 import EducationCard from "./EducationCard";
+import EducationForm from "../Forms/EducationForm";
+import { parseObject } from "../../../utils/user";
 function Education() {
   const user = useSelector((state) => state.auth.user);
   const [openModal, setOpenModal] = useState(false);
+  const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const dispatch = useDispatch();
-  const [formState, setFormState] = useState({
+  const initialFormState = {
     school: "",
     major: "",
     degree: "",
     gpa: 0,
     start: 0,
     end: 0,
-  });
+  };
+  const [formState, setFormState] = useState(initialFormState);
   const education = user.education;
 
   const handleChange = (e) => {
@@ -38,31 +42,30 @@ function Education() {
   };
 
   const handleSubmit = async () => {
-    if (!formState.school || !formState.major || !formState.degree) {
-      toast.error("Please fill out all required fields");
-      return;
+    if (!formState.school) {
+      toast.error("School in Education is required");
+      return null;
     }
-    const newEducation = await addEducation({
-      school: formState.school,
-      major: formState.major,
-      degree: formState.degree,
-      gpa: formState.gpa,
-      start_year: formState.start,
-      end_year: formState.end,
-    });
+    if (!formState.major) {
+      toast.error("Major in Education is required");
+      return null;
+    }
+    if (!formState.degree) {
+      toast.error("Degree in Education is required");
+      return null;
+    }
+    setIsSubmitLoading(true);
 
-    if (newEducation) {
-      dispatch(updateUser(newEducation));
-      setFormState({
-        school: "",
-        major: "",
-        degree: "",
-        gpa: 0,
-        start_year: 0,
-        end_year: 0,
-      });
+    const parseEducationObject = parseObject(initialFormState, formState);
+    console.log(parseEducationObject)
+    const newUser = await addEducation(parseEducationObject);
+    console.log(newUser);
+    if (newUser) {
+      dispatch(updateUser(newUser));
+      setFormState(initialFormState);
       setOpenModal(false);
     }
+    setIsSubmitLoading(false);
   };
 
   return (
@@ -83,118 +86,44 @@ function Education() {
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>Add Education</Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleSubmit} class="grid gap-6 mb-6 md:grid-cols-2">
-            <div>
-              <label for="school" class="block mb-2 text-sm">
-                School Name
-              </label>
-              <input
-                type="text"
-                id="school"
-                name="school"
-                onChange={handleChange}
-                class="text-field w-full"
-                placeholder="School Name"
-                required
-              />
-            </div>
-            <div>
-              <label for="major" class="block mb-2 text-sm">
-                Major
-              </label>
-              <input
-                type="text"
-                id="major"
-                name="major"
-                onChange={handleChange}
-                class="text-field w-full"
-                placeholder="Major"
-                required
-              />
-            </div>
-            <div>
-              <label for="degree" class="block mb-2 text-sm">
-                Degree
-              </label>
-              <input
-                type="text"
-                id="degree"
-                name="school"
-                onChange={handleChange}
-                class="text-field w-full"
-                placeholder="Degree"
-                required
-              />
-            </div>
-            <div>
-              <label for="gpa" class="block mb-2 text-sm">
-                GPA
-              </label>
-              <input
-                type="number"
-                id="gpa"
-                name="gpa"
-                onChange={handleChange}
-                class="text-field w-full"
-                placeholder="GPA"
-              />
-            </div>
-            <div>
-              <label for="start" class="block mb-2 text-sm">
-                Start Year
-              </label>
-              <input
-                type="number"
-                id="start"
-                name="start"
-                onChange={handleChange}
-                class="text-field w-full"
-                placeholder="Start Year"
-              />
-            </div>
-            <div>
-              <label for="end" class="block mb-2 text-sm">
-                End Year
-              </label>
-              <input
-                type="number"
-                id="end"
-                name="end"
-                onChange={handleChange}
-                class="text-field w-full"
-                placeholder="End Year"
-              />
-            </div>
-          </form>
+          <EducationForm
+            formState={formState}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+          />
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            className="filled-btn"
-            onClick={() => {
-              handleSubmit();
-              setOpenModal(false);
-            }}
-          >
-            Save
-          </Button>
-          <Button
-            className="filled-btn"
-            color="gray"
-            onClick={() => setOpenModal(false)}
-          >
-            Cancel
-          </Button>
+          <section className="w-full flex justify-end gap-2">
+            <button
+              className="outline-btn btn-padding"
+              color="gray"
+              onClick={() => setOpenModal(false)}
+            >
+              Cancel
+            </button>
+            <button
+              disabled={isSubmitLoading}
+              className="filled-btn btn-padding"
+              onClick={() => {
+                handleSubmit();
+              }}
+            >
+              Save
+            </button>
+          </section>
         </Modal.Footer>
       </Modal>
       {education.length <= 0 ? (
         <p className="font-semibold text-sm pl-2">No items added</p>
       ) : (
         <div className="flex flex-col gap-4">
-          {education.map((item, index) => (
-            <div key={index}>
-              <EducationCard education={item} />
-            </div>
-          ))}
+          {[...education]
+            .sort((a, b) => b.end_y - a.end_y)
+            .map((item, index) => (
+              <div key={index}>
+                <EducationCard education={item} />
+              </div>
+            ))}
         </div>
       )}
     </div>

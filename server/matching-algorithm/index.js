@@ -225,6 +225,6 @@ const algorithmFunction = async () => {
   mongoose.connection.close();
 };
 
-// algorithmFunction(); // this only call when use command
+algorithmFunction(); // this only call when use command
 
 export default algorithmFunction;

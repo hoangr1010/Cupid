@@ -26,15 +26,7 @@ export const sendResume = async (resume, dispatch) => {
 
 export const addEducation = async (formData) => {
   try {
-    const body = {
-      school: formData.school,
-      major: formData.major,
-      degree: formData.major,
-      gpa: formData.gpa,
-      start_year: formData.start_year,
-      end_year: formData.end_year,
-    };
-    const response = await API.put(`user/addEducation`, body);
+    const response = await API.put(`user/addEducation`, formData);
     toast.success("added education");
     return response.data.data;
   } catch (error) {

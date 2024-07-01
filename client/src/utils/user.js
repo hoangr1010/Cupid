@@ -31,10 +31,14 @@ export const parseObject = (template, target) => {
     try {
       switch (typeof template[key]) {
         case "string":
-          parsedObj[key] = String(value);
+          if (value !== "") {
+            parsedObj[key] = String(value);
+          }
           break;
         case "number":
-          parsedObj[key] = Number(value);
+          if (value !== 0) {
+            parsedObj[key] = Number(value);
+          }
           break;
         case "boolean":
           parsedObj[key] = Boolean(value);
