@@ -57,7 +57,7 @@ function Education() {
     setIsSubmitLoading(true);
 
     const parseEducationObject = parseObject(initialFormState, formState);
-    console.log(parseEducationObject)
+
     const newUser = await addEducation(parseEducationObject);
     console.log(newUser);
     if (newUser) {
