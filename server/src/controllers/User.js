@@ -163,20 +163,19 @@ export const addPortfolio = async (req, res) => {
     const userId = req.get("userId");
     const { linkedin, github, website } = req.body;
 
-    const portfolio = {
-      linkedin: linkedin,
-      github: github,
-      website: website,
-    };
+    const updatedFields = {};
+    if (linkedin !== "") updatedFields["portfolio.0.linkedin"] = linkedin;
+    if (github !== "") updatedFields["portfolio.0.github"] = github;
+    if (website !== "") updatedFields["portfolio.0.website"] = website;
 
     const user = await User.findByIdAndUpdate(
       userId,
-      { $push: { portfolio: portfolio } },
+      { $set: updatedFields },
       { new: true, runValidators: true },
     );
 
-    res.status(201).json({
-      message: "add portfolio successfully",
+    res.status(200).json({
+      message: "Added portfolio successfully",
       data: user,
     });
   } catch (error) {
