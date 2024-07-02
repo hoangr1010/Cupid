@@ -78,4 +78,24 @@ export class Notification {
       user.email,
     );
   }
+
+  static async candidateReplyRequest(notiType, requestId) {
+    // fetch data to get recipientId
+    const request = await Request.findOne({ _id: requestId });
+    const openingId = request.opening_id.valueOf();
+
+    const opening = await Opening.findOne({ _id: openingId });
+    const recipientId = opening.referrer_id.valueOf();
+    
+    const user = await User.findOne({ _id: recipientId });
+
+    return new Notification(
+      notiType,
+      recipientId,
+      requestId,
+      "",
+      "",
+      user.email,
+    );
+  }
 }

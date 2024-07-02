@@ -49,12 +49,12 @@ const RequestBox = ({
         </div>
 
         {request.InfoRequest.isActive ? (
-          <div className="self-center p-0.5 text-xs text-white font-bold">
+          <div className="self-center p-0.5 text-sm text-white font-bold">
             Referrer requested for extra information.
             <RequestInfoModal
               request={request}
               trigger={
-                <button className="px-2 py-0.5 underline underline-offset-2 rounded-sm font-bold hover:text-rose-50">
+                <button className="px-2 py-0.5 underline rounded-sm font-bold hover:underline-offset-2">
                   Update Now
                 </button>
               }

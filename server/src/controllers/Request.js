@@ -349,6 +349,12 @@ export const replyRequest = async (req, res) => {
     }
 
     // Notification
+    const noti = await Notification.candidateReplyRequest(
+      "candidateReplyRequest",
+      requestId,
+    );
+    console.log(noti);
+    await sendNoti(noti);
 
     res.status(200).json(updatedRequest);
   } catch (error) {

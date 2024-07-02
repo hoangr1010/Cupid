@@ -182,13 +182,13 @@ export const applyMatchingChanges = async (matchList) => {
 
     try {
       const requestNoti = await Notification.matchingDone(
-        "matchingDone",
+        "matchingDoneCandidate",
         pair[0].candidate_id,
       );
       console.log(requestNoti);
 
       const openingNoti = await Notification.matchingDone(
-        "matchingDone",
+        "matchingDoneReferrer",
         pair[1].referrer_id,
       );
       console.log(openingNoti);

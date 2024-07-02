@@ -1,9 +1,6 @@
 import React from "react";
 
 export const Message = (noti) => {
-  // console.log(noti.createdAt);
-  // console.log(Date.now());
-  // console.log(Date.now() - noti.createdAt);
 
   const d = Math.floor((Date.now() - noti.createdAt) / 86400000);
   const h = Math.floor((Date.now() - noti.createdAt) / 3600000);
@@ -47,6 +44,19 @@ export const Message = (noti) => {
       msg = "Your matching result is here!";
       break;
 
+    case "matchingDoneCandidate":
+      msg =
+        "The matching result is here. See if your requests were matched with any referrers!";
+      break;
+
+    case "matchingDoneReferrer":
+      msg = "The matching result is here. See your potential candidates!";
+      break;
+
+    case "candidateReplyRequest":
+      msg = "Your candidate has replied to your request.";
+      break;
+
     case "refererRequestMoreInfo":
       msg = "A referer requests more information from you";
       break;
@@ -73,5 +83,3 @@ export const Message = (noti) => {
     </div>
   );
 };
-
-// export default message;
