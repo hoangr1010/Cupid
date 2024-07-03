@@ -54,9 +54,8 @@ const RequestDashboardPage = () => {
           </div>
         ) : (
           <>
-            <div className="text-grayLight">
-              You have made {requestList.length}/10 requests. Upgrade for
-              unlimited requests.
+            <div className="text-grayLight font-medium">
+              You have made {requestList.length}/10 requests.
             </div>
             <RequestDashboard requestList={requestList} />
           </>

@@ -23,7 +23,7 @@ const RequestBox = ({
         {number}
       </div>
       <div
-        className={`${request.InfoRequest.isActive ? "p-0.5 bg-pink" : "p-0.5 bg-yellowDark"} flex flex-col w-full rounded-lg`}
+        className={`${request.InfoRequest.isActive ? "p-0.5 bg-pink" : request.rejected_by ? "p-0.5 bg-yellowDark" : ""} flex flex-col w-full rounded-lg`}
       >
         <div className="border px-6 py-4 rounded-lg bg-alt flex justify-between items-center gap-24">
           <div className="flex items-center gap-4">
@@ -64,9 +64,10 @@ const RequestBox = ({
           </div>
         ) : null}
 
-        {!request.InfoRequest.isActive ? (
+        {request.rejected_by ? (
           <div className="px-2 py-0.5 self-center text-xs text-white font-bold">
-            Your request is waiting to be matched with another referrer
+            Rejected by {request.rejected_by.first_name}{" "}
+            {request.rejected_by.last_name}. Your request will be matched again.
           </div>
         ) : null}
       </div>
