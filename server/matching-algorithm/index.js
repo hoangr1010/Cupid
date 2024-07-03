@@ -160,7 +160,7 @@ export const applyMatchingChanges = async (matchList) => {
     try {
       await Request.findOneAndUpdate(
         { _id: pair[0] },
-        { opening_id: pair[1], status: "matched" },
+        { opening_id: pair[1], status: "matched", rejected_by: null },
       );
     } catch (error) {
       console.log("Error updating request");
