@@ -32,6 +32,10 @@ code {
     @apply border p-6 rounded-2xl bg-alt;
   }
 
+  .white-widget {
+    @apply rounded-2xl bg-white;
+  }
+
   .text-field {
     @apply border border-gray-300 font-medium text-sm rounded-md focus:ring-primary focus:border-primary shadow-sm;
   }
@@ -40,8 +44,24 @@ code {
     @apply text-primaryDark bg-primaryLight hover:bg-green-100 font-bold rounded-md transition-all;
   }
 
+  .filled-dark-btn {
+    @apply bg-primaryDark text-white font-bold rounded-lg transition-all hover:bg-primary;
+  }
+
+  .text-dark-btn {
+    @apply bg-transparent text-primaryDark font-bold rounded-lg transition-all hover:bg-primaryLight;
+  }
+
+  .onboard-background {
+    @apply bg-gradient-to-br to-primary from-primaryDark;
+  }
+
   .btn-padding {
     @apply py-[6px] px-3;
+  }
+
+  .onboard-button {
+    @apply border rounded-lg p-6 w-full text-primaryDark font-bold transition-all;
   }
 
   .outline-btn {

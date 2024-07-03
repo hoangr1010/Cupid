@@ -16,6 +16,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import SideBarContainer from "./components/Sidebar/RouteContainer";
 import { useSelector } from "react-redux";
 import { setUserId, setToken } from "./utils/api";
+import SignInSignUp from "./pages/LandingPage/SignInSignUp";
 
 function App() {
   const user = useSelector((state) => state.auth.user);
@@ -39,9 +40,17 @@ function App() {
           path="/"
           element={
             // user is already login can not access to Login page
-            isAuthenticated ? <Navigate to="/profile" /> : <LandingPage />
+            isAuthenticated ? <Navigate to="/homepage" /> : <LandingPage />
           }
         />
+
+        <Route
+          path="auth/:action"
+          element={
+            isAuthenticated ? <Navigate to="/homepage" /> : <SignInSignUp />
+          }
+        />
+
         <Route
           path="/auth/redirect"
           element={<Redirect isAuthenticated={isAuthenticated} />}

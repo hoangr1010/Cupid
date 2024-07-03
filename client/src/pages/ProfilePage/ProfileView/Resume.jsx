@@ -9,6 +9,7 @@ import { Modal, ModalBody, ModalFooter, ModalHeader } from "flowbite-react";
 import { Spinner } from "flowbite-react";
 import { FileUploader } from "react-drag-drop-files";
 import { IoCloudUpload } from "react-icons/io5";
+import UploadResumeModal from "../UploadResumeModal";
 
 function Resume() {
   const user = useSelector((state) => state.auth.user);
@@ -46,12 +47,22 @@ function Resume() {
           <div>
             <h2 className="text-lg font-bold">My Resume</h2>
           </div>
-          <button
+          {/* <button
             onClick={() => setOpenModal(true)}
             className="hover:text-primary cursor-pointer"
           >
             <MdModeEditOutline />
-          </button>
+          </button> */}
+          <UploadResumeModal
+            Trigger={
+              <button
+                onClick={() => setOpenModal(true)}
+                className="hover:text-primary cursor-pointer"
+              >
+                <MdModeEditOutline />
+              </button>
+            }
+          />
         </div>
         <FileBox fileUrl={resume} />
         <div>
@@ -64,65 +75,13 @@ function Resume() {
             </p>
           </button>
         </div>
-        <AutoFill />
-
-        <Modal show={openModal} onClose={() => handleCancel()}>
-          <Modal.Header>
-            <p className="font-bold text-primaryDark text-2xl">Resume</p>
-          </Modal.Header>
-          <Modal.Body>
-            {isLoading ? (
-              <div className="flex flex-col gap-3 items-center justify-center">
-                <Spinner
-                  className="fill-primary w-10 h-10"
-                  aria-label="Loading"
-                />
-                <p className="font-semibold">Uploading your resume</p>
-              </div>
-            ) : (
-              <div>
-                <form
-                  className="pt-2.5 flex flex-col gap-4"
-                  onSubmit={(e) => {
-                    handleSubmit(e);
-                  }}
-                >
-                  <div>
-                    <FileUploader
-                      handleChange={handleChange}
-                      name="file"
-                      types={["PDF"]}
-                    >
-                      <div className="my-2 w-full h-32 border-2 border-dashed rounded-xl border-primary flex flex-col justify-center items-center">
-                        <IoCloudUpload size={30} style={{ color: "1EC69A" }} />
-                        {fileName && (
-                          <p className="mt-2 text-sm text-primaryDark font-bold">
-                            {fileName} is ready to be uploaded!
-                          </p>
-                        )}
-                        <div className="text-sm flex">
-                          <button className=" text-primary underline underline-offset-2">
-                            Click to upload{" "}
-                          </button>
-                          <div className="ms-1">or drag and drop file</div>
-                        </div>
-                      </div>
-                    </FileUploader>
-                  </div>
-                  <div className="justify-center flex">
-                    <button
-                      className="filled-btn btn-padding w-48"
-                      type="submit"
-                      disabled={!file}
-                    >
-                      Upload
-                    </button>
-                  </div>
-                </form>
-              </div>
-            )}
-          </Modal.Body>
-        </Modal>
+        <AutoFill
+          Trigger={
+            <button className="filled-btn w-full py-2">
+              Auto Fill Your Profile
+            </button>
+          }
+        />
 
         <Modal
           size="4xl"
