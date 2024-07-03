@@ -11,22 +11,19 @@ import { readNotification } from "../../api/notification.js";
 // import { notiMessage } from "../../utils/notiMessage.js";
 import { Message } from "./message.jsx";
 import HorizontalDivider from "../HorizontalDivider/index.jsx";
+import { useNavigate } from "react-router-dom";
+import notiNavigate from "../../utils/notiNavigate.js";
 
 export const NotificationDropdown = () => {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [notiList, setNotiList] = useState([]);
 
   // After implementing the push data in backend, change "a" into user._id
   // so the function get all notification of a user.
   useEffect(() => {
     onSnapshot(collection(db, user._id), async (snapshot) => {
-      // console.log(
-      //   snapshot.docs.map((doc) => {
-      //     console.log("create at: " + doc);
-      //   }),
-      // );
-
       var l = [];
       snapshot.docs.map((doc) => {
         l.push(doc.data());
@@ -34,19 +31,10 @@ export const NotificationDropdown = () => {
 
       l = l.sort((a, b) => b.createdAt - a.createdAt);
 
-      // console.log(l);
-      await dispatch(updateNotificationList(l));
+      dispatch(updateNotificationList(l));
 
       setNotiList(l);
     });
-
-    // const q = collection(db, user._id);
-    // const unsubscribe = onSnapshot(q, (snapshot) => {
-    //   snapshot.docChanges().forEach((change) => {
-    //     console.log(change);
-    //     console.log(change.doc.data());
-    //   })
-    // })
   }, []);
 
   return (
@@ -104,6 +92,7 @@ export const NotificationDropdown = () => {
                   }
 
                   // navigate to the notified component
+                  notiNavigate(noti, navigate);
                 }}
               >
                 {Message(noti)}
