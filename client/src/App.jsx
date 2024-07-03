@@ -40,13 +40,13 @@ function App() {
           path="/"
           element={
             // user is already login can not access to Login page
-            isAuthenticated ? <Navigate to="/profile" /> : <LandingPage />
+            isAuthenticated ? <Navigate to="/homepage" /> : <LandingPage />
           }
         />
 
         <Route
           path="auth/:action"
-          element={isAuthenticated ? <Navigate to="/profile" /> : <SignInSignUp />}
+          element={isAuthenticated ? <Navigate to="/homepage" /> : <SignInSignUp />}
         />
 
         <Route

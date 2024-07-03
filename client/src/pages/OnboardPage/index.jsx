@@ -1,6 +1,7 @@
 import { useState } from "react";
 import FirstPage from "./FirstPage";
 import SecondPage from "./SecondPage";
+import ThirdPage from "./ThirdPage";
 
 const OnboardPage = () => {
   const [step, setStep] = useState(1);
@@ -14,7 +15,8 @@ const OnboardPage = () => {
       {
         {
           1: <FirstPage nextStep={nextStep}/>,
-          2: <SecondPage nextStep={nextStep}/>
+          2: <SecondPage nextStep={nextStep}/>,
+          3: <ThirdPage nextStep={nextStep}/>
         }[step]
       }
     </div>

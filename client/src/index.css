@@ -61,7 +61,7 @@ code {
   }
 
   .onboard-button {
-    @apply border p-6 rounded-lg w-full flex gap-2 items-center text-primaryDark font-bold transition-all;
+    @apply border rounded-lg p-6 w-full text-primaryDark font-bold transition-all;
   }
 
   .outline-btn {

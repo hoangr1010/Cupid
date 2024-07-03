@@ -1,4 +1,4 @@
-import { React, useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import { Button, Modal } from "flowbite-react";
 import { autoFillResume, addAll } from "../../../api/user";
 import { useSelector } from "react-redux";
@@ -15,7 +15,7 @@ import { PiBagSimpleFill } from "react-icons/pi";
 import { Spinner } from "flowbite-react";
 import { toast } from "sonner";
 
-const AutoFill = () => {
+const AutoFill = ({ Trigger }) => {
   const user = useSelector((state) => state.auth.user);
   const resumeText = user.resume.text;
   const dispatch = useDispatch();
@@ -134,19 +134,18 @@ const AutoFill = () => {
   const addExperience = () => setExperienceData([...experienceData, {}]);
   const addProject = () => setProjectData([...projectData, {}]);
 
+  const TriggerElement = React.cloneElement(Trigger, {
+    onClick: async () => {
+      setOpenModal(true);
+      setIsLoading(true);
+      await autoFillForm();
+      setIsLoading(false);
+    },
+  });
+
   return (
-    <div>
-      <button
-        className="filled-btn w-full py-2"
-        onClick={async () => {
-          setOpenModal(true);
-          setIsLoading(true);
-          await autoFillForm();
-          setIsLoading(false);
-        }}
-      >
-        Auto Fill Your Profile
-      </button>
+    <>
+      {TriggerElement}
       <Modal size="4xl" show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>
           <div className="flex items-center">
@@ -302,7 +301,7 @@ const AutoFill = () => {
           </div>
         </Modal.Footer>
       </Modal>
-    </div>
+    </>
   );
 };
 
