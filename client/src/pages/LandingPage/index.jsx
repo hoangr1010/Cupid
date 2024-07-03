@@ -1,33 +1,59 @@
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { changeUser } from "../../state";
 import { AiOutlineLinkedin } from "react-icons/ai";
-import { Button } from "flowbite-react";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
-  const LinkedInAuthorize = () => {
-    window.location.href = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${process.env.REACT_APP_LINKEDIN_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_LINKEDIN_REDIRECT_URL}&state=foobar&scope=openid%20profile%20w_member_social%20email`;
+  const navigate = useNavigate();
+
+  const navigateSignIn = () => {
+    navigate("/auth/signin");
+  };
+
+  const navigateSignUp = () => {
+    navigate("/auth/signup");
   };
 
   return (
-    <div className="flex flex-col justify-center items-center bg-background min-h-screen w-screen">
-      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-        Hi, We're{" "}
-        <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
-          Cupid
-        </span>
-      </h1>
+    <div className="bg-background h-screen flex justify-between p-20">
+      <section className="flex flex-col gap-10 w-4/6 py-32 px-10 grow">
+        <div>
+          <h1 className="text-transparent bg-clip-text mb-4 bg-gradient-to-b to-primary from-primaryDark font-righteous text-9xl">
+            Cupid
+          </h1>
 
-      <div className="widget_container flex flex-col items-center justify-center h-fit w-fit ">
-        <button
-          type="button"
-          className="text-white bg-[#0a66c2] hover:bg-[#004b7c]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm pe-3 ps-3 py-2.5 text-center inline-flex items-center"
-          onClick={LinkedInAuthorize}
-        >
-          <AiOutlineLinkedin size={25} />
-          <span className="ps-1">Sign in with LinkedIn</span>
-        </button>
-      </div>
+          <p className="text-primaryDark font-bold text-2xl mb-7 ml-2">
+            Forget Tinder, Meet Cupid!
+          </p>
+
+          <p className="text-primaryDark text-justify ml-2 text-lg">
+            Welcome to Cupid, where talent meets opportunity! Our platform
+            connects job seekers with insiders at their dream companies, making
+            referrals easy and rewarding for everyone involved.
+          </p>
+        </div>
+
+        <div className="flex gap-5 ml-2">
+          <button
+            className="filled-dark-btn btn-padding px-7"
+            onClick={navigateSignUp}
+          >
+            Join us
+          </button>
+          <button
+            className="text-dark-btn btn-padding px-7"
+            onClick={navigateSignIn}
+          >
+            Log in
+          </button>
+        </div>
+      </section>
+      <section className="flex h-full w-full justify-end relative">
+        <div className="bg-gradient-to-t to-primary from-primaryDark w-[538px] h-[666px] rounded-2xl"></div>
+        <img
+          src="landingPage.png"
+          alt="landing page"
+          className="absolute h-96 top-40 right-32"
+        />
+      </section>{" "}
     </div>
   );
 };
