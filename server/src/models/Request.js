@@ -33,6 +33,10 @@ const requestSchema = new Schema(
       enum: ["waiting", "matched", "approved", "referred"],
       required: true,
     },
+    rejected_by: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
     scale: {
       type: Number,
     },
