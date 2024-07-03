@@ -27,23 +27,17 @@ export const updateResumeText = async (req, res, next) => {
   try {
     const userId = req.get("userId");
 
-    // Start parsing the PDF in the background
-    parsePdfFromBuffer(req.file.buffer)
-      .then((resumeText) => {
-        // Once the parsing is finished, update the user with the parsed text
-        User.findByIdAndUpdate(
-          userId,
-          { $set: { "resume.text": resumeText } },
-          { returnOriginal: false },
-        ).catch((err) => {
-          console.error("Error updating user:", err);
-        });
-      })
-      .catch((err) => {
-        console.error("Error parsing PDF:", err);
-      });
+    // Parse the PDF and wait for the result
+    const resumeText = await parsePdfFromBuffer(req.file.buffer);
 
-    // Move on to the next middleware without waiting for the parsing to finish
+    // Update the user with the parsed text
+    await User.findByIdAndUpdate(
+      userId,
+      { $set: { "resume.text": resumeText } },
+      { returnOriginal: false },
+    );
+
+    // Move on to the next middleware
     next();
   } catch (err) {
     res.status(400).json({
