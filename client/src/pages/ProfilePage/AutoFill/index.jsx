@@ -163,7 +163,7 @@ const AutoFill = () => {
                 aria-label="Loading"
               />
               <p className="font-semibold">
-                Give us a moment for parsing your resume
+                Give us a moment to parse your resume
               </p>
             </div>
           ) : (
