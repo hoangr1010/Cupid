@@ -22,7 +22,9 @@ const RequestBox = ({
       <div className="w-8 h-auto flex justify-center items-center font-semibold text-grayLight">
         {number}
       </div>
-      <div className="flex flex-col w-full bg-pinkLighter shadow-md rounded-lg">
+      <div
+        className={`${request.InfoRequest.isActive ? "p-0.5 bg-pink" : "p-0.5 bg-yellowDark"} flex flex-col w-full rounded-lg`}
+      >
         <div className="border px-6 py-4 rounded-lg bg-alt flex justify-between items-center gap-24">
           <div className="flex items-center gap-4">
             {/* <div className="w-14 h-14 bg-blue-700 flex justify-center items-center">
@@ -49,16 +51,22 @@ const RequestBox = ({
         </div>
 
         {request.InfoRequest.isActive ? (
-          <div className="self-center p-0.5 text-xs text-primaryDark font-bold">
-            Referrer requested for extra information.
+          <div className="px-2 py-0.5 self-center text-xs text-white font-bold">
+            Referrer requested for extra information.{" "}
             <RequestInfoModal
               request={request}
               trigger={
-                <button className="px-2 py-0.5 underline underline-offset-2 rounded-sm font-bold hover:text-rose-50">
+                <button className="underline underline-offset-2 rounded-sm font-bold hover:text-rose-50">
                   Update Now
                 </button>
               }
             ></RequestInfoModal>
+          </div>
+        ) : null}
+
+        {!request.InfoRequest.isActive ? (
+          <div className="px-2 py-0.5 self-center text-xs text-white font-bold">
+            Your request is waiting to be matched with another referrer
           </div>
         ) : null}
       </div>
