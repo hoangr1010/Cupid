@@ -5,15 +5,39 @@ import { useDispatch } from "react-redux";
 import FileBox from "../../../components/FileBox";
 import { MdModeEditOutline } from "react-icons/md";
 import AutoFill from "../AutoFill";
-import { Button, Modal } from "flowbite-react";
+import { Modal, ModalBody, ModalFooter, ModalHeader } from "flowbite-react";
+import { Spinner } from "flowbite-react";
+import { FileUploader } from "react-drag-drop-files";
+import { IoCloudUpload } from "react-icons/io5";
 
 function Resume() {
   const user = useSelector((state) => state.auth.user);
   const resume = user.resume.url;
   const [openModal, setOpenModal] = useState(false);
-  const [file, setFile] = useState("");
-  const [newResume, setNewResume] = useState(false);
+  const [openResume, setOpenResume] = useState(false);
+  const [file, setFile] = useState(null);
+  const [fileName, setFileName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    await sendResume(file, dispatch);
+    setIsLoading(false);
+    handleCancel();
+  };
+
+  const handleCancel = () => {
+    setFile(null);
+    setOpenModal(false);
+    setFileName("");
+  };
+
+  const handleChange = (file) => {
+    setFile(file);
+    setFileName(file.name);
+  };
 
   return (
     <div>
@@ -30,106 +54,106 @@ function Resume() {
           </button>
         </div>
         <FileBox fileUrl={resume} />
+        <div>
+          <button
+            onClick={() => setOpenResume(true)}
+            className="flex w-full justify-start"
+          >
+            <p className="text-xs text-primary hover:text-primaryDark">
+              View your resume
+            </p>
+          </button>
+        </div>
         <AutoFill />
-        <Modal show={openModal} onClose={() => setOpenModal(false)}>
+
+        <Modal show={openModal} onClose={() => handleCancel()}>
           <Modal.Header>
             <p className="font-bold text-primaryDark text-2xl">Resume</p>
           </Modal.Header>
           <Modal.Body>
-            {resume && !newResume ? (
-              <div>
-                <div className="h-screen pt-2.5">
-                  <iframe
-                    src={`${process.env.REACT_APP_S3_BUCKET_LINK}/${resume}`}
-                    className="w-full h-full"
-                  ></iframe>
-                </div>
+            {isLoading ? (
+              <div className="flex flex-col gap-3 items-center justify-center">
+                <Spinner
+                  className="fill-primary w-10 h-10"
+                  aria-label="Loading"
+                />
+                <p className="font-semibold">Uploading your resume</p>
               </div>
             ) : (
               <div>
                 <form
-                  className="pt-2.5"
+                  className="pt-2.5 flex flex-col gap-4"
                   onSubmit={(e) => {
-                    e.preventDefault();
-                    if (resume) {
-                      setNewResume(!newResume);
-                    }
-                    sendResume(file, dispatch);
+                    handleSubmit(e);
                   }}
                 >
-                  <input
-                    type="file"
-                    id="resume-upload"
-                    accept=".pdf"
-                    className="hidden"
-                    onChange={(e) => setFile(e.target.files[0])}
-                  />
-                  <label
-                    htmlFor="resume-upload"
-                    className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-                  >
-                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                      <svg
-                        className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 20 16"
-                      >
-                        <path
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                        />
-                      </svg>
-                      <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                        <span className="font-semibold">Click to upload</span>{" "}
-                        or drag and drop
-                      </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
-                        PDF (MAX. 800x400px)
-                      </p>
-                    </div>
-                  </label>
-                  <button
-                    className="filled-btn w-fit px-5 py-2.5 text-center m-2.5"
-                    type="submit"
-                  >
-                    Upload
-                  </button>
+                  <div>
+                    <FileUploader
+                      handleChange={handleChange}
+                      name="file"
+                      types={["PDF"]}
+                    >
+                      <div className="my-2 w-full h-32 border-2 border-dashed rounded-xl border-primary flex flex-col justify-center items-center">
+                        <IoCloudUpload size={30} style={{ color: "1EC69A" }} />
+                        {fileName && (
+                          <p className="mt-2 text-sm text-primaryDark font-bold">
+                            {fileName} is ready to be uploaded!
+                          </p>
+                        )}
+                        <div className="text-sm flex">
+                          <button className=" text-primary underline underline-offset-2">
+                            Click to upload{" "}
+                          </button>
+                          <div className="ms-1">or drag and drop file</div>
+                        </div>
+                      </div>
+                    </FileUploader>
+                  </div>
+                  <div className="justify-center flex">
+                    <button
+                      className="filled-btn btn-padding w-48"
+                      type="submit"
+                      disabled={!file}
+                    >
+                      Upload
+                    </button>
+                  </div>
                 </form>
               </div>
             )}
           </Modal.Body>
-          <Modal.Footer>
-            {resume && !newResume ? (
-              <div>
-                <button
-                  className="filled-btn w-fit px-5 py-2.5 text-center m-2.5"
-                  onClick={() => {
-                    console.log(`${process.env.S3_BUCKET_LINK}`);
-                    console.log(resume && !newResume);
-                    setNewResume(!newResume);
-                  }}
-                >
-                  Upload new resume
-                </button>
-              </div>
-            ) : (
-              <div>
-                {resume && (
-                  <button
-                    onClick={() => setNewResume(!newResume)}
-                    className="filled-btn w-fit px-5 py-2.5 text-center m-2.5 mt-0"
-                  >
-                    Back
-                  </button>
-                )}
-              </div>
-            )}
-          </Modal.Footer>
+        </Modal>
+
+        <Modal
+          size="4xl"
+          show={openResume}
+          onClose={() => setOpenResume(false)}
+        >
+          <ModalHeader>
+            <p className="font-bold text-primaryDark text-2xl">
+              Resume Preview
+            </p>
+          </ModalHeader>
+          <ModalBody>
+            <div className="h-screen">
+              <iframe
+                src={`${process.env.REACT_APP_S3_BUCKET_LINK}/${resume}`}
+                className="w-full h-full"
+              ></iframe>
+            </div>
+          </ModalBody>
+          <ModalFooter className="flex justify-center">
+            <div>
+              <a
+                href={`${process.env.REACT_APP_S3_BUCKET_LINK}/${resume}`}
+                className="filled-btn px-20 py-3"
+                download
+                target="_blank"
+              >
+                Download
+              </a>
+            </div>
+          </ModalFooter>
         </Modal>
       </div>
     </div>

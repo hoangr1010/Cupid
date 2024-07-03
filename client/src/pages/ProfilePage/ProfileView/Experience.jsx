@@ -102,7 +102,7 @@ function Experience() {
           onClick={() => setOpenModal(true)}
           className="font-bold hover:text-primary transition-all"
         >
-          <MdAdd size={25}/>
+          <MdAdd size={25} />
         </button>
       </div>
       <Modal show={openModal} onClose={() => setOpenModal(false)}>

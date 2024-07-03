@@ -160,8 +160,7 @@ const allReducers = {
   notificationList: notificationListSlice.reducer,
 };
 
-export const { updateUser, updateToken, clearAuth } =
-  authSlice.actions;
+export const { updateUser, updateToken, clearAuth } = authSlice.actions;
 export const {
   changeRequestList,
   pushRequestList,
