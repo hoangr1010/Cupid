@@ -6,7 +6,7 @@ const ThirdPage = () => {
 
   const navigateToDashboard = () => {
     navigate("/");
-  }
+  };
   return (
     <div className="white-widget px-32 py-16 w-1/2 flex flex-col gap-10 items-center">
       {/* text area */}
@@ -30,7 +30,10 @@ const ThirdPage = () => {
       {/* image area */}
       <img src="/goldMedal.png" alt="goldMedal" className="w-1/2 h-full" />
 
-      <button onClick={navigateToDashboard} className="filled-dark-btn btn-padding">
+      <button
+        onClick={navigateToDashboard}
+        className="filled-dark-btn btn-padding"
+      >
         Go to Dashboard
       </button>
     </div>

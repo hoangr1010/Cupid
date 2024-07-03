@@ -7,16 +7,16 @@ const OnboardPage = () => {
   const [step, setStep] = useState(1);
 
   const nextStep = () => {
-    setStep(step+1)
-  }
+    setStep(step + 1);
+  };
 
   return (
     <div className="onboard-background h-screen flex justify-center items-center">
       {
         {
-          1: <FirstPage nextStep={nextStep}/>,
-          2: <SecondPage nextStep={nextStep}/>,
-          3: <ThirdPage nextStep={nextStep}/>
+          1: <FirstPage nextStep={nextStep} />,
+          2: <SecondPage nextStep={nextStep} />,
+          3: <ThirdPage nextStep={nextStep} />,
         }[step]
       }
     </div>

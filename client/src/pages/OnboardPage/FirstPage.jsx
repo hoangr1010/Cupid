@@ -1,8 +1,6 @@
 import React from "react";
 
 const FirstPage = ({ nextStep }) => {
-
-
   return (
     <div className="white-widget px-32 py-16 w-1/2 flex flex-col gap-10 items-center">
       {/* text area */}

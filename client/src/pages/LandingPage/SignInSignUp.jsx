@@ -73,7 +73,6 @@ const SignInSignUp = () => {
                 signup: "Sign up with LinkedIn",
                 signin: "Sign in with LinkedIn",
               }[action]
-            
             }
           </div>
         </button>

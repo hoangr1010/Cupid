@@ -33,7 +33,7 @@ code {
   }
 
   .white-widget {
-    @apply rounded-2xl bg-white
+    @apply rounded-2xl bg-white;
   }
 
   .text-field {
@@ -45,7 +45,7 @@ code {
   }
 
   .filled-dark-btn {
-    @apply bg-primaryDark text-white font-bold rounded-lg transition-all hover:bg-primary
+    @apply bg-primaryDark text-white font-bold rounded-lg transition-all hover:bg-primary;
   }
 
   .text-dark-btn {

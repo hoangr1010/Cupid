@@ -46,7 +46,9 @@ function App() {
 
         <Route
           path="auth/:action"
-          element={isAuthenticated ? <Navigate to="/homepage" /> : <SignInSignUp />}
+          element={
+            isAuthenticated ? <Navigate to="/homepage" /> : <SignInSignUp />
+          }
         />
 
         <Route
