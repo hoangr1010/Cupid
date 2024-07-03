@@ -45,6 +45,8 @@ const tailwindConfig = {
     "border-purpleLight",
     "border-grayLighter",
     "text-yellowDark",
+    "border-yellowLight",
+    "bg-yellowLight",
   ],
 };
 

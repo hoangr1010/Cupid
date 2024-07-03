@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const TEST_USER_ID = "663009c09004ced3b81eeaf1";
 const USER_ID = "dummy";
+const REJECTED_BY_ID = "663002d5ac9d7c6c979e2864";
 
 const openingID1 = new mongoose.Types.ObjectId();
 const openingID2 = new mongoose.Types.ObjectId();
@@ -94,6 +95,7 @@ const requests = [
     company: "Google",
     priority: 1,
     status: "waiting",
+    rejected_by: REJECTED_BY_ID,
     job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
     InfoRequest: {
       isActive: false,
@@ -112,7 +114,12 @@ const requests = [
     compatibility: 80,
     InfoRequest: {
       isActive: true,
-      Conversation: [{ sender: "referrer", message: "tao giet may" }],
+      Conversation: [
+        {
+          sender: "referrer",
+          message: "Can you also give me your official transcript?",
+        },
+      ],
     },
   },
   {
@@ -142,13 +149,18 @@ const requests = [
     compatibility: 20,
     InfoRequest: {
       isActive: true,
-      Conversation: [{ sender: "referrer", message: "tao giet may" }],
+      Conversation: [
+        {
+          sender: "referrer",
+          message: "Will you require sponsorship in the future?",
+        },
+      ],
     },
   },
   {
     _id: requestID10,
     candidate_id: USER_ID,
-    company: "Amazon",
+    company: "Microsoft",
     priority: 5,
     status: "waiting",
     job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
@@ -163,10 +175,11 @@ const requests = [
     company: "Meta",
     priority: 6,
     status: "waiting",
+    rejected_by: REJECTED_BY_ID,
     job_posting_url: "https://www.amazon.jobs/en/jobs/2676956/business-analyst",
     InfoRequest: {
-      isActive: true,
-      Conversation: [{ sender: "referrer", message: "tao giet may" }],
+      isActive: false,
+      Conversation: [],
     },
   },
   {

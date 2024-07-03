@@ -22,7 +22,9 @@ const RequestBox = ({
       <div className="w-8 h-auto flex justify-center items-center font-semibold text-grayLight">
         {number}
       </div>
-      <div className="flex flex-col w-full bg-pink rounded-lg">
+      <div
+        className={`${request.InfoRequest.isActive ? "p-0.5 bg-pink" : request.rejected_by ? "p-0.5 bg-yellowDark" : ""} flex flex-col w-full rounded-lg`}
+      >
         <div className="border px-6 py-4 rounded-lg bg-alt flex justify-between items-center gap-24">
           <div className="flex items-center gap-4">
             {/* <div className="w-14 h-14 bg-blue-700 flex justify-center items-center">
@@ -59,6 +61,13 @@ const RequestBox = ({
                 </button>
               }
             ></RequestInfoModal>
+          </div>
+        ) : null}
+
+        {request.rejected_by ? (
+          <div className="px-2 py-0.5 self-center text-xs text-white font-bold">
+            Rejected by {request.rejected_by.first_name}{" "}
+            {request.rejected_by.last_name}. Your request will be matched again.
           </div>
         ) : null}
       </div>

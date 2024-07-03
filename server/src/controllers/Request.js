@@ -38,7 +38,7 @@ export const getAllRequests = async (req, res) => {
         $gte: startDate,
         $lte: endDate,
       },
-    });
+    }).populate("rejected_by", "first_name last_name");
 
     res.status(200).json({
       message: "Requests with 3 months gotten successfully",
@@ -253,6 +253,7 @@ export const deleteFile = async (req, res) => {
 };
 
 export const changeStatus = async (req, res) => {
+  const user_id = req.get("userId");
   const { requestId, newStatus } = req.body;
 
   const session = await mongoose.startSession();
@@ -271,7 +272,7 @@ export const changeStatus = async (req, res) => {
       // update status of the request
       updatedRequest = await Request.findByIdAndUpdate(
         requestId,
-        { status: newStatus, opening_id: null },
+        { status: newStatus, opening_id: null, rejected_by: user_id },
         { new: true, session },
       );
 
