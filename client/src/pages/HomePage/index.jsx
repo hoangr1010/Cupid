@@ -8,14 +8,16 @@ const HomePage = () => {
   const navigate = useNavigate();
   const numRequest = useSelector((state) => state.request.list.length);
   const numOpening = useSelector((state) => state.opening.originalAmount);
-  const userName = useSelector((state) => state.auth.user.first_name)
+  const userName = useSelector((state) => state.auth.user.first_name);
 
   return (
     <div className="max-h-screen overflow-auto">
       {/* <h1 className="text-5xl font-bold font-darker mb-8 text-primaryDark">
         Dashboard
       </h1> */}
-      <div className="text-2xl font-semibold text-primaryDark">Hi {userName}!</div>
+      <div className="text-2xl font-semibold text-primaryDark">
+        Hi {userName}!
+      </div>
 
       <div className="my-6">
         <div className="font-bold text-lg mb-2">Referral Summary</div>
