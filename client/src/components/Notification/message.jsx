@@ -1,7 +1,6 @@
 import React from "react";
 
 export const Message = (noti) => {
-
   const d = Math.floor((Date.now() - noti.createdAt) / 86400000);
   const h = Math.floor((Date.now() - noti.createdAt) / 3600000);
   const m = Math.floor((Date.now() - noti.createdAt) / 60000);

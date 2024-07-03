@@ -24,7 +24,6 @@ export const NotificationDropdown = () => {
   // so the function get all notification of a user.
   useEffect(() => {
     onSnapshot(collection(db, user._id), async (snapshot) => {
-
       var l = [];
       snapshot.docs.map((doc) => {
         l.push(doc.data());
@@ -36,10 +35,7 @@ export const NotificationDropdown = () => {
 
       setNotiList(l);
     });
-
   }, []);
-
-
 
   return (
     <>

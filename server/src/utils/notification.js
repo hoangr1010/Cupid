@@ -86,7 +86,7 @@ export class Notification {
 
     const opening = await Opening.findOne({ _id: openingId });
     const recipientId = opening.referrer_id.valueOf();
-    
+
     const user = await User.findOne({ _id: recipientId });
 
     return new Notification(
