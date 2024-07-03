@@ -53,11 +53,15 @@ code {
   }
 
   .onboard-background {
-    @apply bg-gradient-to-br to-primary from-primaryDark
+    @apply bg-gradient-to-br to-primary from-primaryDark;
   }
 
   .btn-padding {
     @apply py-[6px] px-3;
+  }
+
+  .onboard-button {
+    @apply border p-6 rounded-lg w-full flex gap-2 items-center text-primaryDark font-bold transition-all;
   }
 
   .outline-btn {
