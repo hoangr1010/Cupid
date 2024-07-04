@@ -20,6 +20,8 @@ const notiNavigate = (noti, navigate) => {
       break;
 
     case "refererRequestMoreInfo":
+      navigate(`/request`);
+      navigate(0);
       break;
 
     case "requestRemindAction":
