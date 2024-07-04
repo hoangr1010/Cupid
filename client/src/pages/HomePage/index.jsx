@@ -2,6 +2,7 @@ import React from "react";
 import StatisticsTable from "./StatisticsTable.jsx";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
 const HomePage = () => {
@@ -9,6 +10,7 @@ const HomePage = () => {
   const numRequest = useSelector((state) => state.request.list.length);
   const numOpening = useSelector((state) => state.opening.originalAmount);
   const userName = useSelector((state) => state.auth.user.first_name);
+  const [search, setSearch] = useState("");
 
   return (
     <div className="max-h-screen overflow-auto">
@@ -72,13 +74,15 @@ const HomePage = () => {
         </div>
 
         <input
-          className="h-full w-full border-hidden text-sm rounded-lg"
+          className="h-full w-full border-hidden text-sm rounded-lg focus:border-hidden focus:ring-transparent"
           type="text"
           placeholder="Search for companies"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
         />
       </div>
 
-      <StatisticsTable />
+      <StatisticsTable search={search} />
     </div>
   );
 };

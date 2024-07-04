@@ -6,7 +6,7 @@ import { getAllExistingOpenings } from "../../api/opening";
 import { getAllExistingRequests } from "../../api/request";
 import CompanyCard from "./CompanyCard";
 
-const StatisticsTable = () => {
+const StatisticsTable = ({ search }) => {
   const distinctCompanyList = useSelector(
     (state) => state.distinctCompanyList.list,
   );
@@ -70,9 +70,16 @@ const StatisticsTable = () => {
   return (
     <main className="h-full gap-12 overflow-auto">
       <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {distinctCompanyList.map((company) => (
-          <CompanyCard company={company} companyStatistic={companyStatistic} />
-        ))}
+        {distinctCompanyList.map((company) =>
+          company.toLowerCase().includes(search.toLowerCase()) ? (
+            <CompanyCard
+              company={company}
+              companyStatistic={companyStatistic}
+            />
+          ) : (
+            <></>
+          ),
+        )}
       </ul>
     </main>
   );
