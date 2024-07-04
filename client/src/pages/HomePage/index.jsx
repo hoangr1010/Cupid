@@ -74,7 +74,7 @@ const HomePage = () => {
         </div>
 
         <input
-          className="h-full w-full border-hidden text-sm rounded-lg focus:border-hidden"
+          className="h-full w-full border-hidden text-sm rounded-lg focus:border-hidden focus:ring-transparent"
           type="text"
           placeholder="Search for companies"
           value={search}
