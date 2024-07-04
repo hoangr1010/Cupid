@@ -10,10 +10,11 @@ const handler = async (event) => {
   const asyncId = [];
   for (const message of messages) {
     const obj = JSON.parse(message.body);
+    console.log(message.body);
 
     const params = {
       Destination: {
-        ToAddresses: ["huyhoangr1010@gmail.com"],
+        ToAddresses: [obj.email],
       },
       Message: {
         Body: {
@@ -60,10 +61,12 @@ const handler = async (event) => {
   Promise.all(asyncDocEmail)
     .then((values) => console.log(values))
     .catch((err) => console.error(err));
+  console.log("Email is sent and doc is pushed");
 
   Promise.all(asyncId)
     .then((values) => console.log(values))
     .catch((err) => console.error(err));
+  console.log("Id on doc is added");
 };
 
 module.exports.handler = handler;
