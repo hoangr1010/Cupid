@@ -1,7 +1,7 @@
 # Cupid - Referral Matching Application
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/d349128d-1659-421b-80e8-1e626093851f" alt="Screenshot 2024-11-12 at 6 12 56 PM">
+  <img src="https://github.com/user-attachments/assets/b0c45c4f-5893-4055-bf1a-bd0f621bb7cb" alt="Screenshot 2024-11-12 at 6 12 56 PM">
 </div>
 
 **Cupid** is a platform that simplifies the referral process for job seekers by connecting them directly with employees willing to give referrals at their companies. By matching job seekers with the right referral givers, Cupid makes getting a referral more accessible and efficient, increasing the chances of landing the desired job.
